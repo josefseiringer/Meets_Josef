@@ -1,0 +1,5 @@
+CREATE DATABASE Meets;
+GO
+
+USE Meets;
+GO

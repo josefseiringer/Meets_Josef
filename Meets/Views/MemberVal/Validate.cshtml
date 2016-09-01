@@ -1,0 +1,18 @@
+﻿@model Meets.Models.RegistrierFormModel
+
+@{
+    ViewBag.Title = "Validate";
+    Layout = "~/Views/Shared/_LayoutMeetValidate.cshtml";
+}
+
+<div class="val">
+    <h3 style="text-align:center;">Validierungsmeldung</h3>
+    <h5 style="text-align:center;">Validierung abgeschlossen<br />Du kannst dich jetzt anmelden</h5>
+    @if (ViewBag.valErr != null)
+    {
+        <h4 class="text-danger" style="text-align:center;">@ViewBag.valErr</h4>
+    }
+</div>
+        
+
+    

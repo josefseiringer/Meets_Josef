@@ -1,0 +1,377 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="MeetsModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Events">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="created" Type="datetime" Nullable="false" />
+          <Property Name="member_id" Type="int" Nullable="false" />
+          <Property Name="eventdate" Type="datetime" Nullable="false" />
+          <Property Name="title" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="description" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="viewpublic" Type="bit" Nullable="false" />
+          <Property Name="location" Type="varchar" MaxLength="255" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Members">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="created" Type="datetime" Nullable="false" />
+          <Property Name="email" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="password" Type="varbinary(max)" Nullable="false" />
+          <Property Name="dateofbirth" Type="datetime2" Precision="7" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Membervalidation">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="created" Type="datetime" Nullable="false" />
+          <Property Name="member_id" Type="int" Nullable="false" />
+        </EntityType>
+        <!--Während der Generierung sind Fehler aufgetreten:
+Warnung 6002: Für Tabelle/Sicht 'Meets.dbo.View_Event' ist kein Primärschlüssel definiert. Der Schlüssel wurde abgeleitet, und die Definition wurde als schreibgeschützte Tabelle/Sicht erstellt.-->
+        <EntityType Name="View_Event">
+          <Key>
+            <PropertyRef Name="Erstellt" />
+            <PropertyRef Name="Ersteller" />
+            <PropertyRef Name="Termin" />
+            <PropertyRef Name="Veranstaltungsname" />
+            <PropertyRef Name="Beschreibung" />
+            <PropertyRef Name="Oeffentlich" />
+            <PropertyRef Name="Standort" />
+          </Key>
+          <Property Name="Erstellt" Type="datetime" Nullable="false" />
+          <Property Name="Ersteller" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="Termin" Type="datetime" Nullable="false" />
+          <Property Name="Veranstaltungsname" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Beschreibung" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="Oeffentlich" Type="bit" Nullable="false" />
+          <Property Name="Standort" Type="varchar" MaxLength="255" Nullable="false" />
+        </EntityType>
+        <!--Während der Generierung sind Fehler aufgetreten:
+Warnung 6002: Für Tabelle/Sicht 'Meets.dbo.View_Event_open' ist kein Primärschlüssel definiert. Der Schlüssel wurde abgeleitet, und die Definition wurde als schreibgeschützte Tabelle/Sicht erstellt.-->
+        <EntityType Name="View_Event_open">
+          <Key>
+            <PropertyRef Name="Erstellt" />
+            <PropertyRef Name="Ersteller" />
+            <PropertyRef Name="Termin" />
+            <PropertyRef Name="Veranstaltungsname" />
+            <PropertyRef Name="Beschreibung" />
+            <PropertyRef Name="Oeffentlich" />
+            <PropertyRef Name="Standort" />
+          </Key>
+          <Property Name="Erstellt" Type="datetime" Nullable="false" />
+          <Property Name="Ersteller" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="Termin" Type="datetime" Nullable="false" />
+          <Property Name="Veranstaltungsname" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Beschreibung" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="Oeffentlich" Type="bit" Nullable="false" />
+          <Property Name="Standort" Type="varchar" MaxLength="255" Nullable="false" />
+        </EntityType>
+        <Association Name="fk_Events_Members">
+          <End Role="Members" Type="Self.Members" Multiplicity="1" />
+          <End Role="Events" Type="Self.Events" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Members">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Events">
+              <PropertyRef Name="member_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_Membervalidation_Member">
+          <End Role="Members" Type="Self.Members" Multiplicity="1" />
+          <End Role="Membervalidation" Type="Self.Membervalidation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Members">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Membervalidation">
+              <PropertyRef Name="member_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="fn_check_user_Table" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="email" Type="varchar" Mode="In" />
+          <Parameter Name="password" Type="varbinary(max)" Mode="In" />
+          <ReturnType>
+            <CollectionType>
+              <RowType>
+                <Property Name="id" Type="int" Nullable="false" />
+              </RowType>
+            </CollectionType>
+          </ReturnType>
+        </Function>
+        <Function Name="sp_RegisterUser" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="email" Type="varchar" Mode="In" />
+          <Parameter Name="password" Type="varbinary(max)" Mode="In" />
+          <Parameter Name="dateOfBirth" Type="datetime" Mode="In" />
+        </Function>
+        <EntityContainer Name="MeetsModelStoreContainer">
+          <EntitySet Name="Events" EntityType="Self.Events" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Members" EntityType="Self.Members" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Membervalidation" EntityType="Self.Membervalidation" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="View_Event" EntityType="Self.View_Event" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [View_Event].[Erstellt] AS [Erstellt], 
+    [View_Event].[Ersteller] AS [Ersteller], 
+    [View_Event].[Termin] AS [Termin], 
+    [View_Event].[Veranstaltungsname] AS [Veranstaltungsname], 
+    [View_Event].[Beschreibung] AS [Beschreibung], 
+    [View_Event].[Oeffentlich] AS [Oeffentlich], 
+    [View_Event].[Standort] AS [Standort]
+    FROM [dbo].[View_Event] AS [View_Event]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="View_Event_open" EntityType="Self.View_Event_open" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [View_Event_open].[Erstellt] AS [Erstellt], 
+    [View_Event_open].[Ersteller] AS [Ersteller], 
+    [View_Event_open].[Termin] AS [Termin], 
+    [View_Event_open].[Veranstaltungsname] AS [Veranstaltungsname], 
+    [View_Event_open].[Beschreibung] AS [Beschreibung], 
+    [View_Event_open].[Oeffentlich] AS [Oeffentlich], 
+    [View_Event_open].[Standort] AS [Standort]
+    FROM [dbo].[View_Event_open] AS [View_Event_open]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="fk_Events_Members" Association="Self.fk_Events_Members">
+            <End Role="Members" EntitySet="Members" />
+            <End Role="Events" EntitySet="Events" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Membervalidation_Member" Association="Self.fk_Membervalidation_Member">
+            <End Role="Members" EntitySet="Members" />
+            <End Role="Membervalidation" EntitySet="Membervalidation" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="MeetsModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <ComplexType Name="fn_check_user_Table_Result">
+          <Property Name="id" Type="Int32" Nullable="false" />
+        </ComplexType>
+        <EntityType Name="Event">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="created" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="member_id" Type="Int32" Nullable="false" />
+          <Property Name="eventdate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="title" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="description" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="viewpublic" Type="Boolean" Nullable="false" />
+          <Property Name="location" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Member" Relationship="Self.fk_Events_Members" FromRole="Events" ToRole="Members" />
+        </EntityType>
+        <EntityType Name="Member">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="created" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="email" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="password" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
+          <Property Name="dateofbirth" Type="DateTime" Nullable="false" Precision="7" />
+          <NavigationProperty Name="Events" Relationship="Self.fk_Events_Members" FromRole="Members" ToRole="Events" />
+          <NavigationProperty Name="Membervalidations" Relationship="MeetsModel.fk_Membervalidation_Member" FromRole="Member" ToRole="Membervalidation" />
+        </EntityType>
+        <EntityType Name="View_Event">
+          <Key>
+            <PropertyRef Name="Erstellt" />
+            <PropertyRef Name="Ersteller" />
+            <PropertyRef Name="Termin" />
+            <PropertyRef Name="Veranstaltungsname" />
+            <PropertyRef Name="Beschreibung" />
+            <PropertyRef Name="Oeffentlich" />
+            <PropertyRef Name="Standort" />
+          </Key>
+          <Property Name="Erstellt" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Ersteller" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Termin" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Veranstaltungsname" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Beschreibung" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Oeffentlich" Type="Boolean" Nullable="false" />
+          <Property Name="Standort" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
+        <EntityType Name="View_Event_open">
+          <Key>
+            <PropertyRef Name="Erstellt" />
+            <PropertyRef Name="Ersteller" />
+            <PropertyRef Name="Termin" />
+            <PropertyRef Name="Veranstaltungsname" />
+            <PropertyRef Name="Beschreibung" />
+            <PropertyRef Name="Oeffentlich" />
+            <PropertyRef Name="Standort" />
+          </Key>
+          <Property Name="Erstellt" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Ersteller" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Termin" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Veranstaltungsname" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Beschreibung" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Oeffentlich" Type="Boolean" Nullable="false" />
+          <Property Name="Standort" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
+        <Association Name="fk_Events_Members">
+          <End Role="Members" Type="Self.Member" Multiplicity="1" />
+          <End Role="Events" Type="Self.Event" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Members">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Events">
+              <PropertyRef Name="member_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="MeetsEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Events" EntityType="Self.Event" />
+          <EntitySet Name="Members" EntityType="Self.Member" />
+          <EntitySet Name="View_Event" EntityType="Self.View_Event" />
+          <EntitySet Name="View_Event_open" EntityType="Self.View_Event_open" />
+          <AssociationSet Name="fk_Events_Members" Association="Self.fk_Events_Members">
+            <End Role="Members" EntitySet="Members" />
+            <End Role="Events" EntitySet="Events" />
+          </AssociationSet>
+          <FunctionImport Name="fn_check_user_Table" IsComposable="true" ReturnType="Collection(MeetsModel.fn_check_user_Table_Result)">
+            <Parameter Name="email" Mode="In" Type="String" />
+            <Parameter Name="password" Mode="In" Type="Binary" />
+          </FunctionImport>
+          <FunctionImport Name="sp_RegisterUser">
+            <Parameter Name="email" Mode="In" Type="String" />
+            <Parameter Name="password" Mode="In" Type="Binary" />
+            <Parameter Name="dateOfBirth" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <EntitySet Name="Membervalidations" EntityType="MeetsModel.Membervalidation" />
+          <AssociationSet Name="fk_Membervalidation_Member" Association="MeetsModel.fk_Membervalidation_Member">
+            <End Role="Member" EntitySet="Members" />
+            <End Role="Membervalidation" EntitySet="Membervalidations" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Membervalidation">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="created" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="member_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Member" Relationship="MeetsModel.fk_Membervalidation_Member" FromRole="Membervalidation" ToRole="Member" />
+        </EntityType>
+        <Association Name="fk_Membervalidation_Member">
+          <End Type="MeetsModel.Member" Role="Member" Multiplicity="1" />
+          <End Type="MeetsModel.Membervalidation" Role="Membervalidation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Member">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Membervalidation">
+              <PropertyRef Name="member_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="MeetsModelStoreContainer" CdmEntityContainer="MeetsEntities">
+          <EntitySetMapping Name="Events">
+            <EntityTypeMapping TypeName="MeetsModel.Event">
+              <MappingFragment StoreEntitySet="Events">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="created" ColumnName="created" />
+                <ScalarProperty Name="member_id" ColumnName="member_id" />
+                <ScalarProperty Name="eventdate" ColumnName="eventdate" />
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="viewpublic" ColumnName="viewpublic" />
+                <ScalarProperty Name="location" ColumnName="location" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Members">
+            <EntityTypeMapping TypeName="MeetsModel.Member">
+              <MappingFragment StoreEntitySet="Members">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="created" ColumnName="created" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="dateofbirth" ColumnName="dateofbirth" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="View_Event">
+            <EntityTypeMapping TypeName="MeetsModel.View_Event">
+              <MappingFragment StoreEntitySet="View_Event">
+                <ScalarProperty Name="Erstellt" ColumnName="Erstellt" />
+                <ScalarProperty Name="Ersteller" ColumnName="Ersteller" />
+                <ScalarProperty Name="Termin" ColumnName="Termin" />
+                <ScalarProperty Name="Veranstaltungsname" ColumnName="Veranstaltungsname" />
+                <ScalarProperty Name="Beschreibung" ColumnName="Beschreibung" />
+                <ScalarProperty Name="Oeffentlich" ColumnName="Oeffentlich" />
+                <ScalarProperty Name="Standort" ColumnName="Standort" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="View_Event_open">
+            <EntityTypeMapping TypeName="MeetsModel.View_Event_open">
+              <MappingFragment StoreEntitySet="View_Event_open">
+                <ScalarProperty Name="Erstellt" ColumnName="Erstellt" />
+                <ScalarProperty Name="Ersteller" ColumnName="Ersteller" />
+                <ScalarProperty Name="Termin" ColumnName="Termin" />
+                <ScalarProperty Name="Veranstaltungsname" ColumnName="Veranstaltungsname" />
+                <ScalarProperty Name="Beschreibung" ColumnName="Beschreibung" />
+                <ScalarProperty Name="Oeffentlich" ColumnName="Oeffentlich" />
+                <ScalarProperty Name="Standort" ColumnName="Standort" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionName="MeetsModel.Store.fn_check_user_Table" FunctionImportName="fn_check_user_Table">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="MeetsModel.fn_check_user_Table_Result">
+                <ScalarProperty Name="id" ColumnName="id" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_RegisterUser" FunctionName="MeetsModel.Store.sp_RegisterUser" />
+          <EntitySetMapping Name="Membervalidations">
+            <EntityTypeMapping TypeName="MeetsModel.Membervalidation">
+              <MappingFragment StoreEntitySet="Membervalidation">
+                <ScalarProperty Name="member_id" ColumnName="member_id" />
+                <ScalarProperty Name="created" ColumnName="created" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Kein" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

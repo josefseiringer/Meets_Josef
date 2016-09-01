@@ -1,0 +1,83 @@
+﻿@model List<Meets.Models.View_Event_open>
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+    <link href="~/Content/MyStyle.css" rel="stylesheet" />
+
+</head>
+<body style="font-family:Corbel;color:#000000;font-weight:500;">
+    <div id="container">        
+        <div id="header">
+            <img src="~/img/HeaderNewMeetsSchmal.jpg" />
+            <div class="oben1">
+                <a href="~/Login/Login"><input class="btnstyleHeader" type="button" value="Anmeldung" /></a>
+                <a href="~/User/Registrieren"><input class="btnstyleHeader" type="button" value="Registrierung" /></a>
+            </div>
+        </div>
+        <div id="content">
+            <br />
+            <div class="backwithe">
+                <h2 class="center">Hallo du bist zur Zeit als Gast bei Meets</h2>
+                <p align="center">Daher kannst du nur öffentliche Termine einsehen.<br />Falls du dich anmelden möchtest klicke auf Anmelden<br />wenn du unserer Plattform beitreten willst Registrieren, und genieße alle Vorteile von Meets.</p>
+                <br />                
+            </div>
+            <div><h2 class="center">Offene Veranstaltungen</h2></div>
+
+            <div class="contentScroll">
+            @foreach (var item in Model)
+            {
+                <div class="backwitheEvent">
+                    <table>
+                        <tr>
+                            <th>Erstelldatum:</th>
+                            <td style="padding-left:10px;">@Html.DisplayFor(modelItem => item.Erstellt)</td>
+                        </tr>
+                        <tr>
+                            <th>Titel:</th>
+                            <td style="padding-left:10px;">@Html.DisplayFor(modelItem => item.Veranstaltungsname)</td>
+                        </tr>
+                        <tr>
+                            <th>Eventdatum:</th>
+                            <td style="padding-left:10px;">@Html.DisplayFor(modelItem => item.Termin)</td>
+                        </tr>
+                        <tr>
+                            <th>Beschreibung:</th>
+                            <td style="padding-left:10px;">@Html.DisplayFor(modelItem => item.Beschreibung)</td>
+                        </tr>
+                        <tr>
+                            <th>Für alle Einsehbar</th>
+                            <td style="padding-left:10px;">@Html.DisplayFor(modelItem => item.Oeffentlich)</td>
+                        </tr>
+                        <tr>
+                            <th>Standort:</th>
+                            <td style="padding-left:10px;">@Html.DisplayFor(modelItem => item.Standort)</td>
+                        </tr>
+                        <tr>
+                            <th>E-Mail des Erstellers:</th>
+                            <td style="padding-left:10px;">@Html.DisplayFor(modelItem => item.Ersteller)</td>
+                        </tr>
+
+                    </table>
+                </div>
+            }
+           </div>
+        </div>        
+    </div>
+    @if (ViewBag.ErrorDatabase != null)
+    {
+        <script type="text/javascript">
+            alert("@ViewBag.keineOffenenBeiträge");
+        </script>
+        <script type="text/javascript">
+            alert("@ViewBag.keinePrivatenBeiträge");
+        </script>
+    }
+</body>
+</html>

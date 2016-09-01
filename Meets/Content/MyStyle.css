@@ -1,0 +1,157 @@
+﻿body{font-family:"Helvetica Neue", Helvetica, Arial, sans-serif;color:#000000;font-weight:500;}
+#container {
+    width: 1054px;
+    height: 768px;
+    margin: 20px auto;
+    border: solid 1px #000000;
+    border-radius: 20px;
+    padding: 20px;
+    -webkit-box-shadow: 0px 2px 2px 2px #000000;
+    box-shadow: 0px 2px 2px 2px #000000;
+    background-image: url('../img/container1024x768.jpg');
+}
+.oben1 {
+    margin-left: 800px;
+    margin-top: -60px;
+}
+.center{text-align:center;}
+.backwithe{margin:20px auto; width:682px; height:150px;border:solid 1px #808080;border-radius:10px;-webkit-box-shadow: 0px 2px 2px 2px #808080;box-shadow: 0px 2px 2px 2px #808080;background-color:#A5D3F3;}
+.backwitheEvent {padding-top:10px; margin:20px auto; width:682px; height:200px;border:solid 1px #808080;border-radius:10px;-webkit-box-shadow: 0px 2px 2px 2px #808080;box-shadow: 0px 2px 2px 2px #808080;padding-left:10px;padding-right:10px;background-color:aliceblue;}
+.btnstyle{float:right;padding:10px 30px 10px 30px;border-radius:5px;margin-top:-10px;}
+.btnstyle:hover{background-color:burlywood;}
+.btnstyleHeader{padding:10px;border-radius:5px;}
+.btnstyleHeader:hover{background-color:burlywood;}
+#header{height:71px;}
+.contentScroll {
+    padding: 20px;
+    width: 800px;
+    height: 400px;
+    border: solid 1px #808080;
+    overflow-y: scroll;
+    overflow-x:hidden;
+    border-radius: 10px;
+    -webkit-box-shadow: 0px 2px 0px 2px #808080;
+    box-shadow: 0px 2px 0px 2px #808080;
+    margin: 0 auto;
+    background-color: #A5D3F3;
+    
+}
+.centerInput{height:100%;margin: 0 auto;}
+
+/*TABELLEN GESTALTEN IN REGISTRIERUNG*/
+.contentReg{
+    padding: 20px;
+    width: 800px;
+    height: 400px;
+    border: solid 1px #808080;
+    border-radius: 10px;
+    -webkit-box-shadow: 0px 2px 0px 2px #808080;
+    box-shadow: 0px 2px 0px 2px #808080;
+    margin: 0 auto;
+    background-color: #A5D3F3;
+}
+.regnow{width:235px;height:233px;position:relative;left:510px; bottom:300px;}
+.tdpadding{padding-right:20px;padding-left:20px;}
+.mylabel{width:250px;padding:5px 10px;}
+.mytabeltext{width:250px}
+.spaltenabstand{margin-bottom:10px;}
+
+/*LoginStyles*/
+.loginFigur{width:236px;height:194px; position:relative;left:530px; bottom:200px;}
+.contentLogin{
+    padding: 20px;
+    width: 800px;
+    height: 300px;
+    border: solid 1px #808080;
+    border-radius: 10px;
+    -webkit-box-shadow: 0px 2px 0px 2px #808080;
+    box-shadow: 0px 2px 0px 2px #808080;
+    margin: 0 auto;
+    background-color: #A5D3F3;
+}
+/*Regiesrierung Fertig styles*/
+/*.controlMeldung{
+    position:absolute;
+    top:380px;
+    left:480px;
+    width:400px;
+    height:200px;
+     border: solid 1px #808080;
+    border-radius: 10px;
+    -webkit-box-shadow: 0px 2px 0px 2px #808080;
+    box-shadow: 0px 2px 0px 2px #808080;
+    margin: 0 auto;
+    background-color: #fff;
+    display:none;
+    
+
+}*/
+.regmeldung{
+    padding: 20px;
+    width: 800px;
+    height: 300px;
+    border: solid 1px #808080;
+    border-radius: 10px;
+    -webkit-box-shadow: 0px 2px 0px 2px #808080;
+    box-shadow: 0px 2px 0px 2px #808080;
+    margin: 0 auto;
+    background-color: #A5D3F3;
+
+}
+.imgEMail{
+    margin-left:500px;
+    width:165px;
+    height:200px;
+}
+
+/*Events styles*/
+.scrollAddEvent {
+    width: 850px;
+    height: 400px;
+    /*overflow-y: scroll;
+    overflow-x:hidden;*/
+}
+.contentEvent{
+
+    padding: 20px;
+    width: 950px;
+    height: 400px;
+    border: solid 1px #808080;
+    border-radius: 10px;
+    -webkit-box-shadow: 0px 2px 0px 2px #808080;
+    box-shadow: 0px 2px 0px 2px #808080;
+    margin: 0 auto;
+    background-color: #A5D3F3;
+    overflow-y: auto;
+    overflow-x:hidden;
+}
+
+.linkAsBtn{
+    padding:10px;
+    border-radius:5px;
+    border:solid 1px #000000;
+    display:inline-block;
+    background-color:lightgray;
+    
+}
+.linkAsBtn:hover{
+    background-color:burlywood;
+    -webkit-box-shadow: 0px 0px 0px 2px #808080;
+    box-shadow: 0px 0px 0px 2px #808080;
+}
+.linkText{
+    color:black;
+}
+
+/*ValidationView Styles*/
+.val{
+    width:400px;
+    height:180px;
+    border:solid 1px #ddd4d4; 
+    border-radius:10px;
+    background-color:antiquewhite;  
+    margin:90px auto;
+    -webkit-box-shadow: 0px 2px 0px 2px #808080;
+    box-shadow: 0px 2px 0px 2px #808080;
+
+}

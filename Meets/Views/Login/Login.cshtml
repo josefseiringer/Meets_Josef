@@ -1,0 +1,48 @@
+﻿@model Meets.Models.LoginFormModel
+
+@{
+    ViewBag.Title = "Login";
+    Layout = "~/Views/Shared/_LayoutMeetLogin.cshtml";
+}
+@*Gleich loslegen Rest steht im Layoutfile*@
+
+    @using (Html.BeginForm("Login2", "Login"))
+    {
+        <table style="margin-top:10px;" cellpadding="10">
+            <tr>
+                <td class="tdpadding">@Html.LabelFor(x => x.Email)</td>
+                <td class="mytabeltext">@Html.TextBoxFor(x => x.Email, htmlAttributes: new { @class = "mylabel" })</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td class="mytabeltext">@Html.ValidationMessageFor(model => model.Email, String.Empty, new { @class = "text-danger" })</td></tr>
+            <tr>
+                <td class="tdpadding">@Html.LabelFor(x => x.Password)</td>
+                <td class="mytabeltext">@Html.PasswordFor(x => x.Password, htmlAttributes: new { @class = "mylabel" })</td>
+            </tr> 
+            <tr>
+                <td></td>
+                <td class="mytabeltext">@Html.ValidationMessageFor(model => model.Password, String.Empty, new { @class = "text-danger" })</td>                
+            </tr> 
+            <tr>
+                <td colspan="2">
+                    @if (ViewBag.noLogin != null)
+                {
+                    <label class="text-danger">@ViewBag.noLogin</label>
+                }
+            </td>
+            </tr>          
+            <tr>
+                <td><input class="btnstyle" type="submit" value="Anmelden" /></td>
+            </tr>
+        </table>
+        <div class="loginFigur">
+            <img src="~/img/loginFigur236x194.jpg" /></div>
+    }
+@if (ViewBag.probDB != null)
+{
+    <script type="text/javascript">
+            alert("@ViewBag.probDB");
+    </script>
+}
+

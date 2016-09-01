@@ -1,0 +1,92 @@
+﻿@model Meets.Models.RegistrierFormModel
+
+@{
+    ViewBag.Title = "Registrieren";
+    Layout = "~/Views/Shared/_LayoutMeetsReg.cshtml";
+}
+@*Gleich loslegen Rest steht im Layoutfile*@
+
+@using (Html.BeginForm("RegistrierungSpeichern", "User"))
+{
+    <table style="margin-top:10px;" cellpadding="10">
+        <tr>
+            <td class="tdpadding">@Html.LabelFor(x => x.Email)</td>
+            <td class="mytabeltext">@Html.TextBoxFor(x => x.Email, htmlAttributes: new { @class = "mylabel" })</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td class="mytabeltext">
+                @Html.ValidationMessageFor(model => model.Email, String.Empty, new { @class = "text-danger" })
+            </td>
+        </tr>
+        <tr>
+            <td class="tdpadding">@Html.LabelFor(x => x.Passwort)</td>
+            <td class="mytabeltext">@Html.PasswordFor(x => x.Passwort, htmlAttributes: new { @class = "mylabel" })</td>
+           
+        </tr>
+        <tr>
+            <td></td>
+            <td class="mytabeltext">
+                @Html.ValidationMessageFor(model => model.Passwort, String.Empty, new { @class = "text-danger" })
+            </td>
+        </tr>
+        <tr>
+            <td class="tdpadding">@Html.LabelFor(x => x.Passwortvergleich)</td>
+            <td class="mytabeltext">@Html.PasswordFor(x => x.Passwortvergleich, htmlAttributes: new { @class = "mylabel" })</td>            
+        </tr>
+        <tr>
+            <td></td>
+            <td class="mytabeltext">@Html.ValidationMessageFor(model => model.Passwortvergleich, String.Empty, new { @class = "text-danger" })</td>
+        </tr>
+        <tr>
+            <td class="tdpadding">@Html.LabelFor(x => x.Geburtsdatum)</td>
+            <td class="mytabeltext">@Html.TextBoxFor(x => x.Geburtsdatum, htmlAttributes: new { @class = "mylabel" })</td> 
+        </tr>
+        <tr>
+            <td></td>
+            <td class="mytabeltext">
+                @Html.ValidationMessageFor(model => model.Geburtsdatum, String.Empty, new { @class = "text-danger" })
+                @if (ViewBag.ErrorMesage != null)
+                {
+                  <label class="text-danger">@ViewBag.ErrorMesage</label>
+                }
+            </td>
+
+        </tr>
+        <tr>
+            <td><input class="btnstyle" type="submit" value="Registrieren" /></td>
+        </tr>
+    </table>
+}
+    <div class="regnow">
+        <img src="~/img/register.png" />
+    </div>
+ 
+    @if (ViewBag.ErrorDatabase != null)
+    {        
+        <script type="text/javascript">
+            alert("@ViewBag.ErrorDatabase");
+        </script>        
+    }
+
+    @if (ViewBag.ConfirmMessage != null)
+    {
+        <script type="text/javascript">
+            alert("@ViewBag.ConfirmMessage");
+        </script>
+    }
+
+    @if (ViewBag.ErrorMessageMail != null)
+    {
+        <script type="text/javascript">
+            alert("@ViewBag.ErrorMessageMail");
+        </script>
+    }
+    @if (ViewBag.Mailversand != null)
+    {
+        <script type="text/javascript">
+            alert("@ViewBag.Mailversand");
+        </script>
+    }
+
+
