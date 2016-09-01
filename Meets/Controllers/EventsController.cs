@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Meets.Models;
+using System.Web.Security;
 
 namespace Meets.Controllers
 {
@@ -15,11 +16,31 @@ namespace Meets.Controllers
         
         private MeetsEntities db = new MeetsEntities();
 
+
+
+
+        [Authorize]
+        [HttpGet]
+        public ActionResult EventDefaultUser()
+        {
+
+            ViewBag.mail = TempData["mail"];  
+            string ma = null;
+            ma = ViewBag.mail;
+            List < fn_Show_Event_Table_Result > fsetr = db.fn_Show_Event_Table(ma).ToList();
+            return View(fsetr);
+        }
+
+
+
         // GET: Events
         [Authorize]
         public ActionResult Index()
         {
             var events = db.Events.Include(x => x.Member);
+            string ma = null;
+            ma = User.Identity.Name;
+            TempData["mail"] = ma;
             return View(events.ToList());
         }
 

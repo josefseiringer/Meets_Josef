@@ -1,0 +1,45 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+    <link href="~/Content/MyStyle.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery-1.12.4.js"></script>
+    <script src="~/Scripts/bootstrap.js"></script>
+    <script src="~/Scripts/jquery.validate.js"></script>
+
+</head>
+<body>
+    <div id="container">
+        <div id="header">
+            <img src="~/img/HeaderNewMeetsSchmal.jpg" />
+            <div class="oben1">
+                <a href="~/Abmelden/Logout"><input class="btnstyleHeader" type="button" value="Abmelden" /></a>
+                <a href="~/Home/Index"><input class="btnstyleHeader" type="button" value="Home" /></a>
+            </div>
+        </div>
+        <div id="content">
+            <br />
+            <div class="backwithe">
+                <h2 class="center">Hallo du kannst deine Veranstaltungen einsehen.</h2>
+                <p align="center">Jetzt kannst du Einladung per E-Mail versenden<br />Falls du dich Abmelden möchtest klicke auf Abmelden.</p>
+
+            </div>
+            <br />
+            <div class="contentEvent">
+                @RenderBody()
+            </div>
+        </div>
+    </div>
+    @Scripts.Render("~/bundles/jquery")
+    @*Einbinden der Validierung*@
+    @Scripts.Render("~/bundles/jqueryval")
+    @*Einbinden für Datepicker*@
+    @Scripts.Render("~/bundles/jqueryui")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>
+

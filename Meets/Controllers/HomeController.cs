@@ -26,7 +26,8 @@ namespace Meets.Controllers
                     ViewBag.keinePrivatenBeiträge = "Es sind keine privaten Veranstaltungen vorhanden";
                     return View();
                 }
-                return View(con.View_Event_open.ToList());               
+                List<View_Event_open> ev = con.View_Event_open.ToList();
+                return View(ev);               
             }
             
         }

@@ -329,6 +329,8 @@
     <Content Include="Views\MemberVal\Validate.cshtml" />
     <Content Include="Views\User\Edit.cshtml" />
     <Content Include="Views\Shared\_LayoutMeetsEdit.cshtml" />
+    <Content Include="Views\Events\EventDefaultUser.cshtml" />
+    <Content Include="Views\Shared\_LayoutMeetsEventsSingle.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
