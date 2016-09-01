@@ -63,5 +63,15 @@ namespace Meets.Models
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_RegisterUser", emailParameter, passwordParameter, dateOfBirthParameter);
         }
+    
+        [DbFunction("MeetsEntities", "fn_Show_Event_Table")]
+        public virtual IQueryable<fn_Show_Event_Table_Result> fn_Show_Event_Table(string email)
+        {
+            var emailParameter = email != null ?
+                new ObjectParameter("email", email) :
+                new ObjectParameter("email", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<fn_Show_Event_Table_Result>("[MeetsEntities].[fn_Show_Event_Table](@email)", emailParameter);
+        }
     }
 }

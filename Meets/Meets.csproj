@@ -175,6 +175,9 @@
     <Compile Include="Models\fn_check_user_Table_Result.cs">
       <DependentUpon>MeetsModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\fn_Show_Event_Table_Result.cs">
+      <DependentUpon>MeetsModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Helper.cs" />
     <Compile Include="Models\LoginFormModel.cs" />
     <Compile Include="Models\MeetsModel.Context.cs">

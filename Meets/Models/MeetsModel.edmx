@@ -111,6 +111,21 @@ Warnung 6002: Für Tabelle/Sicht 'Meets.dbo.View_Event_open' ist kein Primärsch
             </CollectionType>
           </ReturnType>
         </Function>
+        <Function Name="fn_Show_Event_Table" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="email" Type="varchar" Mode="In" />
+          <ReturnType>
+            <CollectionType>
+              <RowType>
+                <Property Name="id" Type="int" />
+                <Property Name="evdate" Type="datetime" />
+                <Property Name="title" Type="varchar" MaxLength="50" />
+                <Property Name="evdesc" Type="varchar" MaxLength="255" />
+                <Property Name="loc" Type="varchar" MaxLength="255" />
+                <Property Name="pub" Type="bit" />
+              </RowType>
+            </CollectionType>
+          </ReturnType>
+        </Function>
         <Function Name="sp_RegisterUser" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="email" Type="varchar" Mode="In" />
           <Parameter Name="password" Type="varbinary(max)" Mode="In" />
@@ -255,6 +270,9 @@ Warnung 6002: Für Tabelle/Sicht 'Meets.dbo.View_Event_open' ist kein Primärsch
             <End Role="Member" EntitySet="Members" />
             <End Role="Membervalidation" EntitySet="Membervalidations" />
           </AssociationSet>
+          <FunctionImport Name="fn_Show_Event_Table" IsComposable="true" ReturnType="Collection(MeetsModel.fn_Show_Event_Table_Result)">
+            <Parameter Name="email" Mode="In" Type="String" />
+          </FunctionImport>
         </EntityContainer>
         <EntityType Name="Membervalidation">
           <Key>
@@ -277,6 +295,14 @@ Warnung 6002: Für Tabelle/Sicht 'Meets.dbo.View_Event_open' ist kein Primärsch
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <ComplexType Name="fn_Show_Event_Table_Result">
+          <Property Type="Int32" Name="id" Nullable="true" />
+          <Property Type="DateTime" Name="evdate" Nullable="true" Precision="23" />
+          <Property Type="String" Name="title" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="evdesc" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="loc" Nullable="true" MaxLength="255" />
+          <Property Type="Boolean" Name="pub" Nullable="true" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -351,6 +377,18 @@ Warnung 6002: Für Tabelle/Sicht 'Meets.dbo.View_Event_open' ist kein Primärsch
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="fn_Show_Event_Table" FunctionName="MeetsModel.Store.fn_Show_Event_Table">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="MeetsModel.fn_Show_Event_Table_Result">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="evdate" ColumnName="evdate" />
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="evdesc" ColumnName="evdesc" />
+                <ScalarProperty Name="loc" ColumnName="loc" />
+                <ScalarProperty Name="pub" ColumnName="pub" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
