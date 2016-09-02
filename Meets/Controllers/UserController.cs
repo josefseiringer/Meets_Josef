@@ -31,7 +31,8 @@ namespace Meets.Controllers
                     return View(memVal);
                 }
             }
-            return View(ViewBag.errorMsg = "User nicht vorhanden");
+            ViewBag.errorMsg = "User nicht vorhanden";
+            return View();
         }
 
         [HttpPost]

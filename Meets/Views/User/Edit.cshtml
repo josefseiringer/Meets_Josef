@@ -14,32 +14,35 @@
             <tr>
                 @*Verstektes Id Feld im View*@
                 <td>@Html.HiddenFor(modelItem => modelItem.id )</td>
-                <td>@Html.HiddenFor(modelItem => modelItem.password)</td>
+                
             </tr>
             <tr>
                 <th><h4>E-Mail:</h4></th>
+                <th><h4>Passwort:</h4></th>
             </tr>
             <tr>
-                <td class="mytabeltext">
-                    @Html.TextBoxFor(modelItem => modelItem.email, htmlAttributes: new { @class = "mylabel" })
-                </td>               
+                <td class="mytabeltext">@Html.TextBoxFor(modelItem => modelItem.email, htmlAttributes: new { @class = "mylabel" })</td>
+                <td>@Html.PasswordFor(modelItem => modelItem.password, htmlAttributes: new { @class = "mylabel" })</td>                   
+            </tr>
+            <tr>
+                <td>@Html.ValidationMessageFor(modelItem => modelItem.password)</td>          
                 @if (ViewBag.errorEmail != null)
                 {
                     <td class="text-danger">@ViewBag.errorEmail</td>
-                }                
+                }
             </tr>
             <tr>
                 <th><h4>Geburtsdatum:</h4></th>
             </tr>
             <tr>
-                <td class="mytabeltext">
-                    @Html.TextBoxFor(modelItem => modelItem.dateofbirth, htmlAttributes: new { @class = "mylabel" })
-                </td>
+                <td class="mytabeltext">@Html.TextBoxFor(modelItem => modelItem.dateofbirth, htmlAttributes: new { @class = "mylabel" })</td>
+            </tr>
+            <tr>
+                <td>@Html.ValidationMessageFor(modelItem => modelItem.dateofbirth)</td>
                 @if (ViewBag.errdaten != null)
                 {
                     <td class="text-danger">@ViewBag.errdaten</td>
                 }
-
             </tr>                     
         </table>        
         <div style="padding-top:20px;padding-left:10px;"><input style="float:left;" class="btnstyle" type="submit" value="Speichern" /></div>
