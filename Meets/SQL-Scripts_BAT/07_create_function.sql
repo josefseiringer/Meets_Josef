@@ -40,6 +40,40 @@ BEGIN
 END
 GO
 
+CREATE FUNCTION [dbo].[fn_Check_User_FromEmail]( @email VARCHAR(255))
+	RETURNS INT
+AS
+BEGIN
+	DECLARE @result INT = 0;
+	SELECT TOP 1 @result = m.id
+	FROM [Members] AS m
+	WHERE m.email = @email;
+	
+	RETURN @result;
+END;
+GO
+
+CREATE FUNCTION fn_Show_Event_Table(@email varchar(255))
+	RETURNS @retTable TABLE(id int,evdate DATETIME,title varchar(50),evdesc varchar(255),loc varchar(255),pub BIT)
+AS
+BEGIN
+	DECLARE @user_id INT = NULL;
+	SET @user_id = dbo.fn_Check_User_FromEmail(@email)
+	IF (NOT @user_id IS NULL) AND (@user_id > 0)
+		BEGIN
+		INSERT INTO @retTable(id,evdate,title,evdesc,loc,pub)
+			select ev.id,ev.eventdate,ev.title,ev.[description],ev.location,ev.viewpublic
+			from Meets.dbo.Members as me 
+			JOIN Meets.dbo.[Events] as ev ON ev.member_id = me.id
+			JOIN Meets.dbo.Membervalidation as mv ON me.id = mv.member_id
+			where me.id = 1;
+	END
+RETURN;
+END
+GO
+
+
+
 CREATE FUNCTION fn_hash_password(@text_to_hash VARBINARY(MAX) )
 	RETURNS VARBINARY(MAX)
 AS

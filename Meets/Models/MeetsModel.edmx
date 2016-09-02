@@ -271,7 +271,7 @@ Warnung 6002: Für Tabelle/Sicht 'Meets.dbo.View_Event_open' ist kein Primärsch
             <End Role="Membervalidation" EntitySet="Membervalidations" />
           </AssociationSet>
           <FunctionImport Name="fn_Show_Event_Table" IsComposable="true" ReturnType="Collection(MeetsModel.fn_Show_Event_Table_Result)">
-            <Parameter Name="email" Mode="In" Type="String" />
+          <Parameter Name="email" Mode="In" Type="String" />
           </FunctionImport>
         </EntityContainer>
         <EntityType Name="Membervalidation">
