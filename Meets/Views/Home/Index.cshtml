@@ -13,23 +13,16 @@
 
 </head>
 <body style="font-family:Corbel;color:#000000;font-weight:500;">
-    <div id="container">        
-        <div id="header">
-            <img src="~/img/HeaderNewMeetsSchmal.jpg" />
-            <div class="oben1">
-                <a href="~/Login/Login"><input class="btnstyleHeader" type="button" value="Anmeldung" /></a>
-                <a href="~/User/Registrieren"><input class="btnstyleHeader" type="button" value="Registrierung" /></a>
+    <div id="container">
+        <nav class="navigation">
+            <a href="~/Login/Login"><input class="btnstyleHeader" type="button" value="Anmeldung" /></a>
+            <a href="~/User/Registrieren"><input class="btnstyleHeader" type="button" value="Registrierung" /></a>
+        </nav>
+        <div id="content">           
+            <div class="backcolor">
+                <h2 class="center" style="font-family:Corbel;">Hallo du bist zur Zeit als Gast bei Meets</h2>               
+                <h2 class="center" style="font-family:Corbel;">Offene Veranstaltungen</h2>
             </div>
-        </div>
-        <div id="content">
-            <br />
-            <div class="backwithe">
-                <h2 class="center">Hallo du bist zur Zeit als Gast bei Meets</h2>
-                <p align="center">Daher kannst du nur öffentliche Termine einsehen.<br />Falls du dich anmelden möchtest klicke auf Anmelden<br />wenn du unserer Plattform beitreten willst Registrieren, und genieße alle Vorteile von Meets.</p>
-                <br />                
-            </div>
-            <div><h2 class="center">Offene Veranstaltungen</h2></div>
-
             <div class="contentScroll">
             @foreach (var item in Model)
             {

@@ -1,19 +1,46 @@
 ﻿body{font-family:"Helvetica Neue", Helvetica, Arial, sans-serif;color:#000000;font-weight:500;}
 #container {
-    width: 1054px;
-    height: 768px;
+    width: 1240px;
+    height: 810px;
     margin: 20px auto;
     border: solid 1px #000000;
     border-radius: 20px;
     padding: 20px;
     -webkit-box-shadow: 0px 2px 2px 2px #000000;
     box-shadow: 0px 2px 2px 2px #000000;
-    background-image: url('../img/container1024x768.jpg');
+    background: url('../img/containerWithLogo1280x850.jpg') no-repeat;
+}
+
+nav{
+    background-color: rgba(255, 255, 255, 0.3);
+    border-radius:5px;
+    -webkit-box-shadow: 0px 2px 2px 2px #808080;box-shadow: 0px 2px 2px 2px #808080;
+    margin:0 100px 0 0;
+    padding:10px;
+}
+.navigation{
+    position:relative;
+    top:107px;
+    left:50px;
 }
 .oben1 {
-    margin-left: 800px;
-    margin-top: -60px;
+    /*margin-left: 800px;*/
+    /*margin-top: -60px;*/
 }
+
+#content{
+    position:relative;
+    top:90px;
+}
+
+.backcolor{
+    background-color: rgba(255, 255, 255, 0.3);
+    border-radius:5px;
+    -webkit-box-shadow: 0px 2px 2px 2px #808080;box-shadow: 0px 2px 2px 2px #808080;
+    margin:0 50px 3px 50px;
+    padding-bottom:2px;
+}
+
 .center{text-align:center;}
 .backwithe{margin:20px auto; width:682px; height:150px;border:solid 1px #808080;border-radius:10px;-webkit-box-shadow: 0px 2px 2px 2px #808080;box-shadow: 0px 2px 2px 2px #808080;background-color:#A5D3F3;}
 .backwitheEvent {padding-top:10px; margin:20px auto; width:682px; height:200px;border:solid 1px #808080;border-radius:10px;-webkit-box-shadow: 0px 2px 2px 2px #808080;box-shadow: 0px 2px 2px 2px #808080;padding-left:10px;padding-right:10px;background-color:aliceblue;}
@@ -25,15 +52,17 @@
 .contentScroll {
     padding: 20px;
     width: 800px;
-    height: 400px;
+    height: 490px;
     border: solid 1px #808080;
     overflow-y: scroll;
     overflow-x:hidden;
     border-radius: 10px;
-    -webkit-box-shadow: 0px 2px 0px 2px #808080;
-    box-shadow: 0px 2px 0px 2px #808080;
+    -webkit-box-shadow: 0px 2px 2px 2px #808080;
+    box-shadow: 0px 2px 2px 2px #808080;
     margin: 0 auto;
-    background-color: #A5D3F3;
+    /*background-color: #A5D3F3;*/
+    /*background-color: rgba(255, 255, 255, 0.4);*/
+    background-color: rgba(58, 123, 165, 0.7);
     
 }
 .centerInput{height:100%;margin: 0 auto;}
@@ -48,7 +77,8 @@
     -webkit-box-shadow: 0px 2px 0px 2px #808080;
     box-shadow: 0px 2px 0px 2px #808080;
     margin: 0 auto;
-    background-color: #A5D3F3;
+    background-color: rgba(255, 255, 255, 0.5);
+    /*background-color: #A5D3F3;*/
 }
 .regnow{width:235px;height:233px;position:relative;left:510px; bottom:300px;}
 .tdpadding{padding-right:20px;padding-left:20px;}
@@ -57,7 +87,10 @@
 .spaltenabstand{margin-bottom:10px;}
 
 /*LoginStyles*/
-.loginFigur{width:236px;height:194px; position:relative;left:530px; bottom:200px;}
+.loginFigur{width:240px;height:198px; position:relative;left:530px; bottom:200px; border:solid 2px #000000;border-radius:10px;}
+.rounded{
+    border-radius:10px;
+}
 .contentLogin{
     padding: 20px;
     width: 800px;
@@ -67,7 +100,9 @@
     -webkit-box-shadow: 0px 2px 0px 2px #808080;
     box-shadow: 0px 2px 0px 2px #808080;
     margin: 0 auto;
-    background-color: #A5D3F3;
+    background-color: rgba(255, 255, 255, 0.5);
+    /*background-color: rgba(58, 123, 165, 0.5);*/
+    /*background-color: #A5D3F3;*/
 }
 /*Regiesrierung Fertig styles*/
 /*.controlMeldung{

@@ -12,24 +12,18 @@
     <script src="~/Scripts/jquery.validate.js"></script>
     <script src="~/Scripts/toastr.js"></script>
 </head>
-<body>
+<body style="font-family:Corbel;color:#000000;font-weight:500;">
     <div id="container">
-        <div id="header">
-            <img src="~/img/HeaderNewMeetsSchmal.jpg" />
-            <div class="oben1">
-                @*<input class="btnstyleHeader" type="button" name="anmelden" value="Anmeldung" />*@
-                <a href="~/Home/Index"><input class="btnstyleHeader" type="button" value="Home" /></a>
-            </div>
-        </div>
+        <nav class="navigation">
+            @*<a href="~/Login/Login"><input class="btnstyleHeader" type="button" value="Anmeldung" /></a>*@
+            <a href="~/Home/Index"><input class="btnstyleHeader" type="button" value="Home" /></a>
+            <a href="~/User/Registrieren"><input class="btnstyleHeader" type="button" value="Registrierung" /></a>
+        </nav>
         <div id="content">
-            <br />
-            <div class="backwithe">
-                <h2 class="center">Hallo du bist zur Zeit Gast bei Meets</h2>
-                <p align="center">Hier auf dieser Seite kannst du dich anmelden.</p>
-                <br />
+            <div class="backcolor">
+                <h2 class="center" style="font-family:Corbel;">Hallo du bist zur Zeit als Gast bei Meets</h2>
+                <h2 class="center" style="font-family:Corbel;">Login</h2>
             </div>
-            <div><h2 class="center">Anmeldung</h2></div>
-
             <div class="contentLogin">
                 @RenderBody()
             </div>
@@ -42,7 +36,6 @@
     @Scripts.Render("~/bundles/jqueryui")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
-
     <script type="text/javascript">
         toastr.options = {
             "closeButton": true,
