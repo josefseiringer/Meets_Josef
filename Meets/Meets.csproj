@@ -345,7 +345,6 @@
     <Content Include="Views\Events\EventDefaultUser.cshtml" />
     <Content Include="Views\Shared\_LayoutMeetsEventsSingle.cshtml" />
     <Content Include="SQL-Scripts_BAT\00_create_db.bat" />
-    <Content Include="SQL-Scripts_BAT\create_db.log" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
