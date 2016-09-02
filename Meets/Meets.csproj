@@ -301,6 +301,19 @@
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\_references.js" />
+    <Content Include="SQL-Scripts_BAT\01_drop_db.sql" />
+    <Content Include="SQL-Scripts_BAT\02_create_db.sql" />
+    <Content Include="SQL-Scripts_BAT\03_create_table.sql" />
+    <Content Include="SQL-Scripts_BAT\04_create_pk.sql" />
+    <Content Include="SQL-Scripts_BAT\05_create_fk.sql" />
+    <Content Include="SQL-Scripts_BAT\06_create_index.sql" />
+    <Content Include="SQL-Scripts_BAT\07_create_function.sql" />
+    <Content Include="SQL-Scripts_BAT\08_create_procedure.sql" />
+    <Content Include="SQL-Scripts_BAT\09_create_check.sql" />
+    <Content Include="SQL-Scripts_BAT\10_insert_dummy.sql" />
+    <Content Include="SQL-Scripts_BAT\funktion\sammlung.sql" />
+    <Content Include="SQL-Scripts_BAT\funktion\selectMembers_Events.sql" />
+    <Content Include="SQL-Scripts_BAT\funktion\sp_add_user.sql" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -331,10 +344,11 @@
     <Content Include="Views\Shared\_LayoutMeetsEdit.cshtml" />
     <Content Include="Views\Events\EventDefaultUser.cshtml" />
     <Content Include="Views\Shared\_LayoutMeetsEventsSingle.cshtml" />
+    <Content Include="SQL-Scripts_BAT\00_create_db.bat" />
+    <Content Include="SQL-Scripts_BAT\create_db.log" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="SQL-Scripts_BAT\" />
     <Folder Include="Views\Abmelden\" />
   </ItemGroup>
   <ItemGroup>
