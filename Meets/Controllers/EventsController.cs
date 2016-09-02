@@ -43,7 +43,7 @@ namespace Meets.Controllers
             TempData["mail"] = ma;
             return View(events.ToList());
         }
-
+        [Authorize]
         // GET: Events/Details/5
         public ActionResult Details(int? id)
         {
@@ -58,7 +58,7 @@ namespace Meets.Controllers
             }
             return View(@event);
         }
-
+        [Authorize]
         // GET: Events/Create
         public ActionResult Create()
         {
@@ -83,7 +83,7 @@ namespace Meets.Controllers
             ViewBag.member_id = new SelectList(db.Members, "id", "email", @event.member_id);
             return View(@event);
         }
-
+        [Authorize]
         // GET: Events/Edit/5
         public ActionResult Edit(int? id)
         {
@@ -116,7 +116,7 @@ namespace Meets.Controllers
             ViewBag.member_id = new SelectList(db.Members, "id", "email", @event.member_id);
             return View(@event);
         }
-
+        [Authorize]
         // GET: Events/Delete/5
         public ActionResult Delete(int? id)
         {

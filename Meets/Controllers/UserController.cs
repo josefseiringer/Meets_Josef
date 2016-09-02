@@ -13,6 +13,7 @@ namespace Meets.Controllers
 {
     public class UserController : Controller
     {
+        [Authorize]
         [HttpGet]
         public ActionResult Edit()
         {
