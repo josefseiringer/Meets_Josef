@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using Meets.Models;
 using System.Web.Security;
+using System.Diagnostics;
 
 namespace Meets.Controllers
 {
@@ -15,9 +16,6 @@ namespace Meets.Controllers
     {
         
         private MeetsEntities db = new MeetsEntities();
-
-
-
 
         [Authorize]
         [HttpGet]
@@ -31,17 +29,25 @@ namespace Meets.Controllers
             return View(fsetr);
         }
 
-
-
         // GET: Events
         [Authorize]
         public ActionResult Index()
         {
-            var events = db.Events.Include(x => x.Member);
-            string ma = null;
-            ma = User.Identity.Name;
-            TempData["mail"] = ma;
-            return View(events.ToList());
+            try
+            {
+                TempData["ConfirmMessage"] = "Login erfolgreich";
+                var events = db.Events.Include(x => x.Member);
+                string ma = null;
+                ma = User.Identity.Name;
+                TempData["mail"] = ma;
+                return View(events.ToList());
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Fehler {ex.Message}");
+                TempData["ErrorMessage"] = "Fehler mit der Datenbankverbindung";
+                return View();
+            }
         }
         [Authorize]
         // GET: Events/Details/5
@@ -62,13 +68,13 @@ namespace Meets.Controllers
         // GET: Events/Create
         public ActionResult Create()
         {
+            //Dropedown Liste übergeben mit ViewBag an den Create View aus Datenbank Tabelle Members mit id und email
             ViewBag.member_id = new SelectList(db.Members, "id", "email");
+            //ViewBag.UserSingle = User.Identity.Name;
             return View();
         }
 
         // POST: Events/Create
-        // Aktivieren Sie zum Schutz vor übermäßigem Senden von Angriffen die spezifischen Eigenschaften, mit denen eine Bindung erfolgen soll. Weitere Informationen 
-        // finden Sie unter http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "id,created,member_id,eventdate,title,description,viewpublic,location")] Event @event)
@@ -81,6 +87,8 @@ namespace Meets.Controllers
             }
 
             ViewBag.member_id = new SelectList(db.Members, "id", "email", @event.member_id);
+            //ViewBag.UserSingle = User.Identity.Name;
+            //@event.member_id = ViewBag.UserSingle;
             return View(@event);
         }
         [Authorize]
@@ -101,8 +109,6 @@ namespace Meets.Controllers
         }
 
         // POST: Events/Edit/5
-        // Aktivieren Sie zum Schutz vor übermäßigem Senden von Angriffen die spezifischen Eigenschaften, mit denen eine Bindung erfolgen soll. Weitere Informationen 
-        // finden Sie unter http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "id,created,member_id,eventdate,title,description,viewpublic,location")] Event @event)
