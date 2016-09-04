@@ -6,26 +6,23 @@
     <title>Index</title>
     <link href="~/Content/MyStyle.css" rel="stylesheet" />
     <link href="~/Content/bootstrap.css" rel="stylesheet" />
+    <link href="~/Content/toastr.css" rel="stylesheet" />
     <script src="~/Scripts/jquery-1.12.4.js"></script>
     <script src="~/Scripts/bootstrap.js"></script>
     <script src="~/Scripts/jquery.validate.js"></script>
-
+    <script src="~/Scripts/toastr.js"></script>
 </head>
-<body>
+<body style="font-family:Corbel;color:#000000;font-weight:500;">
     <div id="container">
-        <div id="header">
-            <img src="~/img/HeaderNewMeetsSchmal.jpg" />
-            <div class="oben1">
-                <a href="~/Abmelden/Logout"><input class="btnstyleHeader" type="button" value="Abmelden" /></a>
-                <a href="~/Home/Index"><input class="btnstyleHeader" type="button" value="Home" /></a>
-            </div>
-        </div>
+        <nav class="navigation">
+            @*<a href="~/Login/Login"><input class="btnstyleHeader" type="button" value="Anmeldung" /></a>*@
+            <a href="~/Home/Index"><input class="btnstyleHeader" type="button" value="Home" /></a>
+            <a href="~/Abmelden/Logout"><input class="btnstyleHeader" type="button" value="Abmelden" /></a>
+        </nav>
         <div id="content">
-            <br />
-            <div class="backwithe">
-                <h2 class="center">Hallo du kannst deine Veranstaltungen einsehen.</h2>
-                <p align="center">Jetzt kannst du Einladung per E-Mail versenden<br />Falls du dich Abmelden möchtest klicke auf Abmelden.</p>
-
+            <div class="backcolor">
+                <h2 class="center" style="font-family:Corbel;">Du bist jetzt als @User.Identity.Name angemeldet.</h2>
+                <h2 class="center" style="font-family:Corbel;">Übersicht deine Veranstalltungen</h2>
             </div>
             <br />
             <div class="contentEvent">
