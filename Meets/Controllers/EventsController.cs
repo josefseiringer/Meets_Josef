@@ -21,12 +21,21 @@ namespace Meets.Controllers
         [HttpGet]
         public ActionResult EventDefaultUser()
         {
-
-            ViewBag.mail = TempData["mail"];  
             string ma = null;
-            ma = ViewBag.mail;
-            List < fn_Show_Event_Table_Result > fsetr = db.fn_Show_Event_Table(ma).ToList();
-            return View(fsetr);
+            if (User.Identity.Name != null)
+            {                
+                if (TempData["mail"] != null)
+                {
+                    ViewBag.mail = TempData["mail"];                     
+                    ma = ViewBag.mail;
+                    List < fn_Show_Event_Table_Result > fsetr01 = db.fn_Show_Event_Table(ma).ToList();
+                    return View(fsetr01);
+                }
+                ma = User.Identity.Name;
+                List<fn_Show_Event_Table_Result> fsetr02 = db.fn_Show_Event_Table(ma).ToList();
+                return View(fsetr02); 
+            }
+            return RedirectToAction("Login", "Login");
         }
 
         // GET: Events

@@ -10,9 +10,14 @@ namespace Meets.Controllers
 {
     public class LoginController : Controller
     {
+       
         // GET: Login
         public ActionResult Login()
         {
+            if (TempData["ConfirmMessage"] != null)
+            {
+                TempData["ConfirmMessage"] = "Änderung des Benutzernamens erfolgreich";
+            }
             return View();
         }
 

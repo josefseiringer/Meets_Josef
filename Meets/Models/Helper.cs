@@ -76,8 +76,8 @@ namespace Meets.Models
                 mail.From = new MailAddress("noreplay@Meets.at"); //Absender
                 mail.To.Add(mailFromUser); //Empfänger 
 
-                mail.Subject = "Regiestrierbestätigung von Meets";
-                mail.Body = "Bitte auf den Registrierungslink klicken um dich bei Meets zu registrieren.</br></br><a href='http://localhost:52111/RegFertig/Index' >Bestätigen</a>";
+                mail.Subject = "Betätigung der Änderung deiner Anmeldedaten bei Meets";
+                mail.Body = "Deine Registrierdaten wurden geändert.</br></br><a href='http://localhost:52111/Login/Login' >Bestätigen</a>";
                 mail.IsBodyHtml = true;
 
                 //mail.AlternateViews htmlView = AlternateView.CreateAlternateViewFromString()

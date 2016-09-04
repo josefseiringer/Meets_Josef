@@ -12,8 +12,7 @@ namespace Meets.Controllers
         
         [HttpGet]
         public ActionResult Index()
-        {
-            
+        {            
             using (MeetsEntities con = new MeetsEntities())
             {
                 if (con.View_Event_open.ToList() == null)
@@ -26,8 +25,8 @@ namespace Meets.Controllers
                     ViewBag.keinePrivatenBeiträge = "Es sind keine privaten Veranstaltungen vorhanden";
                     return View();
                 }
-                List<View_Event_open> ev = con.View_Event_open.ToList();
-                return View(ev);               
+                 List<View_Event_open> ev = con.View_Event_open.ToList();
+                 return View(ev);             
             }
             
         }

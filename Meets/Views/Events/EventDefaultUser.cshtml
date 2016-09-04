@@ -6,7 +6,9 @@
 }
 
 <div style="margin-bottom:10px;"><h3 style="float:right">@User.Identity.Name</h3></div>
-<label class="linkAsBtn">@Html.ActionLink("Hinzufügen", "Create", "Events")</label> 
+<label class="linkAsBtn">@Html.ActionLink("Hinzufügen", "Create", "Events")</label>
+
+ 
 @foreach (var item in Model)
 {
     <div class="backwitheEvent">

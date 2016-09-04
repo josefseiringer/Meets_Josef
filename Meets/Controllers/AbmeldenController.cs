@@ -16,6 +16,7 @@ namespace Meets.Controllers
         /// <returns>Zum Login View</returns>
         public ActionResult Logout()
         {
+
             //Auth-Cookie entfernen, bzw. ausloggen
             FormsAuthentication.SignOut();
 

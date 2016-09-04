@@ -41,19 +41,52 @@ namespace Meets.Controllers
             if (me != null)
             {
                 using (MeetsEntities cont = new MeetsEntities())
-                {
-                    DateTime cr = DateTime.Now;
-                    me.created = cr;
+                {           
+                    me.created = DateTime.Now;
+                    if (me.klartextpasswort != null)
+                    {
+                        me.password = Helper.GetHash(me.klartextpasswort);
+                    }
+                    else
+                    {
+                        ViewBag.notPasswd = "Bitte Passwort eingeben!";
+                        return View();
+                    }
+                    //Abfrage ob User vorhanden
                     var vorhanden = (from m in cont.Members
-                                     where m.email == me.email &&
-                                     m.password == me.password
+                                     where m.email == me.email
                                      select m.email).FirstOrDefault();
                     if (vorhanden == null)
                     {
-                        
+                        //Speichern der aktuellen Userdaten 
                         cont.Members.Add(me);
                         cont.SaveChanges();
-                        return RedirectToAction("Index", "Events");
+                        using (MeetsEntities con2 = new MeetsEntities())
+                        {
+                            //id der geänderten E-mail ermitteln
+                            int id = (from m in con2.Members
+                                      where me.email == m.email
+                                      select m.id).FirstOrDefault();
+                            // instanzen erzeugen
+                            MembervalidationFormModel mvm = new MembervalidationFormModel();
+                            Membervalidation mv = new Membervalidation();
+                            //speichern ins Objekt MembervalidationFormModel
+                            mvm.created = DateTime.Now;
+                            mvm.member_id = id;
+                            //umspeichern ins Datenbank Objekt
+                            mv.created = mvm.created;
+                            mv.member_id = mvm.member_id;
+                            //entitätsmenge sammeln und dann auf Datenbank speichern
+                            con2.Membervalidations.Add(mv);
+                            con2.SaveChanges();
+                            //sendet eine Bestätigungsmail an den User und hat einen Rückgabe string zur weiteren Verwndung wenn der User bestätigt kommt er auf die Login seite zur Anmeldung
+                            string zugangsaenderung = Helper.SendMailRegTo(me.email);
+                            if (zugangsaenderung != null)
+                            {
+                                TempData["ConfirmMessage"] = zugangsaenderung;
+                            }                        
+                            return RedirectToAction("Logout", "Abmelden");
+                        }                        
                     }
                     else
                     {

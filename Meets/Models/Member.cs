@@ -37,6 +37,8 @@ public partial class Member
 
     public byte[] password { get; set; }
 
+    public string klartextpasswort { get; set; }
+
     public System.DateTime dateofbirth { get; set; }
 
 

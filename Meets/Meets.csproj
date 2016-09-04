@@ -262,8 +262,12 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="img\containerWithLogo1280x850.jpg" />
+    <Content Include="img\email.gif" />
     <Content Include="img\headerMeets.jpg" />
     <Content Include="img\HeaderNewMeetsSchmal.jpg" />
+    <Content Include="img\loginFigur236x194.jpg" />
+    <Content Include="img\register.png" />
     <Content Include="Models\MeetsModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>MeetsModel.edmx</DependentUpon>

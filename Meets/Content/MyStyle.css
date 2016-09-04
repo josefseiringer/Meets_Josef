@@ -51,7 +51,7 @@ nav{
 #header{height:71px;}
 .contentScroll {
     padding: 20px;
-    width: 800px;
+    width: 1100px;
     height: 490px;
     border: solid 1px #808080;
     overflow-y: scroll;
@@ -61,8 +61,8 @@ nav{
     box-shadow: 0px 2px 2px 2px #808080;
     margin: 0 auto;
     /*background-color: #A5D3F3;*/
-    /*background-color: rgba(255, 255, 255, 0.4);*/
-    background-color: rgba(58, 123, 165, 0.7);
+    background-color: rgba(255, 255, 255, 0.4);
+    /*background-color: rgba(58, 123, 165, 0.7);*/
     
 }
 .centerInput{height:100%;margin: 0 auto;}
@@ -70,14 +70,14 @@ nav{
 /*TABELLEN GESTALTEN IN REGISTRIERUNG*/
 .contentReg{
     padding: 20px;
-    width: 800px;
-    height: 500px;
+    width: 1100px;
+    height: 490px;
     border: solid 1px #808080;
     border-radius: 10px;
     -webkit-box-shadow: 0px 2px 0px 2px #808080;
     box-shadow: 0px 2px 0px 2px #808080;
     margin: 0 auto;
-    background-color: rgba(255, 255, 255, 0.5);
+    background-color: rgba(255, 255, 255, 0.3);
     /*background-color: #A5D3F3;*/
 }
 .regnow{width:235px;height:233px;position:relative;left:510px; bottom:300px;}
@@ -147,16 +147,16 @@ nav{
     overflow-x:hidden;*/
 }
 .contentEvent{
-
+    
     padding: 20px;
-    width: 950px;
-    height: 400px;
+    width: 1100px;
+    height: 470px;
     border: solid 1px #808080;
     border-radius: 10px;
     -webkit-box-shadow: 0px 2px 0px 2px #808080;
     box-shadow: 0px 2px 0px 2px #808080;
     margin: 0 auto;
-    background-color: #A5D3F3;
+    background-color: rgba(255, 255, 255, 0.3);
     overflow-y: auto;
     overflow-x:hidden;
 }

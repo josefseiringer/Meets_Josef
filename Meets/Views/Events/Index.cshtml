@@ -4,15 +4,12 @@
     Layout = "~/Views/Shared/_LayoutMeetsEvents.cshtml";
 }
 <div style="margin-bottom:10px;"><h3 style="float:right">@User.Identity.Name</h3></div>
-<label class="linkAsBtn">
-    @Html.ActionLink("Neues Event anlegen", "Create", new { @class = "linkText" })    
-</label>
 @{ string name = User.Identity.Name;}
 <label class="linkAsBtn">
     @Html.ActionLink("Benutzerverwaltung", "Edit", "User")
 </label>
 <label class="linkAsBtn">
-    @Html.ActionLink("Meine Events", "EventDefaultUser", "Events")
+    @Html.ActionLink("Deine Events", "EventDefaultUser", "Events")
 </label>
     @foreach (var item in Model)
     {
@@ -45,15 +42,6 @@
                 <tr>
                     <th>E-Mail des Erstellers:</th>
                     <td style="padding-left:10px;">@Html.DisplayFor(modelItem => item.Member.email)</td>
-                </tr>
-                <tr>
-                    <th>Links:</th>
-                    <td style="padding-left:10px;">
-                        @Html.ActionLink("Edit", "Edit", new { id = item.id }) |
-                        @Html.ActionLink("Details", "Details", new { id = item.id }) |
-                        @Html.ActionLink("Delete", "Delete", new { id = item.id }) |
-                        @Html.ActionLink("Verteilen", "Index", "Verteiler", new { id = item.id })
-                    </td>
                 </tr>
             </table>
         </div>
