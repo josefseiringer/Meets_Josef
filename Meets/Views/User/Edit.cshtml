@@ -18,22 +18,23 @@
                 @*Verstektes Id Feld im View*@
                 <td>@Html.HiddenFor(modelItem => modelItem.id)</td>
 
+
             </tr>
             <tr>
                 <th><h4>E-Mail:</h4></th>
                 <th><h4>Passwort:</h4></th>
-                <th><h4>Geburtsdatum:</h4></th>
+                @*<th><h4>Geburtsdatum:</h4></th>*@
             </tr>
             <tr>
                 <td class="mytabeltext">
                     @Html.TextBoxFor(modelItem => modelItem.email, htmlAttributes: new { @class = "mylabel" })
                 </td>
                 <td>
-                    @Html.PasswordFor(modelItem => modelItem.klartextpasswort, htmlAttributes: new { @class = "mylabel" })
+                    @Html.PasswordFor(modelItem => modelItem.Klartextpasswort, htmlAttributes: new { @class = "mylabel" })
                 </td>
-                <td class="mytabeltext">
+                @*<td class="mytabeltext">
                     @Html.TextBoxFor(modelItem => modelItem.dateofbirth, htmlAttributes: new { @class = "mylabel" })
-                </td>
+                </td>*@
             </tr>
             <tr>
                 <td class="text-danger">
@@ -51,7 +52,7 @@
                     }
                 </td>             
                 
-                <td>@Html.ValidationMessageFor(modelItem => modelItem.dateofbirth)</td>
+                @*<td>@Html.ValidationMessageFor(modelItem => modelItem.dateofbirth)</td>*@
                 
             </tr>
             <tr>

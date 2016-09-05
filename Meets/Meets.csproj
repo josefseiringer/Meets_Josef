@@ -172,6 +172,9 @@
       <DependentUpon>MeetsModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\EventFormModel.cs" />
+    <Compile Include="Models\Eventinvitation.cs">
+      <DependentUpon>MeetsModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\fn_check_user_Table_Result.cs">
       <DependentUpon>MeetsModel.tt</DependentUpon>
     </Compile>
@@ -179,6 +182,9 @@
       <DependentUpon>MeetsModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Helper.cs" />
+    <Compile Include="Models\Invitationstatu.cs">
+      <DependentUpon>MeetsModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\LoginFormModel.cs" />
     <Compile Include="Models\MeetsModel.Context.cs">
       <AutoGen>True</AutoGen>
@@ -196,6 +202,12 @@
       <DependentUpon>MeetsModel.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\Member.cs">
+      <DependentUpon>MeetsModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Memberproperty.cs">
+      <DependentUpon>MeetsModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Membersubscription.cs">
       <DependentUpon>MeetsModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Membervalidation.cs">

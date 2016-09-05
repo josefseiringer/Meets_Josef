@@ -7,11 +7,19 @@
       <Diagram DiagramId="73273a18cbbf43fcbbdde3ddddc71a01" Name="Diagram1">
         <EntityTypeShape EntityType="MeetsModel.Event" Width="1.5" PointX="0.625" PointY="0.5" IsExpanded="true" />
         <EntityTypeShape EntityType="MeetsModel.Member" Width="1.5" PointX="3.25" PointY="0.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="MeetsModel.View_Event" Width="1.5" PointX="0.75" PointY="4.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="MeetsModel.View_Event_open" Width="1.5" PointX="2.75" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MeetsModel.View_Event" Width="1.5" PointX="8" PointY="3.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="MeetsModel.View_Event_open" Width="1.5" PointX="8.125" PointY="0.5" IsExpanded="true" />
         <AssociationConnector Association="MeetsModel.fk_Events_Members" ManuallyRouted="false" />
-        <EntityTypeShape EntityType="MeetsModel.Membervalidation" Width="1.5" PointX="5.75" PointY="0.625" />
+        <EntityTypeShape EntityType="MeetsModel.Membervalidation" Width="1.5" PointX="5.75" PointY="0.5" />
         <AssociationConnector Association="MeetsModel.fk_Membervalidation_Member" />
+        <EntityTypeShape EntityType="MeetsModel.Eventinvitation" Width="1.5" PointX="0.5" PointY="4" />
+        <EntityTypeShape EntityType="MeetsModel.Invitationstatu" Width="1.5" PointX="0.625" PointY="7" />
+        <EntityTypeShape EntityType="MeetsModel.Memberproperty" Width="1.5" PointX="5.875" PointY="5.25" />
+        <EntityTypeShape EntityType="MeetsModel.Membersubscription" Width="1.5" PointX="5.75" PointY="2.75" />
+        <AssociationConnector Association="MeetsModel.fk_Eventinvitations_Events" />
+        <AssociationConnector Association="MeetsModel.fk_Invitationstatus_Eventinvitations" />
+        <AssociationConnector Association="MeetsModel.fk_Memberproperties_Member" />
+        <AssociationConnector Association="MeetsModel.fk_Membersubscriptions_Member" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

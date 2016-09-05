@@ -43,9 +43,12 @@ namespace Meets.Controllers
                 using (MeetsEntities cont = new MeetsEntities())
                 {           
                     me.created = DateTime.Now;
-                    if (me.klartextpasswort != null)
+                    me.dateofbirth = (from m in cont.Members
+                                      where m.email == User.Identity.Name
+                                      select m.dateofbirth).FirstOrDefault();
+                    if (me.Klartextpasswort != null)
                     {
-                        me.password = Helper.GetHash(me.klartextpasswort);
+                        me.password = Helper.GetHash(me.Klartextpasswort);
                     }
                     else
                     {

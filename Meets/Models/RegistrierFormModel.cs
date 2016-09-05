@@ -10,6 +10,8 @@ namespace Meets.Models
     {
         public int IDMember { get; set; }
 
+        public string Klartextpasswort { get; set; }
+
         [Required(ErrorMessage = "Pflichtfeld", AllowEmptyStrings = false)]
         //E-Mail mittels Jquery Validation überprüfen
         [EmailAddress(ErrorMessage = "Ungültige Emailadresse")]
@@ -29,5 +31,8 @@ namespace Meets.Models
         //[CustomValidation(typeof(AlterValidator), "ValidateEndTimeRange")]
         [DisplayFormat(DataFormatString = "{0:dd.MM.yyyy}", ApplyFormatInEditMode = true)]
         public DateTime Geburtsdatum { get; set; }
+
+
     }
+
 }
