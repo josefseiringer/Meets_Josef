@@ -136,9 +136,9 @@ namespace Meets.Models
                 return awt;
 
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                awt = ex + " Fehler beim Versenden der Email";
+                awt = "Fehler beim Versenden der Email";
                 return awt;
             }
 

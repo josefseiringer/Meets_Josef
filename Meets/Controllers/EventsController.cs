@@ -17,28 +17,70 @@ namespace Meets.Controllers
         
         private MeetsEntities db = new MeetsEntities();
 
+        //[Authorize]
+        //[HttpGet]
+        //public ActionResult EventDefaultUser()
+        //{
+        //    string ma = null;
+        //    if (User.Identity.Name != null)
+        //    {                
+        //        if (TempData["mail"] != null)
+        //        {
+        //            ViewBag.mail = TempData["mail"];                     
+        //            ma = ViewBag.mail;
+        //            List < fn_Show_Event_Table_Result > fsetr01 = db.fn_Show_Event_Table(ma).ToList();
+        //            return View(fsetr01);
+        //        }
+        //        ma = User.Identity.Name;
+        //        List<fn_Show_Event_Table_Result> fsetr02 = db.fn_Show_Event_Table(ma).ToList();
+        //        return View(fsetr02); 
+        //    }
+        //    return RedirectToAction("Login", "Login");
+        //}
+
+        // GET: Events
+
         [Authorize]
         [HttpGet]
         public ActionResult EventDefaultUser()
         {
-            string ma = null;
+            TempData["ConfirmMessage"] = "Login erfolgreich";
+            ViewBag.mail = TempData["mail"];
+            string ma = ViewBag.mail;
             if (User.Identity.Name != null)
-            {                
-                if (TempData["mail"] != null)
+            {
+                List<Event> defUser = (from e in db.Events
+                                       where e.Member.id == e.member_id &&
+                                       e.Member.email == User.Identity.Name
+                                       select e).ToList();
+                if (defUser.Count == 0)
                 {
-                    ViewBag.mail = TempData["mail"];                     
-                    ma = ViewBag.mail;
-                    List < fn_Show_Event_Table_Result > fsetr01 = db.fn_Show_Event_Table(ma).ToList();
-                    return View(fsetr01);
+                    ViewBag.leereListe = "Du hast noch keine Einträge erstellt.";
+                    return View(defUser);
                 }
-                ma = User.Identity.Name;
-                List<fn_Show_Event_Table_Result> fsetr02 = db.fn_Show_Event_Table(ma).ToList();
-                return View(fsetr02); 
+                return View(defUser);
+            }
+            if (ma != null)
+            {
+                List<Event> defUserPerMail = (from e in db.Events
+                                       where e.Member.id == e.member_id &&
+                                       e.Member.email == ma
+                                       select e).ToList();
+
+                if (defUserPerMail.Count == 0)
+                {
+                    ViewBag.leereListe = "Sie haben noch keine Einträge erstellt.";
+                    return View(defUserPerMail);
+                }
+
+                return View(defUserPerMail);
             }
             return RedirectToAction("Login", "Login");
         }
 
-        // GET: Events
+
+
+
         [Authorize]
         public ActionResult Index()
         {
@@ -63,6 +105,8 @@ namespace Meets.Controllers
                 return View();
             }
         }
+
+
         [Authorize]
         // GET: Events/Details/5
         public ActionResult Details(int? id)
@@ -88,23 +132,48 @@ namespace Meets.Controllers
             return View();
         }
 
-        // POST: Events/Create
+        //// POST: Events/Create Generiert
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public ActionResult Create([Bind(Include = "id,created,member_id,eventdate,title,description,viewpublic,location")] Event @event)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        db.Events.Add(@event);
+        //        db.SaveChanges();
+        //        return RedirectToAction("Index");
+        //    }
+
+        //    ViewBag.member_id = new SelectList(db.Members, "id", "email", @event.member_id);
+        //    //ViewBag.UserSingle = User.Identity.Name;
+        //    //@event.member_id = ViewBag.UserSingle;
+        //    return View(@event);
+        //}
+
+
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "id,created,member_id,eventdate,title,description,viewpublic,location")] Event @event)
+        public ActionResult Create(Event e)
         {
             if (ModelState.IsValid)
             {
-                db.Events.Add(@event);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                e.created = DateTime.Now;
+                e.member_id = (from ev in db.Events
+                               where ev.Member.email == User.Identity.Name
+                               select ev.Member.id).FirstOrDefault();
+                if (e.member_id != 0)
+                {
+                    db.Events.Add(e);
+                    db.SaveChanges();
+                    return View("EventDefaultUser");
+                }
+                TempData["ErrorMessage"] = "Fehler mit der Datenbankverbindung";
+                return View();
             }
+            TempData["ErrorMessage"] = "Fehlende oder falsche Eingabe";
+            return View();
+        } 
 
-            ViewBag.member_id = new SelectList(db.Members, "id", "email", @event.member_id);
-            //ViewBag.UserSingle = User.Identity.Name;
-            //@event.member_id = ViewBag.UserSingle;
-            return View(@event);
-        }
         [Authorize]
         // GET: Events/Edit/5
         public ActionResult Edit(int? id)
@@ -122,20 +191,47 @@ namespace Meets.Controllers
             return View(@event);
         }
 
-        // POST: Events/Edit/5
+        // POST: Events/Edit/5 generiert
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public ActionResult Edit([Bind(Include = "id,created,member_id,eventdate,title,description,viewpublic,location")] Event @event)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        db.Entry(@event).State = EntityState.Modified;
+        //        db.SaveChanges();
+        //        return RedirectToAction("Index");
+        //    }
+        //    ViewBag.member_id = new SelectList(db.Members, "id", "email", @event.member_id);
+        //    return View(@event);
+        //}
+
+        // POST: Events/Edit/von mir
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "id,created,member_id,eventdate,title,description,viewpublic,location")] Event @event)
+        public ActionResult Edit(Event e)
         {
-            if (ModelState.IsValid)
+            if (e != null)
             {
-                db.Entry(@event).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+
+                e.created = DateTime.Now;
+                e.member_id = (from ev in db.Events
+                               where ev.Member.email == User.Identity.Name
+                               select ev.Member.id).FirstOrDefault();
+                if (e.member_id != 0)
+                {
+                    db.Events.Add(e);
+                    db.SaveChanges();
+                    return RedirectToAction("EventDefaultUser");
+                }
+                TempData["ErrorMessage"] = "Fehler mit der Datenbankverbindung";
+                return View();
+
             }
-            ViewBag.member_id = new SelectList(db.Members, "id", "email", @event.member_id);
-            return View(@event);
+            TempData["ErrorMessage"] = "Fehlende oder falsche Eingabe";
+            return View();            
         }
+
         [Authorize]
         // GET: Events/Delete/5
         public ActionResult Delete(int? id)
