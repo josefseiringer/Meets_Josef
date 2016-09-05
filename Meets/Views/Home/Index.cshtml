@@ -1,4 +1,4 @@
-﻿@model List<Meets.Models.View_Event_open>
+﻿@model List<Meets.Models.Event>
 @{
     Layout = null;
 }
@@ -30,40 +30,35 @@
                     <table>
                         <tr>
                             <th>Erstelldatum:</th>
-                            <td style="padding-left:10px;">@Html.DisplayFor(modelItem => item.Erstellt)</td>
+                            <td style="padding-left:10px;">@Html.DisplayFor(modelItem =>item.created)</td>
                         </tr>
                         <tr>
                             <th>Titel:</th>
-                            <td style="padding-left:10px;">@Html.DisplayFor(modelItem => item.Veranstaltungsname)</td>
+                            <td style="padding-left:10px;">@Html.DisplayFor(modelItem => item.title)</td>
                         </tr>
                         <tr>
                             <th>Eventdatum:</th>
-                            <td style="padding-left:10px;">@Html.DisplayFor(modelItem => item.Termin)</td>
+                            <td style="padding-left:10px;">@Html.DisplayFor(modelItem => item.eventdate)</td>
                         </tr>
                         <tr>
                             <th>Beschreibung:</th>
-                            <td style="padding-left:10px;">@Html.DisplayFor(modelItem => item.Beschreibung)</td>
+                            <td style="padding-left:10px;">@Html.DisplayFor(modelItem => item.description)</td>
                         </tr>
                         <tr>
                             <th>Für alle Einsehbar</th>
-                            <td style="padding-left:10px;">@Html.DisplayFor(modelItem => item.Oeffentlich)</td>
+                            <td style="padding-left:10px;">@Html.DisplayFor(modelItem => item.viewpublic)</td>
                         </tr>
                         <tr>
                             <th>Standort:</th>
-                            <td style="padding-left:10px;">@Html.DisplayFor(modelItem => item.Standort)</td>
+                            <td style="padding-left:10px;">@Html.DisplayFor(modelItem => item.location)</td>
                         </tr>
-                        <tr>
-                            <th>E-Mail des Erstellers:</th>
-                            <td style="padding-left:10px;">@Html.DisplayFor(modelItem => item.Ersteller)</td>
-                        </tr>
-
                     </table>
                 </div>
             }
            </div>
         </div>        
     </div>
-    @if (ViewBag.ErrorDatabase != null)
+    @*@if (ViewBag.ErrorDatabase != null)
     {
         <script type="text/javascript">
             alert("@ViewBag.keineOffenenBeiträge");
@@ -71,6 +66,6 @@
         <script type="text/javascript">
             alert("@ViewBag.keinePrivatenBeiträge");
         </script>
-    }
+    }*@
 </body>
 </html>
