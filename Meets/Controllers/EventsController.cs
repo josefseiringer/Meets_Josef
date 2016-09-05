@@ -48,7 +48,7 @@ namespace Meets.Controllers
                 //var events = db.Events.Include(x => x.Member);
                 List<Event> events2 = (from e in db.Events
                                where e.Member.id == e.member_id &&
-                               e.viewpublic == true
+                               e.Member.email == User.Identity.Name
                                select e).ToList();
                 string ma = null;
                 ma = User.Identity.Name;

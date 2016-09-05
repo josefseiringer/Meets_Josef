@@ -1,4 +1,5 @@
-﻿@model List<Meets.Models.Event>
+﻿@*@model IEnumerable<Meets.Models.Event>*@
+@model List<Meets.Models.Event>
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_LayoutMeetsEvents.cshtml";
@@ -9,7 +10,10 @@
     @Html.ActionLink("Benutzerverwaltung", "Edit", "User")
 </label>
 <label class="linkAsBtn">
-    @Html.ActionLink("Deine Events", "EventDefaultUser", "Events")
+    @Html.ActionLink("Events bearbeiten", "EventDefaultUser", "Events")
+</label>
+<label class="linkAsBtn">
+    @Html.ActionLink("Engeladen zu", "Einladung", "Events")
 </label>
     @foreach (var item in Model)
     {
