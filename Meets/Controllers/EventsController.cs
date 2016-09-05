@@ -157,18 +157,29 @@ namespace Meets.Controllers
         {
             if (ModelState.IsValid)
             {
+                
                 e.created = DateTime.Now;
                 e.member_id = (from ev in db.Events
-                               where ev.Member.email == User.Identity.Name
-                               select ev.Member.id).FirstOrDefault();
+                            where ev.Member.email == User.Identity.Name
+                            select ev.member_id).FirstOrDefault();                
                 if (e.member_id != 0)
-                {
+                {                    
                     db.Events.Add(e);
                     db.SaveChanges();
                     return View("EventDefaultUser");
                 }
-                TempData["ErrorMessage"] = "Fehler mit der Datenbankverbindung";
-                return View();
+                else if(User.Identity.Name != null)
+                {
+                    e.member_id = (from m in db.Members
+                                   where m.email == User.Identity.Name
+                                   select m.id).FirstOrDefault();
+                    db.Events.Add(e);
+                    db.SaveChanges();
+                    return View("EventDefaultUser");
+                }
+            TempData["ErrorMessage"] = "Fehler mit der Datenbankverbindung";
+            return View();                
+                
             }
             TempData["ErrorMessage"] = "Fehlende oder falsche Eingabe";
             return View();
