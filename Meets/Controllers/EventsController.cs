@@ -73,7 +73,7 @@ namespace Meets.Controllers
                     return View(defUserPerMail);
                 }
 
-                return View(defUserPerMail);
+                //return View(defUserPerMail);
             }
             return RedirectToAction("Login", "Login");
         }
@@ -166,7 +166,7 @@ namespace Meets.Controllers
                 {                    
                     db.Events.Add(e);
                     db.SaveChanges();
-                    return View("EventDefaultUser");
+                    return RedirectToAction("EventDefaultUser");
                 }
                 else if(User.Identity.Name != null)
                 {
@@ -175,7 +175,7 @@ namespace Meets.Controllers
                                    select m.id).FirstOrDefault();
                     db.Events.Add(e);
                     db.SaveChanges();
-                    return View("EventDefaultUser");
+                    return RedirectToAction("EventDefaultUser");
                 }
             TempData["ErrorMessage"] = "Fehler mit der Datenbankverbindung";
             return View();                
@@ -267,7 +267,7 @@ namespace Meets.Controllers
             Event @event = db.Events.Find(id);
             db.Events.Remove(@event);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("EventDefaultUser");
         }
 
         protected override void Dispose(bool disposing)
