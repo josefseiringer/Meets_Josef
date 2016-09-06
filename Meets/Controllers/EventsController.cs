@@ -38,9 +38,23 @@ namespace Meets.Controllers
         //    return RedirectToAction("Login", "Login");
         //}
 
+        [HttpPost]
+        public ActionResult VerteilerMailAnnahme(int @id)
+        {
+            if (id != 0)
+            {
+                Event aktuell = (from e in db.Events
+                                 where e.id == @id
+                                 select e).FirstOrDefault();
+                if (aktuell != null)
+                {
 
+                }
+            }
+            return View();
+        }
 
-        //[Authorize]
+        [Authorize]
         [HttpGet]
         public ActionResult Verteiler(int id)
         {
@@ -68,6 +82,22 @@ namespace Meets.Controllers
                 Event aktuell = (from ev in db.Events
                                  where vfm.id == ev.id
                                  select ev).FirstOrDefault();
+                //Instanz erzeugen für Speicherung und Sammlung der Daten
+                Eventinvitation ei = new Eventinvitation();
+                if (aktuell != null && vfm != null)
+                {
+                    //Umkopieren der Daten
+                    //Event ID speichern 
+                    ei.event_id = aktuell.id;
+                    //E-Mail des Empfängers speichern
+                    ei.email = vfm.Email;
+                    // Zeitstempel speichern
+                    ei.created = DateTime.Now;
+                    //Entitätsmenge speichern
+                    db.Eventinvitations.Add(ei);
+                    db.SaveChanges();
+
+                }
 
                 TempData["ConfirmMessage"] = mailEventSent;
                 return View(aktuell);
