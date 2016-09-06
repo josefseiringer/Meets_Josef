@@ -215,6 +215,7 @@
     </Compile>
     <Compile Include="Models\MembervalidationFormModel.cs" />
     <Compile Include="Models\RegistrierFormModel.cs" />
+    <Compile Include="Models\VerteilerFormModel.cs" />
     <Compile Include="Models\View_Event.cs">
       <DependentUpon>MeetsModel.tt</DependentUpon>
     </Compile>
@@ -368,6 +369,9 @@
     <Content Include="Views\Events\EventDefaultUser.cshtml" />
     <Content Include="Views\Shared\_LayoutMeetsEventsSingle.cshtml" />
     <Content Include="SQL-Scripts_BAT\00_create_db.bat" />
+    <Content Include="Views\Events\Verteiler.cshtml" />
+    <Content Include="Views\Events\VerteilerSender.cshtml" />
+    <Content Include="Views\Shared\_LayoutValidateGesendet.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

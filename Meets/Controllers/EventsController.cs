@@ -38,7 +38,45 @@ namespace Meets.Controllers
         //    return RedirectToAction("Login", "Login");
         //}
 
-        // GET: Events
+
+
+        //[Authorize]
+        [HttpGet]
+        public ActionResult Verteiler(int id)
+        {
+            if (User.Identity.Name != null)
+            {
+                Event aktuell = (from ev in db.Events
+                                 where id == ev.id
+                                 select ev).FirstOrDefault();
+                
+                return View(aktuell);
+            }
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult VerteilerSender(VerteilerFormModel vfm)
+        {
+            string mailEventSent = null;
+            //string mailTo = null;
+            if (vfm != null)
+            {
+                //Senden an E-Mail Empfänger durch E-Mail und Id
+                mailEventSent = Helper.SendEventToEmail(vfm.Email, vfm.id, vfm.EventTitle);
+                //suche aktuelles event
+                Event aktuell = (from ev in db.Events
+                                 where vfm.id == ev.id
+                                 select ev).FirstOrDefault();
+
+                TempData["ConfirmMessage"] = mailEventSent;
+                return View(aktuell);
+            }
+
+            TempData["ErrorMessage"] = "Fehler mit der Datenbankverbindung";
+            return View();
+        }
+
 
         [Authorize]
         [HttpGet]
