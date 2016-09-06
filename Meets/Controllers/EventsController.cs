@@ -46,7 +46,7 @@ namespace Meets.Controllers
                              where e.id == @id
                              select e).FirstOrDefault();
 
-            return View();
+            return View(aktuell);
         }
 
 
@@ -56,21 +56,33 @@ namespace Meets.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpPost]
-        public ActionResult VerteilerMailAnnahme(Event ev )
+        public ActionResult VerteilerMailAnnahme(Event ev, string ja,string nein)
         {
             
            
             if (ev != null)
-            { 
-                
-                Invitationstatu ivs = new Invitationstatu();
-                ivs.created = DateTime.Now;
-                ivs.eventinvitations_id = ev.id;
-                ivs.confirm = true;
+            {
+                if (ja != null)
+                {
+                    Invitationstatu ivs = new Invitationstatu();
+                    ivs.created = DateTime.Now;
+                    ivs.eventinvitations_id = ev.id;
+                    ivs.confirm = true;
+
+                    TempData["ConfirmMessage"] = "Annahme wurde bestätigt";
+                    return RedirectToAction("VerteilerMailAnnahme", ev.id);
+                }
+                else if (nein != null)
+                {
+
+                    TempData["ConfirmMessage"] = "Du hast abgelehnt";
+                    return RedirectToAction("VerteilerMailAnnahme", ev.id);
+
+                }               
                 
             }
-            
-            return View();
+            TempData["ErrorMessage"] = "Kein Event geladen";
+            return RedirectToAction("VerteilerMailAnnahme", ev.id);
         }
 
         [Authorize]
