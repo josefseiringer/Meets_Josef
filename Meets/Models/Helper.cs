@@ -56,6 +56,56 @@ namespace Meets.Models
             return hashbytes;
         }
 
+        /// <summary>
+        /// Email über smtp mit HtmlBody
+        /// </summary>
+        /// <param name="emailTo"></param>
+        /// <param name="id"></param>
+        /// <param name="eventTitle"></param>
+        /// <returns>string mit Erfolgs Meldung</returns>
+        public static string SendEventToEmail(string emailTo, int id, string eventTitle)
+        {
+            string antwort = null;
+            if (emailTo != null)
+            {
+                //string passwd = "Jomoresa31_bbrz";
+                //string mailSelf = "josef.seiringer@qualifizierung.or.at";
+                string passwd = "Jo_1973_moresa31";
+                string mailSelf = "digitalman@a1.net";
+
+                MailMessage mail = new MailMessage();
+                mail.From = new MailAddress("noreplay@Meets.at"); //Absender
+                mail.To.Add(emailTo); //Empfänger
+
+                mail.Subject = "Einladung zu einem Event bei Meets";
+                string linkja = "http://localhost:52111/MemberVal/Validate/" + id;
+                string linknein = "http://localhost:52111/MemberVal/Validate/" + id;
+                string siteHtml = "<!DOCTYPE html><html><head><meta http-equiv=#'content-Type'content='text/html;charset= utf-8'/><title>Event von Meets</title><meta charset='utf - 8'/><style>#content{width:400px;height:290px;border:solid 3px #0094ff;padding:10px;margin:20px auto;}h3{font-family:Corbel; font-size:20px;text-align:center;}input{padding:10px 15px 10px 15px;border:solid 1px #000000;border-radius:5px;margin-top:50px;}input:hover{background-color:burlywood;box-shadow:#808080 2px 2px 2px;}   #eventTitle{width:350px;height:50px;border:solid1px#3113cc;border-radius:10px;margin:0auto;}</style></head><body><div id='content'><h2>Meets</h2><h3>Du wurdest zu einem Event eingeladen!<br/>Bitte mit Ja oder Nein bestätigen!</h3><div id='eventTitle'><h3>"+ eventTitle +"</h3></div><a href='"+ linkja+"'><input type='button'name='sendJa'value='Annehmen'/></a><a href='"+ linknein +"'><input style='float:right;'type='button' name='sendNein'value='Ablehnen'/></a></div></body></html>";
+                
+                mail.Body = siteHtml;
+
+                mail.IsBodyHtml = true;
+
+                //mail.AlternateViews htmlView = AlternateView.CreateAlternateViewFromString()
+                //SmtpClient client = new SmtpClient("sauron.itcc.local", 25);
+                SmtpClient client = new SmtpClient("a1.net", 25);
+
+                //!!! nicht SSL im BBRZ verwenden !!!           
+
+                client.Credentials = new System.Net.NetworkCredential(mailSelf, passwd);
+
+                //client.EnableSsl = true;
+
+                client.Send(mail); //Senden 
+
+
+                antwort = "Event wurde an Mailadresse versendet";
+                return antwort;
+            }
+
+            antwort = "Mailversand nicht erfolgreich";
+            return antwort;
+        }
 
 
         /// <summary>
