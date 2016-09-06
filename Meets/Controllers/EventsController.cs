@@ -38,19 +38,38 @@ namespace Meets.Controllers
         //    return RedirectToAction("Login", "Login");
         //}
 
-        [HttpPost]
+        [HttpGet]
         public ActionResult VerteilerMailAnnahme(int @id)
         {
-            if (id != 0)
-            {
-                Event aktuell = (from e in db.Events
-                                 where e.id == @id
-                                 select e).FirstOrDefault();
-                if (aktuell != null)
-                {
 
-                }
+            Event aktuell = (from e in db.Events
+                             where e.id == @id
+                             select e).FirstOrDefault();
+
+            return View();
+        }
+
+
+        /// <summary>
+        /// Bei Annahme oder Ablehnung Status Speichern in die Ivitatiostatus Tabelle
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public ActionResult VerteilerMailAnnahme(Event ev )
+        {
+            
+           
+            if (ev != null)
+            { 
+                
+                Invitationstatu ivs = new Invitationstatu();
+                ivs.created = DateTime.Now;
+                ivs.eventinvitations_id = ev.id;
+                ivs.confirm = true;
+                
             }
+            
             return View();
         }
 

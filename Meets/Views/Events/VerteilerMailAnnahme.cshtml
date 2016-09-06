@@ -1,0 +1,42 @@
+﻿@model Meets.Models.Event
+
+@{
+    ViewBag.Title = "VerteilerMailAnnahme";
+    Layout = "~/Views/Shared/_LayoutMeetValidate.cshtml";
+}
+
+<div class="backwitheEventHoeher">
+    @using (Html.BeginForm("VerteilerMailAnnahme", "Events", new { @id = Model.id }))
+    {    
+    <table style="margin:10px auto;">
+        <tr>
+            <td class="hidden">@Model.id</td>
+        </tr>
+        <tr>
+            <th>Titel:</th>
+            <td>@Model.title</td>
+        </tr>
+        <tr>
+            <th style="padding-right:20px;">Event Datum:</th>
+            <td>@Model.eventdate</td>
+        </tr>
+        <tr>
+            <th>Ersteller:</th>
+            <td>@Model.Member.email</td>
+        </tr>
+        <tr>
+            <th>Beschreibung:</th>
+            <td>@Model.description</td>
+        </tr>
+        <tr>
+            <th>Standort:</th>
+            <td>@Model.location</td>
+        </tr>
+        <tr>
+            <td><input class="btnstyle" type="submit" name="ja" /></td>
+            <td><input class="btnstyle" type="submit" name="nein" /></td>
+        </tr>
+    </table>
+    }
+</div>
+

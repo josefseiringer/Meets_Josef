@@ -372,6 +372,8 @@
     <Content Include="Views\Events\Verteiler.cshtml" />
     <Content Include="Views\Events\VerteilerSender.cshtml" />
     <Content Include="Views\Shared\_LayoutValidateGesendet.cshtml" />
+    <Content Include="Views\Events\VerteilerMailAnnahme.cshtml" />
+    <Content Include="Views\Shared\_LayoutMailAnnahme.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
