@@ -382,16 +382,11 @@ Warnung 6002: Für Tabelle/Sicht 'Meets.dbo.View_Event_open' ist kein Primärsch
           <Parameter Name="email" Mode="In" Type="String" />
           </FunctionImport>
           <EntitySet Name="Eventinvitations" EntityType="MeetsModel.Eventinvitation" />
-          <EntitySet Name="Invitationstatus" EntityType="MeetsModel.Invitationstatu" />
           <EntitySet Name="Memberproperties" EntityType="MeetsModel.Memberproperty" />
           <EntitySet Name="Membersubscriptions" EntityType="MeetsModel.Membersubscription" />
           <AssociationSet Name="fk_Eventinvitations_Events" Association="MeetsModel.fk_Eventinvitations_Events">
             <End Role="Event" EntitySet="Events" />
             <End Role="Eventinvitation" EntitySet="Eventinvitations" />
-          </AssociationSet>
-          <AssociationSet Name="fk_Invitationstatus_Eventinvitations" Association="MeetsModel.fk_Invitationstatus_Eventinvitations">
-            <End Role="Eventinvitation" EntitySet="Eventinvitations" />
-            <End Role="Invitationstatu" EntitySet="Invitationstatus" />
           </AssociationSet>
           <AssociationSet Name="fk_Memberproperties_Member" Association="MeetsModel.fk_Memberproperties_Member">
             <End Role="Member" EntitySet="Members" />
@@ -400,6 +395,11 @@ Warnung 6002: Für Tabelle/Sicht 'Meets.dbo.View_Event_open' ist kein Primärsch
           <AssociationSet Name="fk_Membersubscriptions_Member" Association="MeetsModel.fk_Membersubscriptions_Member">
             <End Role="Member" EntitySet="Members" />
             <End Role="Membersubscription" EntitySet="Membersubscriptions" />
+          </AssociationSet>
+          <EntitySet Name="Invitationstatus" EntityType="MeetsModel.Invitationstatu" />
+          <AssociationSet Name="fk_Invitationstatus_Eventinvitations" Association="MeetsModel.fk_Invitationstatus_Eventinvitations">
+            <End Role="Eventinvitation" EntitySet="Eventinvitations" />
+            <End Role="Invitationstatu" EntitySet="Invitationstatus" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="Membervalidation">
@@ -442,16 +442,6 @@ Warnung 6002: Für Tabelle/Sicht 'Meets.dbo.View_Event_open' ist kein Primärsch
           <NavigationProperty Name="Event" Relationship="MeetsModel.fk_Eventinvitations_Events" FromRole="Eventinvitation" ToRole="Event" />
           <NavigationProperty Name="Invitationstatus" Relationship="MeetsModel.fk_Invitationstatus_Eventinvitations" FromRole="Eventinvitation" ToRole="Invitationstatu" />
         </EntityType>
-        <EntityType Name="Invitationstatu">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="created" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="eventinvitations_id" Type="Int32" Nullable="false" />
-          <Property Name="confirm" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="Eventinvitation" Relationship="MeetsModel.fk_Invitationstatus_Eventinvitations" FromRole="Invitationstatu" ToRole="Eventinvitation" />
-        </EntityType>
         <EntityType Name="Memberproperty">
           <Key>
             <PropertyRef Name="id" />
@@ -485,18 +475,6 @@ Warnung 6002: Für Tabelle/Sicht 'Meets.dbo.View_Event_open' ist kein Primärsch
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="fk_Invitationstatus_Eventinvitations">
-          <End Type="MeetsModel.Eventinvitation" Role="Eventinvitation" Multiplicity="1" />
-          <End Type="MeetsModel.Invitationstatu" Role="Invitationstatu" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Eventinvitation">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="Invitationstatu">
-              <PropertyRef Name="eventinvitations_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="fk_Memberproperties_Member">
           <End Type="MeetsModel.Member" Role="Member" Multiplicity="1" />
           <End Type="MeetsModel.Memberproperty" Role="Memberproperty" Multiplicity="*" />
@@ -518,6 +496,28 @@ Warnung 6002: Für Tabelle/Sicht 'Meets.dbo.View_Event_open' ist kein Primärsch
             </Principal>
             <Dependent Role="Membersubscription">
               <PropertyRef Name="member_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Invitationstatu">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="created" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="eventinvitations_id" Type="Int32" Nullable="false" />
+          <Property Name="confirm" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Eventinvitation" Relationship="MeetsModel.fk_Invitationstatus_Eventinvitations" FromRole="Invitationstatu" ToRole="Eventinvitation" />
+        </EntityType>
+        <Association Name="fk_Invitationstatus_Eventinvitations">
+          <End Type="MeetsModel.Eventinvitation" Role="Eventinvitation" Multiplicity="1" />
+          <End Type="MeetsModel.Invitationstatu" Role="Invitationstatu" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Eventinvitation">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Invitationstatu">
+              <PropertyRef Name="eventinvitations_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -617,16 +617,6 @@ Warnung 6002: Für Tabelle/Sicht 'Meets.dbo.View_Event_open' ist kein Primärsch
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Invitationstatus">
-            <EntityTypeMapping TypeName="MeetsModel.Invitationstatu">
-              <MappingFragment StoreEntitySet="Invitationstatus">
-                <ScalarProperty Name="confirm" ColumnName="confirm" />
-                <ScalarProperty Name="eventinvitations_id" ColumnName="eventinvitations_id" />
-                <ScalarProperty Name="created" ColumnName="created" />
-                <ScalarProperty Name="id" ColumnName="id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Memberproperties">
             <EntityTypeMapping TypeName="MeetsModel.Memberproperty">
               <MappingFragment StoreEntitySet="Memberproperties">
@@ -643,6 +633,16 @@ Warnung 6002: Für Tabelle/Sicht 'Meets.dbo.View_Event_open' ist kein Primärsch
               <MappingFragment StoreEntitySet="Membersubscriptions">
                 <ScalarProperty Name="year" ColumnName="year" />
                 <ScalarProperty Name="member_id" ColumnName="member_id" />
+                <ScalarProperty Name="created" ColumnName="created" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Invitationstatus">
+            <EntityTypeMapping TypeName="MeetsModel.Invitationstatu">
+              <MappingFragment StoreEntitySet="Invitationstatus">
+                <ScalarProperty Name="confirm" ColumnName="confirm" />
+                <ScalarProperty Name="eventinvitations_id" ColumnName="eventinvitations_id" />
                 <ScalarProperty Name="created" ColumnName="created" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>

@@ -33,10 +33,13 @@
             <td>@Model.location</td>
         </tr>
     </table>
-    <div>
-        <input class="btnstyle" type="submit" name="ja" value="Annehmen" />
-        <input class="btnstyle" type="submit" name="nein" value="Ablehnen" />
-    </div>
+        if (ViewBag.invit == 0)
+        {
+            <div>
+                <input class="btnstyle" type="submit" name="ja" value="Annehmen" />
+                <input class="btnstyle" type="submit" name="nein" value="Ablehnen" />
+            </div>
+        }
     }
 </div>
 

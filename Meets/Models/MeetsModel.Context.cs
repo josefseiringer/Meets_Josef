@@ -33,9 +33,9 @@ namespace Meets.Models
         public virtual DbSet<View_Event_open> View_Event_open { get; set; }
         public virtual DbSet<Membervalidation> Membervalidations { get; set; }
         public virtual DbSet<Eventinvitation> Eventinvitations { get; set; }
-        public virtual DbSet<Invitationstatu> Invitationstatus { get; set; }
         public virtual DbSet<Memberproperty> Memberproperties { get; set; }
         public virtual DbSet<Membersubscription> Membersubscriptions { get; set; }
+        public virtual DbSet<Invitationstatu> Invitationstatus { get; set; }
     
         [DbFunction("MeetsEntities", "fn_check_user_Table")]
         public virtual IQueryable<fn_check_user_Table_Result> fn_check_user_Table(string email, byte[] password)

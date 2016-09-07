@@ -41,11 +41,15 @@ namespace Meets.Controllers
         [HttpGet]
         public ActionResult VerteilerMailAnnahme(int @id)
         {
+            //in Datenbank nachsehn ob ein Eintrag in eventsinvitation_id existiert
+            //int invit = (from i in db.Invitationstatus
+            //             where @id == i.eventinvitations_id
+            //             select i.eventinvitations_id).FirstOrDefault();
 
             Event aktuell = (from e in db.Events
                              where e.id == @id
                              select e).FirstOrDefault();
-
+            
             return View(aktuell);
         }
 
@@ -58,32 +62,45 @@ namespace Meets.Controllers
         [HttpPost]
         public ActionResult VerteilerMailAnnahme(Event ev, string ja,string nein)
         {
-            
-           
-            if (ev != null)
-            {
-                //instanz erzeugen und variable ivs zeigt darauf
-                Invitationstatu ivs = new Invitationstatu();
-                if (ja != null)
-                {                    
-                    ivs.created = DateTime.Now;
-                    ivs.eventinvitations_id = ev.id;
-                    ivs.confirm = true;
+            int invit = (from i in db.Invitationstatus
+                         where ev.id == i.eventinvitations_id
+                         select i.eventinvitations_id).FirstOrDefault();
 
-                    TempData["ConfirmMessage"] = "Annahme wurde bestätigt";
-                    return RedirectToAction("VerteilerMailAnnahme", ev.id);
-                }
-                else if (nein != null)
+            if (invit == 0)
+            {
+
+                if (ev != null)
                 {
-                    ivs.created = DateTime.Now;
-                    ivs.eventinvitations_id = ev.id;
-                    ivs.confirm = false;
-                    TempData["ConfirmMessage"] = "Du hast abgelehnt";
-                    return RedirectToAction("VerteilerMailAnnahme", ev.id);
-                }               
-                
+                    //instanz erzeugen und variable ivs zeigt darauf
+                    Invitationstatu ivs = new Invitationstatu();
+                    ////bei Annehmen eventinvitation_id mit true speichern in den Invitationstatus
+                    if (ja != null)
+                    {                    
+                        ivs.created = DateTime.Now;
+                        ivs.eventinvitations_id = ev.id;
+                        ivs.confirm = true;
+                        db.Invitationstatus.Add(ivs);
+                        db.SaveChanges();
+
+                        TempData["ConfirmMessage"] = "Annahme wurde bestätigt";
+                        return RedirectToAction("VerteilerMailAnnahme", ev.id);
+                    }
+                    //bei Ablehen eventinvitation_id mit false speichern in den Invitationstatus
+                    else if (nein != null)
+                    {
+                        ivs.created = DateTime.Now;
+                        ivs.eventinvitations_id = ev.id;
+                        ivs.confirm = false;
+                        db.Invitationstatus.Add(ivs);
+                        db.SaveChanges();
+                        TempData["ConfirmMessage"] = "Du hast abgelehnt";
+                        return RedirectToAction("VerteilerMailAnnahme", ev.id);
+                    }                
+                }
+                TempData["ErrorMessage"] = "Kein Event geladen";
             }
-            TempData["ErrorMessage"] = "Kein Event geladen";
+            //id Übergabe an View
+            ViewBag.invit = invit;
             return RedirectToAction("VerteilerMailAnnahme", ev.id);
         }
 

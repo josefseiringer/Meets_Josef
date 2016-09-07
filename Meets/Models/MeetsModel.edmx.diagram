@@ -13,13 +13,13 @@
         <EntityTypeShape EntityType="MeetsModel.Membervalidation" Width="1.5" PointX="5.75" PointY="0.5" />
         <AssociationConnector Association="MeetsModel.fk_Membervalidation_Member" />
         <EntityTypeShape EntityType="MeetsModel.Eventinvitation" Width="1.5" PointX="0.5" PointY="4" />
-        <EntityTypeShape EntityType="MeetsModel.Invitationstatu" Width="1.5" PointX="0.625" PointY="7" />
         <EntityTypeShape EntityType="MeetsModel.Memberproperty" Width="1.5" PointX="5.875" PointY="5.25" />
         <EntityTypeShape EntityType="MeetsModel.Membersubscription" Width="1.5" PointX="5.75" PointY="2.75" />
         <AssociationConnector Association="MeetsModel.fk_Eventinvitations_Events" />
-        <AssociationConnector Association="MeetsModel.fk_Invitationstatus_Eventinvitations" />
         <AssociationConnector Association="MeetsModel.fk_Memberproperties_Member" />
         <AssociationConnector Association="MeetsModel.fk_Membersubscriptions_Member" />
+        <EntityTypeShape EntityType="MeetsModel.Invitationstatu" Width="1.75" PointX="0.625" PointY="7.375" />
+        <AssociationConnector Association="MeetsModel.fk_Invitationstatus_Eventinvitations" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
