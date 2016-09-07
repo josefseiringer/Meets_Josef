@@ -68,10 +68,10 @@ namespace Meets.Models
             string antwort = null;
             if (emailTo != null)
             {
-                //string passwd = "Jomoresa31_bbrz";
-                //string mailSelf = "josef.seiringer@qualifizierung.or.at";
-                string passwd = "Jomoresa@31";
-                string mailSelf = "j.seiringer@live.at";
+                string passwd = "Jomoresa31_bbrz";
+                string mailSelf = "josef.seiringer@qualifizierung.or.at";
+                //string passwd = "Jomoresa@31";
+                //string mailSelf = "j.seiringer@live.at";
 
                 MailMessage mail = new MailMessage();
                 mail.From = new MailAddress("noreplay@Meets.at"); //Absender
@@ -88,14 +88,14 @@ namespace Meets.Models
                 mail.IsBodyHtml = true;
 
                 //mail.AlternateViews htmlView = AlternateView.CreateAlternateViewFromString()
-                //SmtpClient client = new SmtpClient("sauron.itcc.local", 25);
-                SmtpClient client = new SmtpClient("smtp.live.com", 25);
+                SmtpClient client = new SmtpClient("sauron.itcc.local", 25);
+                //SmtpClient client = new SmtpClient("smtp.live.com", 25);
 
                 //!!! nicht SSL im BBRZ verwenden !!!           
 
                 client.Credentials = new System.Net.NetworkCredential(mailSelf, passwd);
 
-                client.EnableSsl = true;
+                //client.EnableSsl = true;
 
                 client.Send(mail); //Senden 
 

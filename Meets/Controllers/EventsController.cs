@@ -62,9 +62,10 @@ namespace Meets.Controllers
            
             if (ev != null)
             {
+                //instanz erzeugen und variable ivs zeigt darauf
+                Invitationstatu ivs = new Invitationstatu();
                 if (ja != null)
-                {
-                    Invitationstatu ivs = new Invitationstatu();
+                {                    
                     ivs.created = DateTime.Now;
                     ivs.eventinvitations_id = ev.id;
                     ivs.confirm = true;
@@ -74,10 +75,11 @@ namespace Meets.Controllers
                 }
                 else if (nein != null)
                 {
-
+                    ivs.created = DateTime.Now;
+                    ivs.eventinvitations_id = ev.id;
+                    ivs.confirm = false;
                     TempData["ConfirmMessage"] = "Du hast abgelehnt";
                     return RedirectToAction("VerteilerMailAnnahme", ev.id);
-
                 }               
                 
             }
@@ -129,7 +131,7 @@ namespace Meets.Controllers
                     db.SaveChanges();
 
                 }
-
+                //Rückgabenachricht aus Methode SendEventToEmail an TempData übergeben
                 TempData["ConfirmMessage"] = mailEventSent;
                 return View(aktuell);
             }
@@ -162,9 +164,9 @@ namespace Meets.Controllers
             if (ma != null)
             {
                 List<Event> defUserPerMail = (from e in db.Events
-                                       where e.Member.id == e.member_id &&
-                                       e.Member.email == ma
-                                       select e).ToList();
+                                              where e.Member.id == e.member_id &&
+                                              e.Member.email == ma
+                                              select e).ToList();
 
                 if (defUserPerMail.Count == 0)
                 {

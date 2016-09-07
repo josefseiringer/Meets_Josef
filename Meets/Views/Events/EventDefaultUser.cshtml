@@ -8,11 +8,11 @@
 }
 
 <div style="margin-bottom:10px;"><h3 style="float:right">@User.Identity.Name</h3></div>
-<label class="linkAsBtn">@Html.ActionLink("Hinzufügen", "Create", "Events")</label>
-@if (ViewBag.leereListe == null)
+<label class="linkAsBtn">@Html.ActionLink("Event Hinzufügen", "Create", "Events")</label>
+@*@if (ViewBag.leereListe == null)
 {
     <label class="linkAsBtn">@Html.ActionLink("Events teilen", "Verteiler", "Events")</label>
-}
+}*@
 
 @if (ViewBag.leereListe != null)
 {
