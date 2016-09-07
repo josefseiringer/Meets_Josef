@@ -9,12 +9,21 @@ namespace Meets.Controllers
 {
     public class MemberValController : Controller
     {
+        /// <summary>
+        /// GET Benutzervalidierung 
+        /// </summary>
+        /// <returns></returns>
         // GET: MemberVal
         public ActionResult Create()
         {
             return View();
         }
 
+        /// <summary>
+        /// POST Benutzervalidierung speichern in Datenbank
+        /// </summary>
+        /// <param name="mvfm"></param>
+        /// <returns></returns>
         [HttpPost]
         public ActionResult Create(MembervalidationFormModel mvfm)
         {
@@ -29,11 +38,13 @@ namespace Meets.Controllers
                 con.SaveChanges();
             }
             return View();
-        }
-
+        }        
         
-        
-
+        /// <summary>
+        /// Aktuelle Validierung überprüfen ob schon Validiert mit Rückmeldung an View über ViewBag
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet]
         public ActionResult Validate(int id)
         {

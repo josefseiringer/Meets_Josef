@@ -17,27 +17,6 @@ namespace Meets.Controllers
         
         private MeetsEntities db = new MeetsEntities();
 
-        //[Authorize]
-        //[HttpGet]
-        //public ActionResult EventDefaultUser()
-        //{
-        //    string ma = null;
-        //    if (User.Identity.Name != null)
-        //    {                
-        //        if (TempData["mail"] != null)
-        //        {
-        //            ViewBag.mail = TempData["mail"];                     
-        //            ma = ViewBag.mail;
-        //            List < fn_Show_Event_Table_Result > fsetr01 = db.fn_Show_Event_Table(ma).ToList();
-        //            return View(fsetr01);
-        //        }
-        //        ma = User.Identity.Name;
-        //        List<fn_Show_Event_Table_Result> fsetr02 = db.fn_Show_Event_Table(ma).ToList();
-        //        return View(fsetr02); 
-        //    }
-        //    return RedirectToAction("Login", "Login");
-        //}
-
         [HttpGet]
         public ActionResult VerteilerMailAnnahme(int @id)
         {
@@ -53,7 +32,6 @@ namespace Meets.Controllers
             return View(aktuell);
         }
 
-
         /// <summary>
         /// Bei Annahme oder Ablehnung Status Speichern in die Ivitatiostatus Tabelle
         /// </summary>
@@ -62,48 +40,43 @@ namespace Meets.Controllers
         [HttpPost]
         public ActionResult VerteilerMailAnnahme(Event ev, string ja,string nein)
         {
-            int invit = (from i in db.Invitationstatus
-                         where ev.id == i.eventinvitations_id
-                         select i.eventinvitations_id).FirstOrDefault();
-
-            if (invit == 0)
+            if (ev != null)
             {
+                //instanz erzeugen und variable ivs zeigt darauf
+                Invitationstatu ivs = new Invitationstatu();
+                ////bei Annehmen eventinvitation_id mit true speichern in den Invitationstatus
+                if (ja != null)
+                {      
+                    ivs.created = DateTime.Now;
+                    ivs.eventinvitations_id = ev.id;
+                    ivs.confirm = true;
+                    db.Invitationstatus.Add(ivs);
+                    db.SaveChanges();
 
-                if (ev != null)
-                {
-                    //instanz erzeugen und variable ivs zeigt darauf
-                    Invitationstatu ivs = new Invitationstatu();
-                    ////bei Annehmen eventinvitation_id mit true speichern in den Invitationstatus
-                    if (ja != null)
-                    {                    
-                        ivs.created = DateTime.Now;
-                        ivs.eventinvitations_id = ev.id;
-                        ivs.confirm = true;
-                        db.Invitationstatus.Add(ivs);
-                        db.SaveChanges();
-
-                        TempData["ConfirmMessage"] = "Annahme wurde bestätigt";
-                        return RedirectToAction("VerteilerMailAnnahme", ev.id);
-                    }
-                    //bei Ablehen eventinvitation_id mit false speichern in den Invitationstatus
-                    else if (nein != null)
-                    {
-                        ivs.created = DateTime.Now;
-                        ivs.eventinvitations_id = ev.id;
-                        ivs.confirm = false;
-                        db.Invitationstatus.Add(ivs);
-                        db.SaveChanges();
-                        TempData["ConfirmMessage"] = "Du hast abgelehnt";
-                        return RedirectToAction("VerteilerMailAnnahme", ev.id);
-                    }                
+                    TempData["ConfirmMessage"] = "Annahme wurde bestätigt";
+                    return RedirectToAction("VerteilerMailAnnahme", ev.id);
                 }
-                TempData["ErrorMessage"] = "Kein Event geladen";
+                //bei Ablehen eventinvitation_id mit false speichern in den Invitationstatus
+                else if (nein != null)
+                {
+                    ivs.created = DateTime.Now;
+                    ivs.eventinvitations_id = ev.id;
+                    ivs.confirm = false;
+                    db.Invitationstatus.Add(ivs);
+                    db.SaveChanges();
+                    TempData["ConfirmMessage"] = "Du hast abgelehnt";
+                    return RedirectToAction("VerteilerMailAnnahme", ev.id);
+                }                
             }
-            //id Übergabe an View
-            ViewBag.invit = invit;
+            TempData["ErrorMessage"] = "Kein Event geladen";
             return RedirectToAction("VerteilerMailAnnahme", ev.id);
         }
 
+        /// <summary>
+        /// Ansicht des gesuchten Events zum verteilen
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [Authorize]
         [HttpGet]
         public ActionResult Verteiler(int id)
@@ -119,6 +92,11 @@ namespace Meets.Controllers
             return View();
         }
 
+        /// <summary>
+        /// Speicherung in der Datenbank das eine Einladung verschickt wurde ink. E-Mail an den einzuladenden
+        /// </summary>
+        /// <param name="vfm"></param>
+        /// <returns></returns>
         [HttpPost]
         public ActionResult VerteilerSender(VerteilerFormModel vfm)
         {
@@ -157,7 +135,10 @@ namespace Meets.Controllers
             return View();
         }
 
-
+        /// <summary>
+        /// Ansicht Events des gerade angemeldeten Benutzers
+        /// </summary>
+        /// <returns></returns>
         [Authorize]
         [HttpGet]
         public ActionResult EventDefaultUser()
@@ -196,9 +177,10 @@ namespace Meets.Controllers
             return RedirectToAction("Login", "Login");
         }
 
-
-
-
+        /// <summary>
+        /// Erstes View der Ansicht der Events des bestimmten Benutzers wird nicht verwendet
+        /// </summary>
+        /// <returns></returns>
         [Authorize]
         public ActionResult Index()
         {
@@ -224,7 +206,11 @@ namespace Meets.Controllers
             }
         }
 
-
+        /// <summary>
+        /// Mögliche Detail Ansicht wird nicht verwendet
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [Authorize]
         // GET: Events/Details/5
         public ActionResult Details(int? id)
@@ -240,6 +226,11 @@ namespace Meets.Controllers
             }
             return View(@event);
         }
+
+        /// <summary>
+        /// Erzeugen eines Events
+        /// </summary>
+        /// <returns></returns>
         [Authorize]
         // GET: Events/Create
         public ActionResult Create()
@@ -250,25 +241,11 @@ namespace Meets.Controllers
             return View();
         }
 
-        //// POST: Events/Create Generiert
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult Create([Bind(Include = "id,created,member_id,eventdate,title,description,viewpublic,location")] Event @event)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        db.Events.Add(@event);
-        //        db.SaveChanges();
-        //        return RedirectToAction("Index");
-        //    }
-
-        //    ViewBag.member_id = new SelectList(db.Members, "id", "email", @event.member_id);
-        //    //ViewBag.UserSingle = User.Identity.Name;
-        //    //@event.member_id = ViewBag.UserSingle;
-        //    return View(@event);
-        //}
-
-
+        /// <summary>
+        /// Speichern des Events in der Datenbank
+        /// </summary>
+        /// <param name="e"></param>
+        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(Event e)
@@ -303,6 +280,11 @@ namespace Meets.Controllers
             return View();
         } 
 
+        /// <summary>
+        /// Bearbeiten oder Update des Events GET
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [Authorize]
         // GET: Events/Edit/5
         public ActionResult Edit(int? id)
@@ -320,47 +302,51 @@ namespace Meets.Controllers
             return View(@event);
         }
 
-        // POST: Events/Edit/5 generiert
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult Edit([Bind(Include = "id,created,member_id,eventdate,title,description,viewpublic,location")] Event @event)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        db.Entry(@event).State = EntityState.Modified;
-        //        db.SaveChanges();
-        //        return RedirectToAction("Index");
-        //    }
-        //    ViewBag.member_id = new SelectList(db.Members, "id", "email", @event.member_id);
-        //    return View(@event);
-        //}
-
         // POST: Events/Edit/von mir
+        /// <summary>
+        /// Update vom bestehenden Event wobei das gleiche Event nicht zwei mal abgespeichert werden kann
+        /// durch UIX in der Datenbank
+        /// </summary>
+        /// <param name="e"></param>
+        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(Event e)
         {
-            if (e != null)
+            try
             {
-
-                e.created = DateTime.Now;
-                e.member_id = (from ev in db.Events
-                               where ev.Member.email == User.Identity.Name
-                               select ev.Member.id).FirstOrDefault();
-                if (e.member_id != 0)
+                if (e != null)
                 {
-                    db.Events.Add(e);
-                    db.SaveChanges();
-                    return RedirectToAction("EventDefaultUser");
-                }
-                TempData["ErrorMessage"] = "Fehler mit der Datenbankverbindung";
-                return View();
 
+                    e.created = DateTime.Now;
+                    e.member_id = (from ev in db.Events
+                                   where ev.Member.email == User.Identity.Name
+                                   select ev.Member.id).FirstOrDefault();
+                    if (e.member_id != 0)
+                    {
+                        db.Events.Add(e);
+                        db.SaveChanges();
+                        return RedirectToAction("EventDefaultUser");
+                    }
+                    TempData["ErrorMessage"] = "Fehler mit der Datenbankverbindung";
+                    return View();
+
+                }
+                TempData["ErrorMessage"] = "Fehlende oder falsche Eingabe";
+                return View();
             }
-            TempData["ErrorMessage"] = "Fehlende oder falsche Eingabe";
-            return View();            
+            catch (Exception ex)
+            {
+                TempData["ErrorMessage"] = "Es kann nicht zweimal das selbe Event eingetragen werden! Ausnamefehler der Web Applikation:"+ex;
+                return View();
+            }     
         }
 
+        /// <summary>
+        /// Möglichkeit ein bestehendes Event zu löschen
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [Authorize]
         // GET: Events/Delete/5
         public ActionResult Delete(int? id)
@@ -377,6 +363,11 @@ namespace Meets.Controllers
             return View(@event);
         }
 
+        /// <summary>
+        /// POST Methode die das löschen ausführt
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         // POST: Events/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]

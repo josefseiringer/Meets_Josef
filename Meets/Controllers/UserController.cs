@@ -13,6 +13,10 @@ namespace Meets.Controllers
 {
     public class UserController : Controller
     {
+        /// <summary>
+        /// GET Methode Benutzer Editieren
+        /// </summary>
+        /// <returns></returns>
         [Authorize]
         [HttpGet]
         public ActionResult Edit()
@@ -35,6 +39,11 @@ namespace Meets.Controllers
             return View();
         }
 
+        /// <summary>
+        /// POST Methode Speichern der Änderung des Benutzers
+        /// </summary>
+        /// <param name="me"></param>
+        /// <returns></returns>
         [HttpPost]
         public ActionResult Edit(Member me)
         {
@@ -103,11 +112,16 @@ namespace Meets.Controllers
         }
 
 
+        /// <summary>
+        /// GET Methode Registrieren eines Benutzers
+        /// </summary>
+        /// <returns></returns>
         // GET: User
         public ActionResult Registrieren()
         {
             return View();
         }
+
         /// <summary>
         /// Post Methode zum überprüfen des Mindestalters und zur Speicherung in der Datenbank
         /// durch eine Prozedur sp_RegisterUser
@@ -140,7 +154,8 @@ namespace Meets.Controllers
                 string antwort = null;
                 antwort = Helper.SendMailRegTo(rfm.Email,rfm.IDMember);
                 ViewBag.Mailversand = antwort;
-                return View("Registrieren");
+                TempData["ConfirmMessage"] = "Du wurdest Registriert musst aber noch deine E-Mail bestätigen.";
+                return RedirectToAction("Login","Login");
             }
             catch (Exception)
             {

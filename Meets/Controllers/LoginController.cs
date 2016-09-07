@@ -11,6 +11,10 @@ namespace Meets.Controllers
     public class LoginController : Controller
     {
        
+        /// <summary>
+        /// GET Methode Login 
+        /// </summary>
+        /// <returns></returns>
         // GET: Login
         public ActionResult Login()
         {
@@ -21,32 +25,14 @@ namespace Meets.Controllers
             return View();
         }
 
-        //[HttpPost]
-        //public ActionResult Login(LoginFormModel lfm)
-        //{
-        //    //Schnittstelle 'uer.Login' von BL        
-        //    int usercorrect = Helper.userLogin(lfm);
-        //    if (usercorrect != 0)
-        //    {
-        //        if (usercorrect == 1)
-        //        {
-        //            //Login Authentifizierung
-        //            //mittels [Authorize] kann bei Actionmethoden auf dieses Cookie zugreifen
-        //            FormsAuthentication.SetAuthCookie(lfm.Email, false);
-
-        //            return RedirectToAction("EventDefaultUser", "Events");
-        //        }
-        //        else if (usercorrect == -1)
-        //        {
-        //            ViewBag.probDB = "Datenbankverbindung fehlgeschlagen";
-        //        }
-                             
-        //    }
-        //   ViewBag.noLogin = "Anmeldung fehlgeschlagen Passwort oder E-Mail falsch!";
-        //   return View();            
-        //}
+       
 
         //post Controller anders mit LinQ
+        /// <summary>
+        /// POST Methode Login mit erstellen eines Session cookis
+        /// </summary>
+        /// <param name="lfm"></param>
+        /// <returns></returns>
         [HttpPost]
         public ActionResult Login2(LoginFormModel lfm)
         {
