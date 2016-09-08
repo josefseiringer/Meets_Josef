@@ -148,16 +148,37 @@ namespace Meets.Controllers
             string ma = ViewBag.mail;
             if (User.Identity.Name != null)
             {
+                //Uneingeschränke Liste : Sucht alle Events des angemeldeten Benutzers und Speichert Sie in eine liste
                 List<Event> defUser = (from e in db.Events
                                        where e.Member.id == e.member_id &&
                                        e.Member.email == User.Identity.Name
                                        select e).ToList();
+                //Eingeschränkte Liste: Sucht alle Events des angemeldeten Benutzers die private sind und speichert sie in einer Liste
+                List<Event> defUserPrivate = (from e in db.Events
+                                              where e.Member.id == e.member_id &&
+                                              e.Member.email == User.Identity.Name &&
+                                              e.viewpublic == false
+                                              select e).ToList();
+                // liefert die id ob der angemeldete Benutzer in der Membervalidation eingetragen ist
+                int valid = (from e in db.Membervalidations
+                             where e.Member.id == e.member_id &&
+                             e.Member.email == User.Identity.Name
+                             select e.id).FirstOrDefault();
+
                 if (defUser.Count == 0)
                 {
                     ViewBag.leereListe = "Du hast noch keine Einträge erstellt.";
+                    return View(defUserPrivate);
+                }
+                if (valid != 0)
+                {
                     return View(defUser);
                 }
-                return View(defUser);
+                else
+                {
+                    return View(defUserPrivate);
+                }
+                
             }
             if (ma != null)
             {
@@ -235,6 +256,11 @@ namespace Meets.Controllers
         // GET: Events/Create
         public ActionResult Create()
         {
+            int valid = (from e in db.Membervalidations
+                         where e.Member.id == e.member_id &&
+                         e.Member.email == User.Identity.Name
+                         select e.id).FirstOrDefault();
+            ViewBag.nurPrivate = valid;
             //Dropedown Liste übergeben mit ViewBag an den Create View aus Datenbank Tabelle Members mit id und email
             ViewBag.member_id = new SelectList(db.Members, "id", "email");
             //ViewBag.UserSingle = User.Identity.Name;
@@ -278,7 +304,7 @@ namespace Meets.Controllers
             }
             TempData["ErrorMessage"] = "Fehlende oder falsche Eingabe";
             return View();
-        } 
+        }
 
         /// <summary>
         /// Bearbeiten oder Update des Events GET
@@ -287,20 +313,54 @@ namespace Meets.Controllers
         /// <returns></returns>
         [Authorize]
         // GET: Events/Edit/5
+        //public ActionResult Edit(int? id)
+        //{
+        //    if (id == null)
+        //    {
+        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+        //    }
+        //    Event @event = db.Events.Find(id);
+        //    if (@event == null)
+        //    {
+        //        return HttpNotFound();
+        //    }
+        //    ViewBag.member_id = new SelectList(db.Members, "id", "email", @event.member_id);
+        //    return View(@event);
+        //}
+
         public ActionResult Edit(int? id)
         {
-            if (id == null)
+            if (User.Identity.Name != null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Event @event = db.Events.Find(id);
-            if (@event == null)
-            {
-                return HttpNotFound();
-            }
-            ViewBag.member_id = new SelectList(db.Members, "id", "email", @event.member_id);
-            return View(@event);
+                //Uneingeschränke Liste : Sucht alle Events des angemeldeten Benutzers und Speichert Sie in eine liste
+                Event defUser = (from e in db.Events
+                                       where e.Member.id == e.member_id &&
+                                       e.Member.email == User.Identity.Name
+                                       select e).FirstOrDefault();
+                //Eingeschränkte Liste: Sucht alle Events des angemeldeten Benutzers die private sind und speichert sie in einer Liste
+                Event defUserPrivate = (from e in db.Events
+                                              where e.Member.id == e.member_id &&
+                                              e.Member.email == User.Identity.Name &&
+                                              e.viewpublic == false
+                                              select e).FirstOrDefault();
+                // liefert die id ob der angemeldete Benutzer in der Membervalidation eingetragen ist
+                int valid = (from e in db.Membervalidations
+                             where e.Member.id == e.member_id &&
+                             e.Member.email == User.Identity.Name
+                             select e.id).FirstOrDefault();
+
+                if (valid != 0)
+                {
+                    return View(defUser);
+                }
+                else
+                {
+                    ViewBag.noValidUser = valid;
+                    return View(defUserPrivate);
+                }
+            }return RedirectToAction("EventDefaultUser");
         }
+
 
         // POST: Events/Edit/von mir
         /// <summary>
