@@ -21,14 +21,14 @@ namespace Meets.Controllers
         public ActionResult VerteilerMailAnnahme(int @id)
         {
             //in Datenbank nachsehn ob ein Eintrag in eventsinvitation_id existiert
-            //int invit = (from i in db.Invitationstatus
-            //             where @id == i.eventinvitations_id
-            //             select i.eventinvitations_id).FirstOrDefault();
+            int invit = (from i in db.Invitationstatus
+                         where @id == i.eventinvitations_id
+                         select i.eventinvitations_id).FirstOrDefault();
 
             Event aktuell = (from e in db.Events
                              where e.id == @id
                              select e).FirstOrDefault();
-            
+            ViewBag.invit = invit;
             return View(aktuell);
         }
 
@@ -112,7 +112,7 @@ namespace Meets.Controllers
                                  select ev).FirstOrDefault();
                 //Instanz erzeugen für Speicherung und Sammlung der Daten
                 Eventinvitation ei = new Eventinvitation();
-                if (aktuell != null && vfm != null)
+                if (aktuell != null)
                 {
                     //Umkopieren der Daten
                     //Event ID speichern 

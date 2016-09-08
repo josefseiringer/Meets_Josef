@@ -1,4 +1,4 @@
-﻿@model Meets.Models.Member
+﻿@model Meets.Models.MemberFormModel
 
 @{
     ViewBag.Title = "Edit";
@@ -9,17 +9,19 @@
 <hr />
 <p style="font-family:Corbel; font-size:18px;">Nach dem ändern der Benutzerdaten wirst du abgemeldet! Gleiche E-Mail Adresse kann nicht mehr verwendet werden.</p>
 
-   
+@if (ViewBag.fehlerUpdate != null)
+{
+    <div>@ViewBag.fehlerUpdate</div>
+}
 
-@using (Html.BeginForm())
+@*@using (Html.BeginForm())*@
+@using (Html.BeginForm("EditTestUpdateLinkQ", "User", FormMethod.Post))
 {
     <div>
         <table style="margin-top:10px;" cellpadding="10">
             <tr>
                 @*Verstektes Id Feld im View*@
                 <td>@Html.HiddenFor(modelItem => modelItem.id)</td>
-
-
             </tr>
             <tr>
                 <th><h4>E-Mail:</h4></th>
@@ -28,7 +30,8 @@
             </tr>
             <tr>
                 <td class="mytabeltext">
-                    @Html.TextBoxFor(modelItem => modelItem.email, htmlAttributes: new { @class = "mylabel" })
+                    @*@Html.TextBoxFor(modelItem => modelItem.email, htmlAttributes: new { @class = "mylabel" })*@
+                    @Html.DisplayFor(modelItem => modelItem.email)
                 </td>
                 <td>
                     @Html.PasswordFor(modelItem => modelItem.Klartextpasswort, htmlAttributes: new { @class = "mylabel" })

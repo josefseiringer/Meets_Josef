@@ -233,6 +233,7 @@
     <Compile Include="Models\Member.cs">
       <DependentUpon>MeetsModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\MemberFormModel.cs" />
     <Compile Include="Models\Memberproperty.cs">
       <DependentUpon>MeetsModel.tt</DependentUpon>
     </Compile>

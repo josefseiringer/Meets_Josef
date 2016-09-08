@@ -28,8 +28,7 @@ namespace Meets.Models
         public string email { get; set; }
         public byte[] password { get; set; }
         public System.DateTime dateofbirth { get; set; }
-        public string Klartextpasswort { get; set; }
-
+        
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Event> Events { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
