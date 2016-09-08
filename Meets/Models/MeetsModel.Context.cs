@@ -77,5 +77,23 @@ namespace Meets.Models
     
             return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<fn_Show_Event_Table_Result>("[MeetsEntities].[fn_Show_Event_Table](@email)", emailParameter);
         }
+    
+        public virtual int sp_delete_Event(Nullable<int> @event)
+        {
+            var eventParameter = @event.HasValue ?
+                new ObjectParameter("event", @event) :
+                new ObjectParameter("event", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_delete_Event", eventParameter);
+        }
+    
+        public virtual int sp_delete_Member(Nullable<int> member)
+        {
+            var memberParameter = member.HasValue ?
+                new ObjectParameter("member", member) :
+                new ObjectParameter("member", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_delete_Member", memberParameter);
+        }
     }
 }

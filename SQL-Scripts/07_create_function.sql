@@ -58,8 +58,51 @@ RETURN;
 END
 GO
 
+CREATE PROCEDURE sp_delete_Member @member INT
+AS
+BEGIN
+	DECLARE @memberval INT = 0;
+	SET @memberval = (SELECT mv.id
+					  FROM Membervalidation AS mv
+					  WHERE mv.member_id = @member);
+	IF ( @memberval >= 0)
+	BEGIN
+		DELETE Membervalidation WHERE id = @memberval
+	END;
+	IF (@member >= 0)
+	BEGIN
+		DELETE Members WHERE id = @member
+	END;
+END;
+GO
 
 
+CREATE PROCEDURE sp_delete_Event 
+	@event INT	
+AS
+BEGIN
+	DECLARE @EventIn INT = 0;
+	DECLARE	@invi INT = 0;
+	SET @EventIn =(SELECT evi.id
+				   FROM Eventinvitations AS evi
+				   WHERE evi.event_id = @event);
+	SET @invi = (SELECT iv.id
+		         FROM Invitationstatus AS iv
+				 WHERE iv.eventinvitations_id = @EventIn);
+	IF (@invi >= 0)
+	BEGIN
+		DELETE Invitationstatus WHERE id =  @invi
+	END;
+	IF (@EventIn >= 0)
+	BEGIN
+		DELETE Eventinvitations WHERE id = @EventIn
+	END;
+	IF (@event >= 0)
+	BEGIN
+		DELETE [Events] WHERE id = @event
+	END;
+END;
+GO
 
 
 
