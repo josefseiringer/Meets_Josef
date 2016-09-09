@@ -1,0 +1,40 @@
+﻿@model Meets.Models.ProfileViewModel
+@{
+    ViewBag.Title = "Profile";
+    Layout = "~/Views/Shared/_LayoutMeetsEdit.cshtml";
+}
+
+<h2>Profile</h2>
+
+@using (Html.BeginForm("Profile", "User"))
+{
+
+    <div>
+        <table>
+            <tr>
+                <th>Benutzer:</th>
+                <td>@User.Identity.Name</td>
+            </tr>
+            <tr>
+                <th>Altes Passwort:</th>
+                <td>@Html.PasswordFor(x=>x.OldPassword)</td>
+                <td>@Html.ValidationMessageFor(x=>x.OldPassword, "",new {@class = "text-danger" })</td>
+            </tr>
+            <tr>
+                <th>Neues Passwort:</th>
+                <td>@Html.PasswordFor(x => x.NewPasswort)</td>
+                <td>@Html.ValidationMessageFor(x => x.NewPasswort, "", new { @class = "text-danger" })</td>
+            </tr>
+            <tr>
+                <th>Passwortwiederholung:</th>
+                <td>@Html.PasswordFor(x => x.Passwortvergleich)</td>
+                <td>@Html.ValidationMessageFor(x => x.Passwortvergleich, "", new { @class = "text-danger" })</td>
+            </tr>
+            <tr>
+                <td><input type="submit" value="Daten ändern" /></td>
+            </tr>
+        </table>
+    </div>
+
+}
+

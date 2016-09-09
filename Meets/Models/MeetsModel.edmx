@@ -211,11 +211,8 @@ Warnung 6002: Für Tabelle/Sicht 'Meets.dbo.View_Event_open' ist kein Primärsch
             </CollectionType>
           </ReturnType>
         </Function>
-        <Function Name="sp_delete_Event" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="event" Type="int" Mode="In" />
-        </Function>
-        <Function Name="sp_delete_Member" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="member" Type="int" Mode="In" />
+        <Function Name="sp_holeUserDaten" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="email" Type="varchar" Mode="In" />
         </Function>
         <Function Name="sp_RegisterUser" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="email" Type="varchar" Mode="In" />
@@ -413,6 +410,9 @@ Warnung 6002: Für Tabelle/Sicht 'Meets.dbo.View_Event_open' ist kein Primärsch
           <FunctionImport Name="sp_delete_Member">
             <Parameter Name="member" Mode="In" Type="Int32" />
           </FunctionImport>
+          <FunctionImport Name="sp_holeUserDaten" ReturnType="Collection(MeetsModel.sp_holeUserDaten_Result)">
+          <Parameter Name="email" Mode="In" Type="String" />
+          </FunctionImport>
         </EntityContainer>
         <EntityType Name="Membervalidation">
           <Key>
@@ -533,6 +533,13 @@ Warnung 6002: Für Tabelle/Sicht 'Meets.dbo.View_Event_open' ist kein Primärsch
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <ComplexType Name="sp_holeUserDaten_Result">
+          <Property Type="Int32" Name="id" Nullable="false" />
+          <Property Type="DateTime" Name="created" Nullable="false" Precision="23" />
+          <Property Type="String" Name="email" Nullable="false" MaxLength="255" />
+          <Property Type="Binary" Name="password" Nullable="false" />
+          <Property Type="DateTime" Name="dateofbirth" Nullable="false" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -660,9 +667,18 @@ Warnung 6002: Für Tabelle/Sicht 'Meets.dbo.View_Event_open' ist kein Primärsch
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="sp_delete_Event" FunctionName="MeetsModel.Store.sp_delete_Event" />
-          <FunctionImportMapping FunctionImportName="sp_delete_Member" FunctionName="MeetsModel.Store.sp_delete_Member" />
-        </EntityContainerMapping>
+          <FunctionImportMapping FunctionImportName="sp_holeUserDaten" FunctionName="MeetsModel.Store.sp_holeUserDaten">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="MeetsModel.sp_holeUserDaten_Result">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="created" ColumnName="created" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="dateofbirth" ColumnName="dateofbirth" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
   </edmx:Runtime>

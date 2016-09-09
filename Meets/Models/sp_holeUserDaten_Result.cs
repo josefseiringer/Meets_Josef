@@ -14,10 +14,18 @@ namespace Meets.Models
 
 using System;
     
-public partial class fn_check_user_Table_Result
+public partial class sp_holeUserDaten_Result
 {
 
     public int id { get; set; }
+
+    public System.DateTime created { get; set; }
+
+    public string email { get; set; }
+
+    public byte[] password { get; set; }
+
+    public System.DateTime dateofbirth { get; set; }
 
 }
 

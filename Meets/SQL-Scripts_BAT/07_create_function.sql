@@ -1,6 +1,25 @@
 USE Meets;
 GO
 
+create procedure sp_AendereUserdaten
+@email varchar(255),
+@password varbinary(max)
+as
+begin
+	update Members set password = @password
+	where Members.email = @email
+end
+go
+
+CREATE PROCEDURE sp_holeUserDaten
+	@email varchar(255)
+AS
+BEGIN
+	select * from Members
+	where Members.email = @email
+END
+GO
+
 
 CREATE PROCEDURE sp_RegisterUser
 	@email Varchar(255),

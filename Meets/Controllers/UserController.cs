@@ -13,6 +13,69 @@ namespace Meets.Controllers
 {
     public class UserController : Controller
     {
+        //[HttpGet]
+        //[Authorize]
+        //public new ActionResult Profile()
+        //{
+        //    string email = this.User.Identity.Name;
+        //    ProfileViewModel pf = new ProfileViewModel();
+        //    using (MeetsEntities con = new MeetsEntities())
+        //    {
+        //        var query = con.sp_holeUserDaten(email).FirstOrDefault();
+        //        pf.Email = query.email;
+        //    }
+        //    return View(pf);
+        //}
+
+        //[HttpPost]
+        //public ActionResult Profile(ProfileViewModel p)
+        //{
+        //    byte[] pwOldHash = Helper.GetHash(p.OldPassword);
+        //    using(MeetsEntities con = new MeetsEntities())
+        //    {
+
+        //        //LinkQ altes Pw auf Richtigkeit prüfen
+        //        var checkOldPw = (from m in con.Members
+        //                          where m.email == this.User.Identity.Name &&
+        //                          pwOldHash == m.password
+        //                          select m).FirstOrDefault();
+        //        if (checkOldPw != null)
+        //        {
+        //            //pw in db ändern
+        //            //1. mittels sp in db ändern
+                    
+
+
+        //            //2. mittels EF in db ändern
+        //            var query =
+        //            (from mem in con.Members
+        //            where mem.email == User.Identity.Name
+        //            select mem).FirstOrDefault();
+
+        //            query.password = Helper.GetHash(p.NewPasswort);
+                    
+        //            try
+        //            {
+        //                con.SaveChanges();
+        //                TempData["ConfirmMessage"] = "Passwort wurde geändert";
+
+        //                return RedirectToAction("Login", "Login");
+        //            }
+        //            catch (Exception)
+        //            {
+                        
+        //                throw;
+        //            }                   
+
+        //         }                    
+        //       }
+            
+
+        //    return RedirectToAction("Login","Login");
+        //}
+
+
+
         /// <summary>
         /// GET Methode Benutzer Editieren
         /// </summary>
@@ -83,7 +146,7 @@ namespace Meets.Controllers
                         {
                             TempData["ConfirmMessage"] = zugangsaenderung;
                         }
-                        return RedirectToAction("Logout","Abmelden");
+                        return RedirectToAction("EventDefaultUser", "Events");
                     }
                     catch (Exception ex)
                     {
@@ -103,81 +166,81 @@ namespace Meets.Controllers
         /// </summary>
         /// <param name="me"></param>
         /// <returns></returns>
-        [HttpPost]
-        public ActionResult Edit(MemberFormModel mfm)
-        {
-            if (mfm != null)
-            {
+        //[HttpPost]
+        //public ActionResult Edit(MemberFormModel mfm)
+        //{
+        //    if (mfm != null)
+        //    {
                 
-                using (MeetsEntities cont = new MeetsEntities())
-                {
-                    Member me = new Member();
-                    //Create Date erstellen
-                    mfm.created = DateTime.Now;
-                    me.created = mfm.created;
-                    //Geburtsdatum anhand der Angemeldeten Email ermitteln
-                    mfm.dateofbirth = (from m in cont.Members
-                                      where m.email == User.Identity.Name
-                                      select m.dateofbirth).FirstOrDefault();
-                    me.dateofbirth = mfm.dateofbirth;
-                    //Passwort Hashen
-                    if (mfm.Klartextpasswort != null)
-                    {
-                        mfm.password = Helper.GetHash(mfm.Klartextpasswort);
-                        me.password = mfm.password;
-                    }
-                    else
-                    {
-                        ViewBag.notPasswd = "Bitte Passwort eingeben!";
-                        return View();
-                    }
-                    //Abfrage ob User vorhanden
-                    var vorhanden = (from m in cont.Members
-                                     where m.email == mfm.email
-                                     select m.email).FirstOrDefault();
-                    if (vorhanden == null)
-                    {
-                        //Speichern der aktuellen Userdaten 
-                        cont.Members.Add(me);
-                        cont.SaveChanges();
+        //        using (MeetsEntities cont = new MeetsEntities())
+        //        {
+        //            Member me = new Member();
+        //            //Create Date erstellen
+        //            mfm.created = DateTime.Now;
+        //            me.created = mfm.created;
+        //            //Geburtsdatum anhand der Angemeldeten Email ermitteln
+        //            mfm.dateofbirth = (from m in cont.Members
+        //                              where m.email == User.Identity.Name
+        //                              select m.dateofbirth).FirstOrDefault();
+        //            me.dateofbirth = mfm.dateofbirth;
+        //            //Passwort Hashen
+        //            if (mfm.Klartextpasswort != null)
+        //            {
+        //                mfm.password = Helper.GetHash(mfm.Klartextpasswort);
+        //                me.password = mfm.password;
+        //            }
+        //            else
+        //            {
+        //                ViewBag.notPasswd = "Bitte Passwort eingeben!";
+        //                return View();
+        //            }
+        //            //Abfrage ob User vorhanden
+        //            var vorhanden = (from m in cont.Members
+        //                             where m.email == mfm.email
+        //                             select m.email).FirstOrDefault();
+        //            if (vorhanden == null)
+        //            {
+        //                //Speichern der aktuellen Userdaten 
+        //                cont.Members.Add(me);
+        //                cont.SaveChanges();
                         
-                        using (MeetsEntities con2 = new MeetsEntities())
-                        {
-                            //id der geänderten E-mail ermitteln
-                            int id = (from m in con2.Members
-                                      where mfm.email == m.email
-                                      select m.id).FirstOrDefault();
-                            // instanzen erzeugen
-                            MembervalidationFormModel mvm = new MembervalidationFormModel();
-                            Membervalidation mv = new Membervalidation();
-                            //speichern ins Objekt MembervalidationFormModel
-                            mvm.created = DateTime.Now;
-                            mvm.member_id = id;
-                            //umspeichern ins Datenbank Objekt
-                            mv.created = mvm.created;
-                            mv.member_id = mvm.member_id;
-                            //entitätsmenge sammeln und dann auf Datenbank speichern
-                            con2.Membervalidations.Add(mv);
-                            con2.SaveChanges();
-                            //sendet eine Bestätigungsmail an den User und hat einen Rückgabe string zur weiteren Verwndung wenn der User bestätigt kommt er auf die Login seite zur Anmeldung
-                            string zugangsaenderung = Helper.SendMailRegTo(mfm.email);
-                            if (zugangsaenderung != null)
-                            {
-                                TempData["ConfirmMessage"] = zugangsaenderung;
-                            }
-                            return RedirectToAction("Logout", "Abmelden");
-                        }
-                    }
-                    else
-                    {
-                        ViewBag.errorEmail = "Gleiche E-Mail wurde verwendet!";
-                        return View();
-                    }
-                }
-            }
-            ViewBag.errdaten = "Kein Update der Person möglich";
-            return View();
-        }
+        //                using (MeetsEntities con2 = new MeetsEntities())
+        //                {
+        //                    //id der geänderten E-mail ermitteln
+        //                    int id = (from m in con2.Members
+        //                              where mfm.email == m.email
+        //                              select m.id).FirstOrDefault();
+        //                    // instanzen erzeugen
+        //                    MembervalidationFormModel mvm = new MembervalidationFormModel();
+        //                    Membervalidation mv = new Membervalidation();
+        //                    //speichern ins Objekt MembervalidationFormModel
+        //                    mvm.created = DateTime.Now;
+        //                    mvm.member_id = id;
+        //                    //umspeichern ins Datenbank Objekt
+        //                    mv.created = mvm.created;
+        //                    mv.member_id = mvm.member_id;
+        //                    //entitätsmenge sammeln und dann auf Datenbank speichern
+        //                    con2.Membervalidations.Add(mv);
+        //                    con2.SaveChanges();
+        //                    //sendet eine Bestätigungsmail an den User und hat einen Rückgabe string zur weiteren Verwndung wenn der User bestätigt kommt er auf die Login seite zur Anmeldung
+        //                    string zugangsaenderung = Helper.SendMailRegTo(mfm.email);
+        //                    if (zugangsaenderung != null)
+        //                    {
+        //                        TempData["ConfirmMessage"] = zugangsaenderung;
+        //                    }
+        //                    return RedirectToAction("Logout", "Abmelden");
+        //                }
+        //            }
+        //            else
+        //            {
+        //                ViewBag.errorEmail = "Gleiche E-Mail wurde verwendet!";
+        //                return View();
+        //            }
+        //        }
+        //    }
+        //    ViewBag.errdaten = "Kein Update der Person möglich";
+        //    return View();
+        //}
 
 
         ///// <summary>

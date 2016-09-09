@@ -244,7 +244,11 @@
       <DependentUpon>MeetsModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\MembervalidationFormModel.cs" />
+    <Compile Include="Models\ProfileViewModel.cs" />
     <Compile Include="Models\RegistrierFormModel.cs" />
+    <Compile Include="Models\sp_holeUserDaten_Result.cs">
+      <DependentUpon>MeetsModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\VerteilerFormModel.cs" />
     <Compile Include="Models\View_Event.cs">
       <DependentUpon>MeetsModel.tt</DependentUpon>
@@ -404,6 +408,7 @@
     <Content Include="Views\Shared\_LayoutValidateGesendet.cshtml" />
     <Content Include="Views\Events\VerteilerMailAnnahme.cshtml" />
     <Content Include="Views\Shared\_LayoutMailAnnahme.cshtml" />
+    <Content Include="Views\User\Profile.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
