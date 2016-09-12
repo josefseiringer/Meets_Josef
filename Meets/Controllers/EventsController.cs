@@ -18,6 +18,22 @@ namespace Meets.Controllers
         private MeetsEntities db = new MeetsEntities();
 
         [HttpGet]
+        [Authorize]
+        public ActionResult DetailEventBestaetigt()
+        {
+            string @email = User.Identity.Name;
+            var bestaetigteEvents = (from ev in db.Events
+                                     join evi in db.Eventinvitations
+                                     on ev.id equals evi.event_id
+                                     join inv in db.Invitationstatus
+                                     on evi.id equals inv.eventinvitations_id
+                                     where ev.Member.email == @email
+                                     select ev);
+            return View();
+        }
+
+
+        [HttpGet]
         public ActionResult VerteilerMailAnnahme(int @id)
         {
             //in Datenbank nachsehn ob ein Eintrag in eventsinvitation_id existiert
