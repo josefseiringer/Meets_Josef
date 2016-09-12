@@ -1,4 +1,4 @@
-﻿@model Meets.Models.MemberFormModel
+﻿@model Meets.Models.ProfileViewModel
 
 @{
     ViewBag.Title = "Edit";
@@ -14,34 +14,23 @@
     <div>@ViewBag.fehlerUpdate</div>
 }
 
-@*@using (Html.BeginForm())*@
 @using (Html.BeginForm("EditTestUpdateLinkQ", "User", FormMethod.Post))
 {
     <div>
         <table style="margin-top:10px;" cellpadding="10">
             <tr>
-                @*Verstektes Id Feld im View*@
-                <td>@Html.HiddenFor(modelItem => modelItem.id)</td>
-            </tr>
-            <tr>
                 <th><h4>E-Mail:</h4></th>
                 <th><h4>Neues Passwort:</h4></th>
                 <th><h4>Passwort wiederholen:</h4></th>
-                @*<th><h4>Geburtsdatum:</h4></th>*@
             </tr>
             <tr>
                 <td class="mytabeltext">
-                    @*@Html.TextBoxFor(modelItem => modelItem.email, htmlAttributes: new { @class = "mylabel" })*@
-                    @*@Html.DisplayFor(modelItem => modelItem.email)*@
-                    <h3>@Model.email</h3>
+                    <h3>@User.Identity.Name</h3>
                 </td>
                 <td>
-                    @Html.PasswordFor(modelItem => modelItem.Klartextpasswort, htmlAttributes: new { @class = "mylabel" })
+                    @Html.PasswordFor(modelItem => modelItem.NewPasswort, htmlAttributes: new { @class = "mylabel" })
                 </td>
-                @*<td class="mytabeltext">
-                    @Html.TextBoxFor(modelItem => modelItem.dateofbirth, htmlAttributes: new { @class = "mylabel" })
-                </td>*@
-                <td>@Html.PasswordFor(modelItem => modelItem.RetypePasswort, htmlAttributes: new { @class = "mylabel" })</td>
+                <td>@Html.PasswordFor(modelItem => modelItem.Passwortvergleich, htmlAttributes: new { @class = "mylabel" })</td>
             </tr>
             <tr>
                 <td class="text-danger">
@@ -59,8 +48,12 @@
                     }
                 </td>             
                 
-                @*<td>@Html.ValidationMessageFor(modelItem => modelItem.dateofbirth)</td>*@
-                
+                @*<td>@Html.ValidationMessageFor(modelItem => modelItem.Passwortvergleich)</td>*@
+                @if (ViewBag.equals != null)
+                {
+                    <td><p class="text-danger">@ViewBag.equals</p></td>
+                }
+
             </tr>
             <tr>
                 @if (ViewBag.errdaten != null)

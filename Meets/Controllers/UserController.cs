@@ -87,27 +87,31 @@ namespace Meets.Controllers
             string mail = User.Identity.Name;
             using (MeetsEntities cont = new MeetsEntities())
             {
-                MemberFormModel mfm = new MemberFormModel();
-
                 //Sucht nach der im View übergebenen id in der Datenbank und liefert ein Objekt Member zurück
                 Member memVal = (from m in cont.Members
                                  where m.email == mail
                                  select m).FirstOrDefault();
+                //MemberFormModel mfm = new MemberFormModel();
+                //mfm.Klartextpasswort = null;
+                //mfm.id = memVal.id;
+                //mfm.created = memVal.created;
+                //mfm.email = memVal.email;
+                //mfm.dateofbirth = memVal.dateofbirth;
+                //mfm.password = memVal.password;
 
-                mfm.Klartextpasswort = null;
-                mfm.id = memVal.id;
-                mfm.created = memVal.created;
-                mfm.email = memVal.email;
-                mfm.dateofbirth = memVal.dateofbirth;
-                mfm.password = memVal.password;
+                ProfileViewModel pvm = new ProfileViewModel();               
 
-                //List<MemberFormModel> result = new List<MemberFormModel>();
-                //result.Add(mfm);
-                
-                if (mfm.id != 0)
+                pvm.Email = memVal.email;
+                if (pvm.NewPasswort == null && pvm.Passwortvergleich == null)
                 {
-                                        
-                    return View(mfm);
+                    pvm.NewPasswort = null;
+                    pvm.Passwortvergleich = null;
+                }
+                
+                
+                if (memVal.id != 0)
+                {                                        
+                    return View(pvm);
                 }
             }
             ViewBag.errorMsg = "User nicht vorhanden";
@@ -116,10 +120,16 @@ namespace Meets.Controllers
 
         //Test LinkQ Update in Database
         [HttpPost]
-        public ActionResult EditTestUpdateLinkQ(MemberFormModel mfm)
+        public ActionResult EditTestUpdateLinkQ(ProfileViewModel pvm)
         {
+            pvm.Email = User.Identity.Name;
+            if (pvm.NewPasswort != pvm.Passwortvergleich)
+            {
+                ViewBag.equals = "Passwortvergleichsunterschied";
+                return View("Edit");
+            }
 
-            if (mfm != null)
+            if (pvm != null)
             {
                 using(MeetsEntities cont = new MeetsEntities())
                 {
@@ -129,19 +139,19 @@ namespace Meets.Controllers
                         where mem.email == User.Identity.Name
                         select mem;
 
-                    mfm.password = Helper.GetHash(mfm.Klartextpasswort);
+                    byte[] pasHash = Helper.GetHash(pvm.NewPasswort);
                     
                     //Änderungen der Datenbank übergeben
                     foreach (Member mem in query)
                     {
-                        mem.created = DateTime.Now;
-                        mem.password = mfm.password;
+                        //mem.created = DateTime.Now;
+                        mem.password = pasHash;
                     }
                     try
                     {
                         cont.SaveChanges();                       
                         //sendet eine Bestätigungsmail an den User und hat einen Rückgabe string zur weiteren Verwndung wenn der User bestätigt kommt er auf die Login seite zur Anmeldung
-                        string zugangsaenderung = Helper.SendMailRegTo(mfm.email);
+                        string zugangsaenderung = Helper.SendMailRegTo(pvm.Email);
                         if (zugangsaenderung != null)
                         {
                             TempData["ConfirmMessage"] = zugangsaenderung;

@@ -15,13 +15,11 @@ namespace Meets.Models
         [StringLength(255, ErrorMessage = "Maximal 255 Zeichen")]
         public string Email { get; set; }
 
-        public string OldPassword { get; set; }
-
         [Required(ErrorMessage = "Pflichtfeld", AllowEmptyStrings = false)]
         public string NewPasswort { get; set; }
 
         [Required(ErrorMessage = "Pflichtfeld", AllowEmptyStrings = false)]
-        [Compare("Passwort", ErrorMessage = "Vergleichsfehler")]
+        //[Compare("Passwort", ErrorMessage = "Vergleichsfehler")]
         public string Passwortvergleich { get; set; }
 
         
