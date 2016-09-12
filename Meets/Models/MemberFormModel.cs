@@ -23,6 +23,8 @@ namespace Meets.Models
         public System.DateTime dateofbirth { get; set; }
         [Required(ErrorMessage = "Pflichtfeld", AllowEmptyStrings = false)]
         public string Klartextpasswort { get; set; }
+        [Required(ErrorMessage = "Pflichtfeld", AllowEmptyStrings = false)]
+        public string RetypePasswort { get; set; }
 
     }
 }

@@ -7,7 +7,7 @@
 
 <h3>Deine Daten bearbeiten</h3>
 <hr />
-<p style="font-family:Corbel; font-size:18px;">Nach dem ändern der Benutzerdaten wirst du abgemeldet! Gleiche E-Mail Adresse kann nicht mehr verwendet werden.</p>
+<p style="font-family:Corbel; font-size:18px;">Nach dem ändern des Passwortes wirst du abgemeldet!</p>
 
 @if (ViewBag.fehlerUpdate != null)
 {
@@ -25,13 +25,15 @@
             </tr>
             <tr>
                 <th><h4>E-Mail:</h4></th>
-                <th><h4>Passwort:</h4></th>
+                <th><h4>Neues Passwort:</h4></th>
+                <th><h4>Passwort wiederholen:</h4></th>
                 @*<th><h4>Geburtsdatum:</h4></th>*@
             </tr>
             <tr>
                 <td class="mytabeltext">
                     @*@Html.TextBoxFor(modelItem => modelItem.email, htmlAttributes: new { @class = "mylabel" })*@
-                    @Html.DisplayFor(modelItem => modelItem.email)
+                    @*@Html.DisplayFor(modelItem => modelItem.email)*@
+                    <h3>@Model.email</h3>
                 </td>
                 <td>
                     @Html.PasswordFor(modelItem => modelItem.Klartextpasswort, htmlAttributes: new { @class = "mylabel" })
@@ -39,6 +41,7 @@
                 @*<td class="mytabeltext">
                     @Html.TextBoxFor(modelItem => modelItem.dateofbirth, htmlAttributes: new { @class = "mylabel" })
                 </td>*@
+                <td>@Html.PasswordFor(modelItem => modelItem.RetypePasswort, htmlAttributes: new { @class = "mylabel" })</td>
             </tr>
             <tr>
                 <td class="text-danger">
@@ -67,7 +70,7 @@
             </tr>
         </table>
     </div>
-    <div style="margin-top:-250px; float:right;">
+    <div style="margin-top:-270px; float:right;">
         <input style="float:right;" class="btnstyle" type="submit" value="Speichern" />
     </div>
 }
