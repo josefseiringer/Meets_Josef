@@ -29,3 +29,12 @@ GO
 
 INSERT INTO Membervalidation(member_id) VALUES (3);
 GO
+
+insert into Meets.dbo.Eventinvitations (email,event_id) values ('j.seiringer@gmail.com',1);
+GO
+insert into meets.dbo.Eventinvitations (email,event_id) values ('j.seiringer@gmail.com',3);
+GO
+insert into Meets.dbo.Invitationstatus (eventinvitations_id,confirm) values (1,1);
+GO
+insert into Meets.dbo.Invitationstatus (eventinvitations_id,confirm) values (2,0);
+GO
