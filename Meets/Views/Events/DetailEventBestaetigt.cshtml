@@ -1,8 +1,37 @@
-﻿
+﻿@model List<Meets.Models.BesaetigungDetailView>
+
 @{
     ViewBag.Title = "DetailEventBestaetigt";
-    Layout = "~/Views/Shared/_LayoutMeetsEvents.cshtml";
+    Layout = "~/Views/Shared/_LayoutGeladneDetail.cshtml";
 }
 
-<h2>DetailEventBestaetigt</h2>
+@foreach (Meets.Models.BesaetigungDetailView item in Model)
+{
+    <div class="backwitheEventsmaller">
+        <table>
+            <tr>
+                <th>Eventdatum:</th>
+                <td style="padding-left:10px;">@Html.DisplayFor(modelItem => item.Eventdatum)</td>
+            </tr>
+            <tr>
+                <th>Titel:</th>
+                <td style="padding-left:10px;">@Html.DisplayFor(modelItem => item.Eventtitel)</td>
+            </tr>
+            <tr>
+                <th>Bestätigungszeitpunkt:</th>
+                <td style="padding-left:10px;">@Html.DisplayFor(modelItem => item.Bestätigungszeitpunkt)</td>
+            </tr>
+            <tr>
+                <th>Eingeleadene E-Mail:</th>
+                <td style="padding-left:10px;">@Html.DisplayFor(modelItem => item.Eingeladen)</td>
+            </tr>
+            <tr>
+                <th>Angenommen Ja/Nein:</th>
+                <td style="padding-left:10px;">@Html.DisplayFor(modelItem => item.Bestätigt)</td>
+            </tr>
+
+        </table>
+    </div>
+}
+
 

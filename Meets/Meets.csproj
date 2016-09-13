@@ -414,6 +414,7 @@
     <Content Include="Views\Shared\_LayoutMailAnnahme.cshtml" />
     <Content Include="Views\User\Profile.cshtml" />
     <Content Include="Views\Events\DetailEventBestaetigt.cshtml" />
+    <Content Include="Views\Shared\_LayoutGeladneDetail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

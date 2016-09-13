@@ -19,25 +19,12 @@ namespace Meets.Controllers
 
         [HttpGet]
         [Authorize]
-        public ActionResult DetailEventBestaetigt(DetailBesaetigungViewModel dbvm)
+        public ActionResult DetailEventBestaetigt()
         {
             string @email = User.Identity.Name;
-            using(MeetsEntities cont = new MeetsEntities())
-            {
+            List<BesaetigungDetailView> list = db.BesaetigungDetailViews.SqlQuery("select * from dbo.fn_detailViewFromUserEmail('" + @email + "')").ToList();
 
-
-
-                return View();
-            }
-
-            //var bestaetigteEvents = (from ev in db.Events
-            //                         join evi in db.Eventinvitations
-            //                         on ev.id equals evi.event_id
-            //                         join inv in db.Invitationstatus
-            //                         on evi.id equals inv.eventinvitations_id
-            //                         where ev.Member.email == @email
-            //                         select ev);
-            
+            return View(list);
         }
 
 

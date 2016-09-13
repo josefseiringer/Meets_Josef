@@ -199,6 +199,9 @@ Warnung 6002: Für Tabelle/Sicht 'Meets.dbo.View_Event_open' ist kein Primärsch
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="fn_Check_User_FromEmail" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int">
+          <Parameter Name="email" Type="varchar" Mode="In" />
+        </Function>
         <Function Name="fn_check_user_Table" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="email" Type="varchar" Mode="In" />
           <Parameter Name="password" Type="varbinary(max)" Mode="In" />
