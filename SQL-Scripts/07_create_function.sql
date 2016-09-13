@@ -160,3 +160,15 @@ SELECT dbo.[Events].created AS Erstellt, dbo.Members.email AS Ersteller, dbo.[Ev
        dbo.[Events].description AS Beschreibung, dbo.[Events].viewpublic AS Oeffentlich, dbo.[Events].location AS Standort
 FROM   dbo.[Events] INNER JOIN dbo.Members ON dbo.[Events].member_id = dbo.Members.id where dbo.[Events].viewpublic = 1;
 GO
+
+CREATE VIEW [dbo].[BesaetigungDetailView]
+AS
+SELECT TOP (100) PERCENT CONVERT(VARCHAR(10), dbo.Events.eventdate, 104) AS Eventdatum, dbo.Events.title AS Eventtitel, CONVERT(VARCHAR(10), dbo.Invitationstatus.created, 104) AS Bestätigungszeitpunkt, dbo.Eventinvitations.email AS Eingeladen, 
+             dbo.Invitationstatus.[confirm] AS Bestätigt
+FROM   dbo.Eventinvitations INNER JOIN
+             dbo.Events ON dbo.Eventinvitations.event_id = dbo.Events.id INNER JOIN
+             dbo.Invitationstatus ON dbo.Eventinvitations.id = dbo.Invitationstatus.eventinvitations_id INNER JOIN
+             dbo.Members ON dbo.Events.member_id = dbo.Members.id
+ORDER BY dbo.Events.eventdate DESC;
+
+GO

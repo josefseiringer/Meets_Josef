@@ -19,17 +19,25 @@ namespace Meets.Controllers
 
         [HttpGet]
         [Authorize]
-        public ActionResult DetailEventBestaetigt()
+        public ActionResult DetailEventBestaetigt(DetailBesaetigungViewModel dbvm)
         {
             string @email = User.Identity.Name;
-            var bestaetigteEvents = (from ev in db.Events
-                                     join evi in db.Eventinvitations
-                                     on ev.id equals evi.event_id
-                                     join inv in db.Invitationstatus
-                                     on evi.id equals inv.eventinvitations_id
-                                     where ev.Member.email == @email
-                                     select ev);
-            return View();
+            using(MeetsEntities cont = new MeetsEntities())
+            {
+
+
+
+                return View();
+            }
+
+            //var bestaetigteEvents = (from ev in db.Events
+            //                         join evi in db.Eventinvitations
+            //                         on ev.id equals evi.event_id
+            //                         join inv in db.Invitationstatus
+            //                         on evi.id equals inv.eventinvitations_id
+            //                         where ev.Member.email == @email
+            //                         select ev);
+            
         }
 
 

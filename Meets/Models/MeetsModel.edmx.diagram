@@ -20,6 +20,7 @@
         <AssociationConnector Association="MeetsModel.fk_Membersubscriptions_Member" />
         <EntityTypeShape EntityType="MeetsModel.Invitationstatu" Width="1.75" PointX="0.625" PointY="7.375" />
         <AssociationConnector Association="MeetsModel.fk_Invitationstatus_Eventinvitations" />
+        <EntityTypeShape EntityType="MeetsModel.BesaetigungDetailView" Width="1.5" PointX="8.25" PointY="6.125" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
