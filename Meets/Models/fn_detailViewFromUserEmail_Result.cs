@@ -14,10 +14,20 @@ namespace Meets.Models
 
 using System;
     
-public partial class fn_check_user_Table_Result
+public partial class fn_detailViewFromUserEmail_Result
 {
 
-    public int id { get; set; }
+    public string Eventdatum { get; set; }
+
+    public string Eventtitel { get; set; }
+
+    public string Bestätigungszeitpunkt { get; set; }
+
+    public string Eingeladen { get; set; }
+
+    public bool Bestätigt { get; set; }
+
+    public string email { get; set; }
 
 }
 

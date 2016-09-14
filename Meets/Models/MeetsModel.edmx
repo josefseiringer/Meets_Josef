@@ -213,6 +213,21 @@ Warnung 6002: Für Tabelle/Sicht 'Meets.dbo.View_Event_open' ist kein Primärsch
             </CollectionType>
           </ReturnType>
         </Function>
+        <Function Name="fn_detailViewFromUserEmail" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="email" Type="varchar" Mode="In" />
+          <ReturnType>
+            <CollectionType>
+              <RowType>
+                <Property Name="Eventdatum" Type="varchar" MaxLength="10" />
+                <Property Name="Eventtitel" Type="varchar" MaxLength="50" Nullable="false" />
+                <Property Name="Bestätigungszeitpunkt" Type="varchar" MaxLength="10" />
+                <Property Name="Eingeladen" Type="varchar" MaxLength="255" Nullable="false" />
+                <Property Name="Bestätigt" Type="bit" Nullable="false" />
+                <Property Name="email" Type="varchar" MaxLength="255" Nullable="false" />
+              </RowType>
+            </CollectionType>
+          </ReturnType>
+        </Function>
         <Function Name="fn_Show_Event_Table" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="email" Type="varchar" Mode="In" />
           <ReturnType>
@@ -439,6 +454,9 @@ Warnung 6002: Für Tabelle/Sicht 'Meets.dbo.View_Event_open' ist kein Primärsch
           <FunctionImport Name="sp_holeUserDaten" ReturnType="Collection(MeetsModel.sp_holeUserDaten_Result)">
           <Parameter Name="email" Mode="In" Type="String" />
           </FunctionImport>
+          <FunctionImport Name="fn_detailViewFromUserEmail" IsComposable="true" ReturnType="Collection(MeetsModel.fn_detailViewFromUserEmail_Result)">
+          <Parameter Name="email" Mode="In" Type="String" />
+          </FunctionImport>
           <EntitySet Name="BesaetigungDetailViews" EntityType="MeetsModel.BesaetigungDetailView" />
         </EntityContainer>
         <EntityType Name="Membervalidation">
@@ -566,6 +584,14 @@ Warnung 6002: Für Tabelle/Sicht 'Meets.dbo.View_Event_open' ist kein Primärsch
           <Property Type="String" Name="email" Nullable="false" MaxLength="255" />
           <Property Type="Binary" Name="password" Nullable="false" />
           <Property Type="DateTime" Name="dateofbirth" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="fn_detailViewFromUserEmail_Result">
+          <Property Type="String" Name="Eventdatum" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="Eventtitel" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="Bestätigungszeitpunkt" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="Eingeladen" Nullable="false" MaxLength="255" />
+          <Property Type="Boolean" Name="Bestätigt" Nullable="false" />
+          <Property Type="String" Name="email" Nullable="false" MaxLength="255" />
         </ComplexType>
         <EntityType Name="BesaetigungDetailView">
           <Key>
@@ -714,6 +740,18 @@ Warnung 6002: Für Tabelle/Sicht 'Meets.dbo.View_Event_open' ist kein Primärsch
                 <ScalarProperty Name="email" ColumnName="email" />
                 <ScalarProperty Name="password" ColumnName="password" />
                 <ScalarProperty Name="dateofbirth" ColumnName="dateofbirth" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="fn_detailViewFromUserEmail" FunctionName="MeetsModel.Store.fn_detailViewFromUserEmail">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="MeetsModel.fn_detailViewFromUserEmail_Result">
+                <ScalarProperty Name="Eventdatum" ColumnName="Eventdatum" />
+                <ScalarProperty Name="Eventtitel" ColumnName="Eventtitel" />
+                <ScalarProperty Name="Bestätigungszeitpunkt" ColumnName="Bestätigungszeitpunkt" />
+                <ScalarProperty Name="Eingeladen" ColumnName="Eingeladen" />
+                <ScalarProperty Name="Bestätigt" ColumnName="Bestätigt" />
+                <ScalarProperty Name="email" ColumnName="email" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

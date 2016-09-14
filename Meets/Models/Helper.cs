@@ -68,38 +68,47 @@ namespace Meets.Models
             string antwort = null;
             if (emailTo != null)
             {
-                //string passwd = "Jomoresa31_bbrz";
-                //string mailSelf = "josef.seiringer@qualifizierung.or.at";
-                string passwd = "Jomoresa@31";
-                string mailSelf = "j.seiringer@live.at";
+                try
+                {
+                    //string passwd = "Jomoresa31_bbrz";
+                    //string mailSelf = "josef.seiringer@qualifizierung.or.at";
+                    string passwd = "Jomoresa@31";
+                    string mailSelf = "j.seiringer@live.at";
 
-                MailMessage mail = new MailMessage();
-                mail.From = new MailAddress("noreplay@Meets.at"); //Absender
-                mail.To.Add(emailTo); //Empfänger
+                    MailMessage mail = new MailMessage();
+                    mail.From = new MailAddress("noreplay@Meets.at"); //Absender
+                    mail.To.Add(emailTo); //Empfänger
 
-                mail.Subject = "Einladung zu einem Event bei Meets";
-                string linkja = "http://localhost:52111/Events/VerteilerMailAnnahme/" + id;
-                string siteHtml = "<div style='width:400px;height:290px;border:solid 3px #0094ff;padding:10px;margin:20px auto;'><h2>Meets lädt dich zu einem Event ein</h2><p>Um das Event : '" + eventTitle +"'<br/>näher zu betrachten bitte den bestätigungs Link klicken</p><a href='"+linkja+"'>Bestätigen</a></div>";
+                    mail.Subject = "Einladung zu einem Event bei Meets";
+                    string linkja = "http://localhost:52111/Events/VerteilerMailAnnahme/" + id;
+                    string siteHtml = "<div style='width:400px;height:290px;border:solid 3px #0094ff;padding:10px;margin:20px auto;'><h2>Meets lädt dich zu einem Event ein</h2><p>Um das Event : '" + eventTitle + "'<br/>näher zu betrachten bitte den bestätigungs Link klicken</p><a href='" + linkja + "'>Bestätigen</a></div>";
+
+                    mail.Body = siteHtml;
+
+                    mail.IsBodyHtml = true;
+
+                    //mail.AlternateViews htmlView = AlternateView.CreateAlternateViewFromString()
+                    //SmtpClient client = new SmtpClient("sauron.itcc.local", 25);
+                    SmtpClient client = new SmtpClient("smtp.live.com", 25);
+
+                    //!!! nicht SSL im BBRZ verwenden !!!           
+
+                    client.Credentials = new System.Net.NetworkCredential(mailSelf, passwd);
+
+                    client.EnableSsl = true;
+
+                    client.Send(mail); //Senden 
+
+
+                    antwort = "Event wurde an Mailadresse versendet";
+                    return antwort;
+                }
+                catch (Exception ex)
+                {
+
+                    antwort = ex + "  Problem mit Mailversand";
+                }
                 
-                mail.Body = siteHtml;
-
-                mail.IsBodyHtml = true;
-
-                //mail.AlternateViews htmlView = AlternateView.CreateAlternateViewFromString()
-                //SmtpClient client = new SmtpClient("sauron.itcc.local", 25);
-                SmtpClient client = new SmtpClient("smtp.live.com", 25);
-
-                //!!! nicht SSL im BBRZ verwenden !!!           
-
-                client.Credentials = new System.Net.NetworkCredential(mailSelf, passwd);
-
-                client.EnableSsl = true;
-
-                client.Send(mail); //Senden 
-
-
-                antwort = "Event wurde an Mailadresse versendet";
-                return antwort;
             }
 
             antwort = "Mailversand nicht erfolgreich";
