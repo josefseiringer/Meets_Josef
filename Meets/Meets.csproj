@@ -346,9 +346,10 @@
     <Content Include="Models\MeetsModel.edmx.diagram">
       <DependentUpon>MeetsModel.edmx</DependentUpon>
     </Content>
-    <Content Include="Pflichtenheft\Pflichtenheft-LAP-IT-IN18-v0.5.docx" />
+    <Content Include="PflichtenheftUndHandbuch\Pflichtenheft-LAP-IT-IN18-v0.5.docx" />
     <Content Include="Content\toastr.scss" />
     <Content Include="Content\toastr.less" />
+    <Content Include="PflichtenheftUndHandbuch\MeetsHandbuch.docx" />
     <None Include="Scripts\jquery-1.12.4.intellisense.js" />
     <Content Include="Scripts\jquery-1.12.4.js" />
     <Content Include="Scripts\jquery-1.12.4.min.js" />
