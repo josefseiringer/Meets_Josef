@@ -33,8 +33,9 @@ namespace Meets.Controllers
         {
             //in Datenbank nachsehn ob ein Eintrag in eventsinvitation_id existiert
             int invit = (from i in db.Invitationstatus
-                         where @id == i.eventinvitations_id
-                         select i.eventinvitations_id).FirstOrDefault();
+                         join evi in db.Eventinvitations on @id equals evi.event_id
+                         where evi.id == i.eventinvitations_id
+                         select i.id).FirstOrDefault();
 
             Event aktuell = (from e in db.Events
                              where e.id == @id
@@ -51,6 +52,7 @@ namespace Meets.Controllers
         [HttpPost]
         public ActionResult VerteilerMailAnnahme(Event ev, string ja,string nein)
         {
+            int @eventid = ev.id;
             if (ev != null)
             {
                 //Ermitteln der id in den Eventinvitation über die event_id  aus Event
@@ -69,8 +71,8 @@ namespace Meets.Controllers
                     db.SaveChanges();
 
                     TempData["ConfirmMessage"] = "Annahme wurde bestätigt";
-                    //return RedirectToAction("VerteilerMailAnnahme", ev.id);
-                    return RedirectToAction("Home", "Index");
+                    
+                    return RedirectToAction("VerteilerMailAnnahme", @eventid);
                 }
                 //bei Ablehen eventinvitation_id mit false speichern in den Invitationstatus
                 else if (nein != null)
@@ -82,12 +84,13 @@ namespace Meets.Controllers
                     db.SaveChanges();
 
                     TempData["ConfirmMessage"] = "Du hast abgelehnt";
-                    //return RedirectToAction("VerteilerMailAnnahme", ev.id);
-                    return RedirectToAction("Home", "Index");
+                    
+                    return RedirectToAction("VerteilerMailAnnahme", @eventid);
                 }                
             }
             TempData["ErrorMessage"] = "Kein Event geladen";
-            return RedirectToAction("VerteilerMailAnnahme", ev.id);
+            
+            return RedirectToAction("VerteilerMailAnnahme", @eventid);
         }
 
         /// <summary>
@@ -324,28 +327,6 @@ namespace Meets.Controllers
             return View();
         }
 
-        /// <summary>
-        /// Bearbeiten oder Update des Events GET
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        [Authorize]
-        // GET: Events/Edit/5
-        //public ActionResult Edit(int? id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-        //    }
-        //    Event @event = db.Events.Find(id);
-        //    if (@event == null)
-        //    {
-        //        return HttpNotFound();
-        //    }
-        //    ViewBag.member_id = new SelectList(db.Members, "id", "email", @event.member_id);
-        //    return View(@event);
-        //}
-
         public ActionResult Edit(int? id)
         {
             if (User.Identity.Name != null)
@@ -451,8 +432,8 @@ namespace Meets.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Event @event = db.Events.Find(id);
-            db.Events.Remove(@event);
+            //Event @event = db.Events.Find(id);
+            db.sp_delete_Event(id);                      
             db.SaveChanges();
             return RedirectToAction("EventDefaultUser");
         }
