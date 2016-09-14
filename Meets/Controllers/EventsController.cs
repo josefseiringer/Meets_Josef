@@ -53,30 +53,37 @@ namespace Meets.Controllers
         {
             if (ev != null)
             {
+                //Ermitteln der id in den Eventinvitation über die event_id  aus Event
+                var idEventInvit = (from ei in db.Eventinvitations
+                                    where ei.event_id == ev.id
+                                    select ei.id).FirstOrDefault();
                 //instanz erzeugen und variable ivs zeigt darauf
                 Invitationstatu ivs = new Invitationstatu();
                 ////bei Annehmen eventinvitation_id mit true speichern in den Invitationstatus
                 if (ja != null)
                 {      
                     ivs.created = DateTime.Now;
-                    ivs.eventinvitations_id = ev.id;
+                    ivs.eventinvitations_id = idEventInvit;
                     ivs.confirm = true;
                     db.Invitationstatus.Add(ivs);
                     db.SaveChanges();
 
                     TempData["ConfirmMessage"] = "Annahme wurde bestätigt";
-                    return RedirectToAction("VerteilerMailAnnahme", ev.id);
+                    //return RedirectToAction("VerteilerMailAnnahme", ev.id);
+                    return RedirectToAction("Home", "Index");
                 }
                 //bei Ablehen eventinvitation_id mit false speichern in den Invitationstatus
                 else if (nein != null)
                 {
                     ivs.created = DateTime.Now;
-                    ivs.eventinvitations_id = ev.id;
+                    ivs.eventinvitations_id = idEventInvit;
                     ivs.confirm = false;
                     db.Invitationstatus.Add(ivs);
                     db.SaveChanges();
+
                     TempData["ConfirmMessage"] = "Du hast abgelehnt";
-                    return RedirectToAction("VerteilerMailAnnahme", ev.id);
+                    //return RedirectToAction("VerteilerMailAnnahme", ev.id);
+                    return RedirectToAction("Home", "Index");
                 }                
             }
             TempData["ErrorMessage"] = "Kein Event geladen";
