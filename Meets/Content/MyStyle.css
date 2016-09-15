@@ -103,7 +103,7 @@ nav{
 .spaltenabstand{margin-bottom:10px;}
 
 /*LoginStyles*/
-.loginFigur{width:240px;height:198px; position:relative;left:530px; bottom:200px; border:solid 2px #000000;border-radius:10px;}
+.loginFigur{width:240px;height:198px; position:relative;left:500px; bottom:80px; border:solid 2px #000000;border-radius:10px;}
 .rounded{
     border-radius:10px;
 }

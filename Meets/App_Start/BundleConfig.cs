@@ -10,7 +10,10 @@ namespace Meets
         {
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
                         "~/Scripts/jquery-{version}.js",
-                        "~/Scripts/toastr.js"));
+                        "~/Scripts/jquery.js",
+                        "~/Scripts/jquery.datetimepicker.js",
+                        "~/Scripts/toastr.js"
+                        ));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
                         "~/Scripts/jquery.validate*"));
@@ -28,6 +31,7 @@ namespace Meets
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",                      
                       "~/Content/site.css",
+                      "~/Content/jquery.datetimepicker.css",
                       "~/Content/toastr.css",
                       "~/Content/bootstrap-datepicker.css"));
         }

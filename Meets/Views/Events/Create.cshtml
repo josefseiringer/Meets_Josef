@@ -10,12 +10,11 @@
     {
         @Html.AntiForgeryToken()
         <div class="form-horizontal">
-            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
- 
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" }) 
             <div class="form-group">
                 @Html.LabelFor(model => model.eventdate, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
-                    @Html.EditorFor(model => model.eventdate, new { htmlAttributes = new { @class = "form-control datepicker"} })
+                    @Html.EditorFor(model => model.eventdate, new { htmlAttributes = new { @class = "form-control", id = "datetimepicker" } })
                     @Html.ValidationMessageFor(model => model.eventdate, "", new { @class = "text-danger" })
                 </div>
             </div>
@@ -72,10 +71,13 @@
 </div>
 <script type="text/javascript">
     $(function () { // will trigger when the document is ready
-        $('.datepicker').datepicker({format: 'dd/mm/yyyy'}); //Initialise any date pickers
+        $('#datetimepicker').datepicker({
+            format: 'dd/mm/yyyy'
+        }); //Initialise any date pickers
     });
 
 </script>
+
 
 
 
