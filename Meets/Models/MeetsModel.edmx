@@ -459,7 +459,7 @@ Warnung 6002: Für Tabelle/Sicht 'Meets.dbo.View_Event_open' ist kein Primärsch
           </FunctionImport>
           <EntitySet Name="BesaetigungDetailViews" EntityType="MeetsModel.BesaetigungDetailView" />
           <FunctionImport Name="sp_delete_Event">
-            <Parameter Name="event" Mode="In" Type="Int32" />
+          <Parameter Name="event" Mode="In" Type="Int32" />
           </FunctionImport>
         </EntityContainer>
         <EntityType Name="Membervalidation">
