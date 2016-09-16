@@ -13,6 +13,25 @@ namespace Meets.Controllers
 {
     public class UserController : Controller
     {
+
+        [HttpGet]
+        [Authorize]
+        public ActionResult Zusatzinfos()
+        {
+            string defaultUserEmail = User.Identity.Name;
+            using (MeetsEntities cont = new MeetsEntities())
+            {
+
+
+
+
+
+                cont.SaveChanges();
+                return null;
+            }
+
+               
+        }
         
 
         /// <summary>
