@@ -5,6 +5,14 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="MeetsModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Configtables">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="description" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="vat" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
         <EntityType Name="Eventinvitations">
           <Key>
             <PropertyRef Name="id" />
@@ -73,19 +81,27 @@
           <Property Name="created" Type="datetime" Nullable="false" />
           <Property Name="member_id" Type="int" Nullable="false" />
         </EntityType>
+        <EntityType Name="Propertytypes">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="created" Type="datetime" Nullable="false" />
+          <Property Name="description" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
         <!--Während der Generierung sind Fehler aufgetreten:
 Warnung 6002: Für Tabelle/Sicht 'Meets.dbo.BesaetigungDetailView' ist kein Primärschlüssel definiert. Der Schlüssel wurde abgeleitet, und die Definition wurde als schreibgeschützte Tabelle/Sicht erstellt.-->
         <EntityType Name="BesaetigungDetailView">
           <Key>
             <PropertyRef Name="Eventtitel" />
             <PropertyRef Name="Eingeladen" />
-            <PropertyRef Name="Bestätigt" />
+            <PropertyRef Name="Bestõtigt" />
           </Key>
           <Property Name="Eventdatum" Type="varchar" MaxLength="10" />
           <Property Name="Eventtitel" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="Bestätigungszeitpunkt" Type="varchar" MaxLength="10" />
+          <Property Name="Bestõtigungszeitpunkt" Type="varchar" MaxLength="10" />
           <Property Name="Eingeladen" Type="varchar" MaxLength="255" Nullable="false" />
-          <Property Name="Bestätigt" Type="bit" Nullable="false" />
+          <Property Name="Bestõtigt" Type="bit" Nullable="false" />
         </EntityType>
         <!--Während der Generierung sind Fehler aufgetreten:
 Warnung 6002: Für Tabelle/Sicht 'Meets.dbo.View_Event' ist kein Primärschlüssel definiert. Der Schlüssel wurde abgeleitet, und die Definition wurde als schreibgeschützte Tabelle/Sicht erstellt.-->
@@ -175,6 +191,18 @@ Warnung 6002: Für Tabelle/Sicht 'Meets.dbo.View_Event_open' ist kein Primärsch
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="fk_Memberproperties_Propertytypes">
+          <End Role="Propertytypes" Type="Self.Propertytypes" Multiplicity="1" />
+          <End Role="Memberproperties" Type="Self.Memberproperties" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Propertytypes">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Memberproperties">
+              <PropertyRef Name="propertytype_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="fk_Membersubscriptions_Member">
           <End Role="Members" Type="Self.Members" Multiplicity="1" />
           <End Role="Membersubscriptions" Type="Self.Membersubscriptions" Multiplicity="*" />
@@ -220,9 +248,9 @@ Warnung 6002: Für Tabelle/Sicht 'Meets.dbo.View_Event_open' ist kein Primärsch
               <RowType>
                 <Property Name="Eventdatum" Type="varchar" MaxLength="10" />
                 <Property Name="Eventtitel" Type="varchar" MaxLength="50" Nullable="false" />
-                <Property Name="Bestätigungszeitpunkt" Type="varchar" MaxLength="10" />
+                <Property Name="Bestõtigungszeitpunkt" Type="varchar" MaxLength="10" />
                 <Property Name="Eingeladen" Type="varchar" MaxLength="255" Nullable="false" />
-                <Property Name="Bestätigt" Type="bit" Nullable="false" />
+                <Property Name="Bestõtigt" Type="bit" Nullable="false" />
                 <Property Name="email" Type="varchar" MaxLength="255" Nullable="false" />
               </RowType>
             </CollectionType>
@@ -243,8 +271,15 @@ Warnung 6002: Für Tabelle/Sicht 'Meets.dbo.View_Event_open' ist kein Primärsch
             </CollectionType>
           </ReturnType>
         </Function>
+        <Function Name="sp_AendereUserdaten" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="email" Type="varchar" Mode="In" />
+          <Parameter Name="password" Type="varbinary(max)" Mode="In" />
+        </Function>
         <Function Name="sp_delete_Event" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="event" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_delete_Member" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="member" Type="int" Mode="In" />
         </Function>
         <Function Name="sp_holeUserDaten" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="email" Type="varchar" Mode="In" />
@@ -255,6 +290,7 @@ Warnung 6002: Für Tabelle/Sicht 'Meets.dbo.View_Event_open' ist kein Primärsch
           <Parameter Name="dateOfBirth" Type="datetime" Mode="In" />
         </Function>
         <EntityContainer Name="MeetsModelStoreContainer">
+          <EntitySet Name="Configtables" EntityType="Self.Configtables" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Eventinvitations" EntityType="Self.Eventinvitations" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Events" EntityType="Self.Events" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Invitationstatus" EntityType="Self.Invitationstatus" Schema="dbo" store:Type="Tables" />
@@ -262,13 +298,14 @@ Warnung 6002: Für Tabelle/Sicht 'Meets.dbo.View_Event_open' ist kein Primärsch
           <EntitySet Name="Members" EntityType="Self.Members" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Membersubscriptions" EntityType="Self.Membersubscriptions" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Membervalidation" EntityType="Self.Membervalidation" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Propertytypes" EntityType="Self.Propertytypes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="BesaetigungDetailView" EntityType="Self.BesaetigungDetailView" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [BesaetigungDetailView].[Eventdatum] AS [Eventdatum], 
     [BesaetigungDetailView].[Eventtitel] AS [Eventtitel], 
-    [BesaetigungDetailView].[Bestätigungszeitpunkt] AS [Bestätigungszeitpunkt], 
+    [BesaetigungDetailView].[Bestõtigungszeitpunkt] AS [Bestõtigungszeitpunkt], 
     [BesaetigungDetailView].[Eingeladen] AS [Eingeladen], 
-    [BesaetigungDetailView].[Bestätigt] AS [Bestätigt]
+    [BesaetigungDetailView].[Bestõtigt] AS [Bestõtigt]
     FROM [dbo].[BesaetigungDetailView] AS [BesaetigungDetailView]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="View_Event" EntityType="Self.View_Event" store:Type="Views" store:Schema="dbo">
@@ -307,6 +344,10 @@ Warnung 6002: Für Tabelle/Sicht 'Meets.dbo.View_Event_open' ist kein Primärsch
           </AssociationSet>
           <AssociationSet Name="fk_Memberproperties_Member" Association="Self.fk_Memberproperties_Member">
             <End Role="Members" EntitySet="Members" />
+            <End Role="Memberproperties" EntitySet="Memberproperties" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Memberproperties_Propertytypes" Association="Self.fk_Memberproperties_Propertytypes">
+            <End Role="Propertytypes" EntitySet="Propertytypes" />
             <End Role="Memberproperties" EntitySet="Memberproperties" />
           </AssociationSet>
           <AssociationSet Name="fk_Membersubscriptions_Member" Association="Self.fk_Membersubscriptions_Member">
@@ -461,6 +502,16 @@ Warnung 6002: Für Tabelle/Sicht 'Meets.dbo.View_Event_open' ist kein Primärsch
           <FunctionImport Name="sp_delete_Event">
           <Parameter Name="event" Mode="In" Type="Int32" />
           </FunctionImport>
+          <EntitySet Name="Configtables" EntityType="MeetsModel.Configtable" />
+          <EntitySet Name="Propertytypes" EntityType="MeetsModel.Propertytype" />
+          <AssociationSet Name="fk_Memberproperties_Propertytypes" Association="MeetsModel.fk_Memberproperties_Propertytypes">
+            <End Role="Propertytype" EntitySet="Propertytypes" />
+            <End Role="Memberproperty" EntitySet="Memberproperties" />
+          </AssociationSet>
+          <FunctionImport Name="sp_AendereUserdaten">
+            <Parameter Name="email" Mode="In" Type="String" />
+            <Parameter Name="password" Mode="In" Type="Binary" />
+          </FunctionImport>
         </EntityContainer>
         <EntityType Name="Membervalidation">
           <Key>
@@ -512,6 +563,7 @@ Warnung 6002: Für Tabelle/Sicht 'Meets.dbo.View_Event_open' ist kein Primärsch
           <Property Name="propertytype_id" Type="Int32" Nullable="false" />
           <Property Name="val" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Member" Relationship="MeetsModel.fk_Memberproperties_Member" FromRole="Memberproperty" ToRole="Member" />
+          <NavigationProperty Name="Propertytype" Relationship="MeetsModel.fk_Memberproperties_Propertytypes" FromRole="Memberproperty" ToRole="Propertytype" />
         </EntityType>
         <EntityType Name="Membersubscription">
           <Key>
@@ -601,13 +653,45 @@ Warnung 6002: Für Tabelle/Sicht 'Meets.dbo.View_Event_open' ist kein Primärsch
             <PropertyRef Name="Eventtitel" />
             <PropertyRef Name="Eingeladen" />
             <PropertyRef Name="Bestätigt" />
+            <PropertyRef Name="Bestõtigt" />
           </Key>
           <Property Name="Eventdatum" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="Eventtitel" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Bestätigungszeitpunkt" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="Eingeladen" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
           <Property Name="Bestätigt" Type="Boolean" Nullable="false" />
+          <Property Name="Bestõtigungszeitpunkt" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Bestõtigt" Type="Boolean" Nullable="false" />
         </EntityType>
+        <EntityType Name="Configtable">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="description" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="vat" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Propertytype">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="created" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="description" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Memberproperties" Relationship="MeetsModel.fk_Memberproperties_Propertytypes" FromRole="Propertytype" ToRole="Memberproperty" />
+        </EntityType>
+        <Association Name="fk_Memberproperties_Propertytypes">
+          <End Type="MeetsModel.Propertytype" Role="Propertytype" Multiplicity="1" />
+          <End Type="MeetsModel.Memberproperty" Role="Memberproperty" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Propertytype">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Memberproperty">
+              <PropertyRef Name="propertytype_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -761,15 +845,34 @@ Warnung 6002: Für Tabelle/Sicht 'Meets.dbo.View_Event_open' ist kein Primärsch
           <EntitySetMapping Name="BesaetigungDetailViews">
             <EntityTypeMapping TypeName="MeetsModel.BesaetigungDetailView">
               <MappingFragment StoreEntitySet="BesaetigungDetailView">
-                <ScalarProperty Name="Bestätigt" ColumnName="Bestätigt" />
+                <ScalarProperty Name="Bestõtigt" ColumnName="Bestõtigt" />
+                <ScalarProperty Name="Bestõtigungszeitpunkt" ColumnName="Bestõtigungszeitpunkt" />
                 <ScalarProperty Name="Eingeladen" ColumnName="Eingeladen" />
-                <ScalarProperty Name="Bestätigungszeitpunkt" ColumnName="Bestätigungszeitpunkt" />
                 <ScalarProperty Name="Eventtitel" ColumnName="Eventtitel" />
                 <ScalarProperty Name="Eventdatum" ColumnName="Eventdatum" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="sp_delete_Event" FunctionName="MeetsModel.Store.sp_delete_Event" />
+          <EntitySetMapping Name="Configtables">
+            <EntityTypeMapping TypeName="MeetsModel.Configtable">
+              <MappingFragment StoreEntitySet="Configtables">
+                <ScalarProperty Name="vat" ColumnName="vat" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Propertytypes">
+            <EntityTypeMapping TypeName="MeetsModel.Propertytype">
+              <MappingFragment StoreEntitySet="Propertytypes">
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="created" ColumnName="created" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="sp_AendereUserdaten" FunctionName="MeetsModel.Store.sp_AendereUserdaten" />
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

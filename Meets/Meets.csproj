@@ -200,6 +200,9 @@
     <Compile Include="Models\BesaetigungDetailView.cs">
       <DependentUpon>MeetsModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Configtable.cs">
+      <DependentUpon>MeetsModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\DetailBesaetigungViewModel.cs" />
     <Compile Include="Models\Event.cs">
       <DependentUpon>MeetsModel.tt</DependentUpon>
@@ -252,6 +255,9 @@
     </Compile>
     <Compile Include="Models\MembervalidationFormModel.cs" />
     <Compile Include="Models\ProfileViewModel.cs" />
+    <Compile Include="Models\Propertytype.cs">
+      <DependentUpon>MeetsModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\RegistrierFormModel.cs" />
     <Compile Include="Models\sp_holeUserDaten_Result.cs">
       <DependentUpon>MeetsModel.tt</DependentUpon>

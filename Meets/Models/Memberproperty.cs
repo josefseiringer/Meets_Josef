@@ -32,6 +32,8 @@ public partial class Memberproperty
 
     public virtual Member Member { get; set; }
 
+    public virtual Propertytype Propertytype { get; set; }
+
 }
 
 }

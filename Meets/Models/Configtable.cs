@@ -15,22 +15,14 @@ namespace Meets.Models
 using System;
     using System.Collections.Generic;
     
-public partial class BesaetigungDetailView
+public partial class Configtable
 {
 
-    public string Eventdatum { get; set; }
+    public int id { get; set; }
 
-    public string Eventtitel { get; set; }
+    public string description { get; set; }
 
-    public string Bestätigungszeitpunkt { get; set; }
-
-    public string Eingeladen { get; set; }
-
-    public bool Bestätigt { get; set; }
-
-    public string Bestõtigungszeitpunkt { get; set; }
-
-    public bool Bestõtigt { get; set; }
+    public string vat { get; set; }
 
 }
 

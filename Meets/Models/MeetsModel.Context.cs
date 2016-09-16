@@ -55,6 +55,10 @@ public partial class MeetsEntities : DbContext
 
     public virtual DbSet<BesaetigungDetailView> BesaetigungDetailViews { get; set; }
 
+    public virtual DbSet<Configtable> Configtables { get; set; }
+
+    public virtual DbSet<Propertytype> Propertytypes { get; set; }
+
 
     [DbFunction("MeetsEntities", "fn_check_user_Table")]
     public virtual IQueryable<fn_check_user_Table_Result> fn_check_user_Table(string email, byte[] password)
@@ -155,6 +159,23 @@ public partial class MeetsEntities : DbContext
 
 
         return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_delete_Event", eventParameter);
+    }
+
+
+    public virtual int sp_AendereUserdaten(string email, byte[] password)
+    {
+
+        var emailParameter = email != null ?
+            new ObjectParameter("email", email) :
+            new ObjectParameter("email", typeof(string));
+
+
+        var passwordParameter = password != null ?
+            new ObjectParameter("password", password) :
+            new ObjectParameter("password", typeof(byte[]));
+
+
+        return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_AendereUserdaten", emailParameter, passwordParameter);
     }
 
 }

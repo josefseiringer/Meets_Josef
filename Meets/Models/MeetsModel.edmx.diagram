@@ -8,19 +8,22 @@
         <EntityTypeShape EntityType="MeetsModel.Event" Width="1.5" PointX="0.625" PointY="0.5" IsExpanded="true" />
         <EntityTypeShape EntityType="MeetsModel.Member" Width="1.5" PointX="3.25" PointY="0.625" IsExpanded="true" />
         <EntityTypeShape EntityType="MeetsModel.View_Event" Width="1.5" PointX="8" PointY="3.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="MeetsModel.View_Event_open" Width="1.5" PointX="8.125" PointY="0.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="MeetsModel.View_Event_open" Width="1.875" PointX="8.125" PointY="0.5" IsExpanded="true" />
         <AssociationConnector Association="MeetsModel.fk_Events_Members" ManuallyRouted="false" />
         <EntityTypeShape EntityType="MeetsModel.Membervalidation" Width="1.5" PointX="5.75" PointY="0.5" />
         <AssociationConnector Association="MeetsModel.fk_Membervalidation_Member" />
         <EntityTypeShape EntityType="MeetsModel.Eventinvitation" Width="1.5" PointX="0.5" PointY="4" />
-        <EntityTypeShape EntityType="MeetsModel.Memberproperty" Width="1.5" PointX="5.875" PointY="5.25" />
-        <EntityTypeShape EntityType="MeetsModel.Membersubscription" Width="1.5" PointX="5.75" PointY="2.75" />
+        <EntityTypeShape EntityType="MeetsModel.Memberproperty" Width="1.875" PointX="5.25" PointY="5.125" />
+        <EntityTypeShape EntityType="MeetsModel.Membersubscription" Width="1.875" PointX="5.75" PointY="2.75" />
         <AssociationConnector Association="MeetsModel.fk_Eventinvitations_Events" />
         <AssociationConnector Association="MeetsModel.fk_Memberproperties_Member" />
         <AssociationConnector Association="MeetsModel.fk_Membersubscriptions_Member" />
-        <EntityTypeShape EntityType="MeetsModel.Invitationstatu" Width="1.75" PointX="0.625" PointY="7.375" />
+        <EntityTypeShape EntityType="MeetsModel.Invitationstatu" Width="1.75" PointX="0.5" PointY="6.75" />
         <AssociationConnector Association="MeetsModel.fk_Invitationstatus_Eventinvitations" />
-        <EntityTypeShape EntityType="MeetsModel.BesaetigungDetailView" Width="1.5" PointX="8.125" PointY="6.375" />
+        <EntityTypeShape EntityType="MeetsModel.BesaetigungDetailView" Width="1.875" PointX="7.875" PointY="6.125" />
+        <EntityTypeShape EntityType="MeetsModel.Configtable" Width="1.5" PointX="0.625" PointY="9.25" />
+        <EntityTypeShape EntityType="MeetsModel.Propertytype" Width="1.5" PointX="3.375" PointY="8.875" />
+        <AssociationConnector Association="MeetsModel.fk_Memberproperties_Propertytypes" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
