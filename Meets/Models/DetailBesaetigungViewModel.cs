@@ -7,11 +7,11 @@ namespace Meets.Models
 {
     public class DetailBesaetigungViewModel
     {
-        public DateTime Eventdatum { get; set; }
+        public string Eventdatum { get; set; }
         public string Eventtitel { get; set; }
-        public DateTime Bestätigungszeitpunkt { get; set; }
+        public string Bestaetigungszeitpunkt { get; set; }
         public string Eingeladen { get; set; }
-        public bool Bestätigt { get; set; }
+        public bool Bestaetigt { get; set; }
 
     }
 }

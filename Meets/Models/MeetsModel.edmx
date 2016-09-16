@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="MeetsModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="MeetsModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Configtables">
           <Key>
             <PropertyRef Name="id" />
@@ -230,6 +230,10 @@ Warnung 6002: Für Tabelle/Sicht 'Meets.dbo.View_Event_open' ist kein Primärsch
         <Function Name="fn_Check_User_FromEmail" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int">
           <Parameter Name="email" Type="varchar" Mode="In" />
         </Function>
+        <Function Name="fn_check_user_scalar" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int">
+          <Parameter Name="email" Type="varchar" Mode="In" />
+          <Parameter Name="password" Type="varbinary(max)" Mode="In" />
+        </Function>
         <Function Name="fn_check_user_Table" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="email" Type="varchar" Mode="In" />
           <Parameter Name="password" Type="varbinary(max)" Mode="In" />
@@ -255,6 +259,9 @@ Warnung 6002: Für Tabelle/Sicht 'Meets.dbo.View_Event_open' ist kein Primärsch
               </RowType>
             </CollectionType>
           </ReturnType>
+        </Function>
+        <Function Name="fn_hash_password" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="varbinary(max)">
+          <Parameter Name="text_to_hash" Type="varbinary(max)" Mode="In" />
         </Function>
         <Function Name="fn_Show_Event_Table" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="email" Type="varchar" Mode="In" />
@@ -359,13 +366,49 @@ Warnung 6002: Für Tabelle/Sicht 'Meets.dbo.View_Event_open' ist kein Primärsch
             <End Role="Membervalidation" EntitySet="Membervalidation" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="MeetsModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <ComplexType Name="fn_check_user_Table_Result">
           <Property Name="id" Type="Int32" Nullable="false" />
         </ComplexType>
+        <ComplexType Name="fn_detailViewFromUserEmail_Result">
+          <Property Name="Eventdatum" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Eventtitel" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Bestõtigungszeitpunkt" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Eingeladen" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Bestõtigt" Type="Boolean" Nullable="false" />
+          <Property Name="email" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="fn_Show_Event_Table_Result">
+          <Property Name="id" Type="Int32" />
+          <Property Name="evdate" Type="DateTime" />
+          <Property Name="title" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="evdesc" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="loc" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="pub" Type="Boolean" />
+        </ComplexType>
+        <EntityType Name="Configtable">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="description" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="vat" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Eventinvitation">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="created" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="event_id" Type="Int32" Nullable="false" />
+          <Property Name="email" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Event" Relationship="Self.fk_Eventinvitations_Events" FromRole="Eventinvitations" ToRole="Events" />
+          <NavigationProperty Name="Invitationstatus" Relationship="Self.fk_Invitationstatus_Eventinvitations" FromRole="Eventinvitations" ToRole="Invitationstatus" />
+        </EntityType>
         <EntityType Name="Event">
           <Key>
             <PropertyRef Name="id" />
@@ -378,8 +421,30 @@ Warnung 6002: Für Tabelle/Sicht 'Meets.dbo.View_Event_open' ist kein Primärsch
           <Property Name="description" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="viewpublic" Type="Boolean" Nullable="false" />
           <Property Name="location" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Eventinvitations" Relationship="Self.fk_Eventinvitations_Events" FromRole="Events" ToRole="Eventinvitations" />
           <NavigationProperty Name="Member" Relationship="Self.fk_Events_Members" FromRole="Events" ToRole="Members" />
-          <NavigationProperty Name="Eventinvitations" Relationship="MeetsModel.fk_Eventinvitations_Events" FromRole="Event" ToRole="Eventinvitation" />
+        </EntityType>
+        <EntityType Name="Invitationstatu">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="created" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="eventinvitations_id" Type="Int32" Nullable="false" />
+          <Property Name="confirm" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Eventinvitation" Relationship="Self.fk_Invitationstatus_Eventinvitations" FromRole="Invitationstatus" ToRole="Eventinvitations" />
+        </EntityType>
+        <EntityType Name="Memberproperty">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="created" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="member_id" Type="Int32" Nullable="false" />
+          <Property Name="propertytype_id" Type="Int32" Nullable="false" />
+          <Property Name="val" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Member" Relationship="Self.fk_Memberproperties_Member" FromRole="Memberproperties" ToRole="Members" />
+          <NavigationProperty Name="Propertytype" Relationship="Self.fk_Memberproperties_Propertytypes" FromRole="Memberproperties" ToRole="Propertytypes" />
         </EntityType>
         <EntityType Name="Member">
           <Key>
@@ -391,9 +456,49 @@ Warnung 6002: Für Tabelle/Sicht 'Meets.dbo.View_Event_open' ist kein Primärsch
           <Property Name="password" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
           <Property Name="dateofbirth" Type="DateTime" Nullable="false" Precision="7" />
           <NavigationProperty Name="Events" Relationship="Self.fk_Events_Members" FromRole="Members" ToRole="Events" />
-          <NavigationProperty Name="Membervalidations" Relationship="MeetsModel.fk_Membervalidation_Member" FromRole="Member" ToRole="Membervalidation" />
-          <NavigationProperty Name="Memberproperties" Relationship="MeetsModel.fk_Memberproperties_Member" FromRole="Member" ToRole="Memberproperty" />
-          <NavigationProperty Name="Membersubscriptions" Relationship="MeetsModel.fk_Membersubscriptions_Member" FromRole="Member" ToRole="Membersubscription" />
+          <NavigationProperty Name="Memberproperties" Relationship="Self.fk_Memberproperties_Member" FromRole="Members" ToRole="Memberproperties" />
+          <NavigationProperty Name="Membersubscriptions" Relationship="Self.fk_Membersubscriptions_Member" FromRole="Members" ToRole="Membersubscriptions" />
+          <NavigationProperty Name="Membervalidations" Relationship="Self.fk_Membervalidation_Member" FromRole="Members" ToRole="Membervalidation" />
+        </EntityType>
+        <EntityType Name="Membersubscription">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="created" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="member_id" Type="Int32" Nullable="false" />
+          <Property Name="year" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Member" Relationship="Self.fk_Membersubscriptions_Member" FromRole="Membersubscriptions" ToRole="Members" />
+        </EntityType>
+        <EntityType Name="Membervalidation">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="created" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="member_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Member" Relationship="Self.fk_Membervalidation_Member" FromRole="Membervalidation" ToRole="Members" />
+        </EntityType>
+        <EntityType Name="Propertytype">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="created" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="description" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Memberproperties" Relationship="Self.fk_Memberproperties_Propertytypes" FromRole="Propertytypes" ToRole="Memberproperties" />
+        </EntityType>
+        <EntityType Name="BesaetigungDetailView">
+          <Key>
+            <PropertyRef Name="Eventtitel" />
+            <PropertyRef Name="Eingeladen" />
+            <PropertyRef Name="Bestõtigt" />
+          </Key>
+          <Property Name="Eventdatum" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Eventtitel" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Bestõtigungszeitpunkt" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Eingeladen" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Bestõtigt" Type="Boolean" Nullable="false" />
         </EntityType>
         <EntityType Name="View_Event">
           <Key>
@@ -431,6 +536,30 @@ Warnung 6002: Für Tabelle/Sicht 'Meets.dbo.View_Event_open' ist kein Primärsch
           <Property Name="Oeffentlich" Type="Boolean" Nullable="false" />
           <Property Name="Standort" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
         </EntityType>
+        <Association Name="fk_Eventinvitations_Events">
+          <End Role="Events" Type="Self.Event" Multiplicity="1" />
+          <End Role="Eventinvitations" Type="Self.Eventinvitation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Events">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Eventinvitations">
+              <PropertyRef Name="event_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_Invitationstatus_Eventinvitations">
+          <End Role="Eventinvitations" Type="Self.Eventinvitation" Multiplicity="1" />
+          <End Role="Invitationstatus" Type="Self.Invitationstatu" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Eventinvitations">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Invitationstatus">
+              <PropertyRef Name="eventinvitations_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="fk_Events_Members">
           <End Role="Members" Type="Self.Member" Multiplicity="1" />
           <End Role="Events" Type="Self.Event" Multiplicity="*" />
@@ -443,90 +572,47 @@ Warnung 6002: Für Tabelle/Sicht 'Meets.dbo.View_Event_open' ist kein Primärsch
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="MeetsEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="Events" EntityType="Self.Event" />
-          <EntitySet Name="Members" EntityType="Self.Member" />
-          <EntitySet Name="View_Event" EntityType="Self.View_Event" />
-          <EntitySet Name="View_Event_open" EntityType="Self.View_Event_open" />
-          <AssociationSet Name="fk_Events_Members" Association="Self.fk_Events_Members">
-            <End Role="Members" EntitySet="Members" />
-            <End Role="Events" EntitySet="Events" />
-          </AssociationSet>
-          <FunctionImport Name="fn_check_user_Table" IsComposable="true" ReturnType="Collection(MeetsModel.fn_check_user_Table_Result)">
-            <Parameter Name="email" Mode="In" Type="String" />
-            <Parameter Name="password" Mode="In" Type="Binary" />
-          </FunctionImport>
-          <FunctionImport Name="sp_RegisterUser">
-            <Parameter Name="email" Mode="In" Type="String" />
-            <Parameter Name="password" Mode="In" Type="Binary" />
-            <Parameter Name="dateOfBirth" Mode="In" Type="DateTime" />
-          </FunctionImport>
-          <EntitySet Name="Membervalidations" EntityType="MeetsModel.Membervalidation" />
-          <AssociationSet Name="fk_Membervalidation_Member" Association="MeetsModel.fk_Membervalidation_Member">
-            <End Role="Member" EntitySet="Members" />
-            <End Role="Membervalidation" EntitySet="Membervalidations" />
-          </AssociationSet>
-          <FunctionImport Name="fn_Show_Event_Table" IsComposable="true" ReturnType="Collection(MeetsModel.fn_Show_Event_Table_Result)">
-          <Parameter Name="email" Mode="In" Type="String" />
-          </FunctionImport>
-          <EntitySet Name="Eventinvitations" EntityType="MeetsModel.Eventinvitation" />
-          <EntitySet Name="Memberproperties" EntityType="MeetsModel.Memberproperty" />
-          <EntitySet Name="Membersubscriptions" EntityType="MeetsModel.Membersubscription" />
-          <AssociationSet Name="fk_Eventinvitations_Events" Association="MeetsModel.fk_Eventinvitations_Events">
-            <End Role="Event" EntitySet="Events" />
-            <End Role="Eventinvitation" EntitySet="Eventinvitations" />
-          </AssociationSet>
-          <AssociationSet Name="fk_Memberproperties_Member" Association="MeetsModel.fk_Memberproperties_Member">
-            <End Role="Member" EntitySet="Members" />
-            <End Role="Memberproperty" EntitySet="Memberproperties" />
-          </AssociationSet>
-          <AssociationSet Name="fk_Membersubscriptions_Member" Association="MeetsModel.fk_Membersubscriptions_Member">
-            <End Role="Member" EntitySet="Members" />
-            <End Role="Membersubscription" EntitySet="Membersubscriptions" />
-          </AssociationSet>
-          <EntitySet Name="Invitationstatus" EntityType="MeetsModel.Invitationstatu" />
-          <AssociationSet Name="fk_Invitationstatus_Eventinvitations" Association="MeetsModel.fk_Invitationstatus_Eventinvitations">
-            <End Role="Eventinvitation" EntitySet="Eventinvitations" />
-            <End Role="Invitationstatu" EntitySet="Invitationstatus" />
-          </AssociationSet>
-          <FunctionImport Name="sp_delete_Member">
-            <Parameter Name="member" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="sp_holeUserDaten" ReturnType="Collection(MeetsModel.sp_holeUserDaten_Result)">
-          <Parameter Name="email" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="fn_detailViewFromUserEmail" IsComposable="true" ReturnType="Collection(MeetsModel.fn_detailViewFromUserEmail_Result)">
-          <Parameter Name="email" Mode="In" Type="String" />
-          </FunctionImport>
-          <EntitySet Name="BesaetigungDetailViews" EntityType="MeetsModel.BesaetigungDetailView" />
-          <FunctionImport Name="sp_delete_Event">
-          <Parameter Name="event" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <EntitySet Name="Configtables" EntityType="MeetsModel.Configtable" />
-          <EntitySet Name="Propertytypes" EntityType="MeetsModel.Propertytype" />
-          <AssociationSet Name="fk_Memberproperties_Propertytypes" Association="MeetsModel.fk_Memberproperties_Propertytypes">
-            <End Role="Propertytype" EntitySet="Propertytypes" />
-            <End Role="Memberproperty" EntitySet="Memberproperties" />
-          </AssociationSet>
-          <FunctionImport Name="sp_AendereUserdaten">
-            <Parameter Name="email" Mode="In" Type="String" />
-            <Parameter Name="password" Mode="In" Type="Binary" />
-          </FunctionImport>
-        </EntityContainer>
-        <EntityType Name="Membervalidation">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="created" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="member_id" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Member" Relationship="MeetsModel.fk_Membervalidation_Member" FromRole="Membervalidation" ToRole="Member" />
-        </EntityType>
-        <Association Name="fk_Membervalidation_Member">
-          <End Type="MeetsModel.Member" Role="Member" Multiplicity="1" />
-          <End Type="MeetsModel.Membervalidation" Role="Membervalidation" Multiplicity="*" />
+        <Association Name="fk_Memberproperties_Member">
+          <End Role="Members" Type="Self.Member" Multiplicity="1" />
+          <End Role="Memberproperties" Type="Self.Memberproperty" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Member">
+            <Principal Role="Members">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Memberproperties">
+              <PropertyRef Name="member_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_Memberproperties_Propertytypes">
+          <End Role="Propertytypes" Type="Self.Propertytype" Multiplicity="1" />
+          <End Role="Memberproperties" Type="Self.Memberproperty" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Propertytypes">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Memberproperties">
+              <PropertyRef Name="propertytype_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_Membersubscriptions_Member">
+          <End Role="Members" Type="Self.Member" Multiplicity="1" />
+          <End Role="Membersubscriptions" Type="Self.Membersubscription" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Members">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Membersubscriptions">
+              <PropertyRef Name="member_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_Membervalidation_Member">
+          <End Role="Members" Type="Self.Member" Multiplicity="1" />
+          <End Role="Membervalidation" Type="Self.Membervalidation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Members">
               <PropertyRef Name="id" />
             </Principal>
             <Dependent Role="Membervalidation">
@@ -534,105 +620,76 @@ Warnung 6002: Für Tabelle/Sicht 'Meets.dbo.View_Event_open' ist kein Primärsch
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <ComplexType Name="fn_Show_Event_Table_Result">
-          <Property Type="Int32" Name="id" Nullable="true" />
-          <Property Type="DateTime" Name="evdate" Nullable="true" Precision="23" />
-          <Property Type="String" Name="title" Nullable="true" MaxLength="50" />
-          <Property Type="String" Name="evdesc" Nullable="true" MaxLength="255" />
-          <Property Type="String" Name="loc" Nullable="true" MaxLength="255" />
-          <Property Type="Boolean" Name="pub" Nullable="true" />
-        </ComplexType>
-        <EntityType Name="Eventinvitation">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="created" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="event_id" Type="Int32" Nullable="false" />
-          <Property Name="email" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Event" Relationship="MeetsModel.fk_Eventinvitations_Events" FromRole="Eventinvitation" ToRole="Event" />
-          <NavigationProperty Name="Invitationstatus" Relationship="MeetsModel.fk_Invitationstatus_Eventinvitations" FromRole="Eventinvitation" ToRole="Invitationstatu" />
-        </EntityType>
-        <EntityType Name="Memberproperty">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="created" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="member_id" Type="Int32" Nullable="false" />
-          <Property Name="propertytype_id" Type="Int32" Nullable="false" />
-          <Property Name="val" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Member" Relationship="MeetsModel.fk_Memberproperties_Member" FromRole="Memberproperty" ToRole="Member" />
-          <NavigationProperty Name="Propertytype" Relationship="MeetsModel.fk_Memberproperties_Propertytypes" FromRole="Memberproperty" ToRole="Propertytype" />
-        </EntityType>
-        <EntityType Name="Membersubscription">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="created" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="member_id" Type="Int32" Nullable="false" />
-          <Property Name="year" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Member" Relationship="MeetsModel.fk_Membersubscriptions_Member" FromRole="Membersubscription" ToRole="Member" />
-        </EntityType>
-        <Association Name="fk_Eventinvitations_Events">
-          <End Type="MeetsModel.Event" Role="Event" Multiplicity="1" />
-          <End Type="MeetsModel.Eventinvitation" Role="Eventinvitation" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Event">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="Eventinvitation">
-              <PropertyRef Name="event_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="fk_Memberproperties_Member">
-          <End Type="MeetsModel.Member" Role="Member" Multiplicity="1" />
-          <End Type="MeetsModel.Memberproperty" Role="Memberproperty" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Member">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="Memberproperty">
-              <PropertyRef Name="member_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="fk_Membersubscriptions_Member">
-          <End Type="MeetsModel.Member" Role="Member" Multiplicity="1" />
-          <End Type="MeetsModel.Membersubscription" Role="Membersubscription" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Member">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="Membersubscription">
-              <PropertyRef Name="member_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityType Name="Invitationstatu">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="created" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="eventinvitations_id" Type="Int32" Nullable="false" />
-          <Property Name="confirm" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="Eventinvitation" Relationship="MeetsModel.fk_Invitationstatus_Eventinvitations" FromRole="Invitationstatu" ToRole="Eventinvitation" />
-        </EntityType>
-        <Association Name="fk_Invitationstatus_Eventinvitations">
-          <End Type="MeetsModel.Eventinvitation" Role="Eventinvitation" Multiplicity="1" />
-          <End Type="MeetsModel.Invitationstatu" Role="Invitationstatu" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Eventinvitation">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="Invitationstatu">
-              <PropertyRef Name="eventinvitations_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
+        <EntityContainer Name="MeetsEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Configtables" EntityType="Self.Configtable" />
+          <EntitySet Name="Eventinvitations" EntityType="Self.Eventinvitation" />
+          <EntitySet Name="Events" EntityType="Self.Event" />
+          <EntitySet Name="Invitationstatus" EntityType="Self.Invitationstatu" />
+          <EntitySet Name="Memberproperties" EntityType="Self.Memberproperty" />
+          <EntitySet Name="Members" EntityType="Self.Member" />
+          <EntitySet Name="Membersubscriptions" EntityType="Self.Membersubscription" />
+          <EntitySet Name="Membervalidations" EntityType="Self.Membervalidation" />
+          <EntitySet Name="Propertytypes" EntityType="Self.Propertytype" />
+          <EntitySet Name="BesaetigungDetailViews" EntityType="Self.BesaetigungDetailView" />
+          <EntitySet Name="View_Event" EntityType="Self.View_Event" />
+          <EntitySet Name="View_Event_open" EntityType="Self.View_Event_open" />
+          <AssociationSet Name="fk_Eventinvitations_Events" Association="Self.fk_Eventinvitations_Events">
+            <End Role="Events" EntitySet="Events" />
+            <End Role="Eventinvitations" EntitySet="Eventinvitations" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Invitationstatus_Eventinvitations" Association="Self.fk_Invitationstatus_Eventinvitations">
+            <End Role="Eventinvitations" EntitySet="Eventinvitations" />
+            <End Role="Invitationstatus" EntitySet="Invitationstatus" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Events_Members" Association="Self.fk_Events_Members">
+            <End Role="Members" EntitySet="Members" />
+            <End Role="Events" EntitySet="Events" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Memberproperties_Member" Association="Self.fk_Memberproperties_Member">
+            <End Role="Members" EntitySet="Members" />
+            <End Role="Memberproperties" EntitySet="Memberproperties" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Memberproperties_Propertytypes" Association="Self.fk_Memberproperties_Propertytypes">
+            <End Role="Propertytypes" EntitySet="Propertytypes" />
+            <End Role="Memberproperties" EntitySet="Memberproperties" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Membersubscriptions_Member" Association="Self.fk_Membersubscriptions_Member">
+            <End Role="Members" EntitySet="Members" />
+            <End Role="Membersubscriptions" EntitySet="Membersubscriptions" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Membervalidation_Member" Association="Self.fk_Membervalidation_Member">
+            <End Role="Members" EntitySet="Members" />
+            <End Role="Membervalidation" EntitySet="Membervalidations" />
+          </AssociationSet>
+          <FunctionImport Name="fn_check_user_Table" IsComposable="true" ReturnType="Collection(MeetsModel.fn_check_user_Table_Result)">
+            <Parameter Name="email" Mode="In" Type="String" />
+            <Parameter Name="password" Mode="In" Type="Binary" />
+          </FunctionImport>
+          <FunctionImport Name="fn_detailViewFromUserEmail" IsComposable="true" ReturnType="Collection(MeetsModel.fn_detailViewFromUserEmail_Result)">
+            <Parameter Name="email" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="fn_Show_Event_Table" IsComposable="true" ReturnType="Collection(MeetsModel.fn_Show_Event_Table_Result)">
+            <Parameter Name="email" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_AendereUserdaten">
+            <Parameter Name="email" Mode="In" Type="String" />
+            <Parameter Name="password" Mode="In" Type="Binary" />
+          </FunctionImport>
+          <FunctionImport Name="sp_delete_Event">
+            <Parameter Name="event" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_delete_Member">
+            <Parameter Name="member" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_holeUserDaten" ReturnType="Collection(MeetsModel.sp_holeUserDaten_Result)">
+            <Parameter Name="email" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_RegisterUser">
+            <Parameter Name="email" Mode="In" Type="String" />
+            <Parameter Name="password" Mode="In" Type="Binary" />
+            <Parameter Name="dateOfBirth" Mode="In" Type="DateTime" />
+          </FunctionImport>
+        </EntityContainer>
         <ComplexType Name="sp_holeUserDaten_Result">
           <Property Type="Int32" Name="id" Nullable="false" />
           <Property Type="DateTime" Name="created" Nullable="false" Precision="23" />
@@ -640,64 +697,31 @@ Warnung 6002: Für Tabelle/Sicht 'Meets.dbo.View_Event_open' ist kein Primärsch
           <Property Type="Binary" Name="password" Nullable="false" />
           <Property Type="DateTime" Name="dateofbirth" Nullable="false" />
         </ComplexType>
-        <ComplexType Name="fn_detailViewFromUserEmail_Result">
-          <Property Type="String" Name="Eventdatum" Nullable="true" MaxLength="10" />
-          <Property Type="String" Name="Eventtitel" Nullable="false" MaxLength="50" />
-          <Property Type="String" Name="Bestätigungszeitpunkt" Nullable="true" MaxLength="10" />
-          <Property Type="String" Name="Eingeladen" Nullable="false" MaxLength="255" />
-          <Property Type="Boolean" Name="Bestätigt" Nullable="false" />
-          <Property Type="String" Name="email" Nullable="false" MaxLength="255" />
-        </ComplexType>
-        <EntityType Name="BesaetigungDetailView">
-          <Key>
-            <PropertyRef Name="Eventtitel" />
-            <PropertyRef Name="Eingeladen" />
-            <PropertyRef Name="Bestätigt" />
-            <PropertyRef Name="Bestõtigt" />
-          </Key>
-          <Property Name="Eventdatum" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="Eventtitel" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Bestätigungszeitpunkt" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="Eingeladen" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="Bestätigt" Type="Boolean" Nullable="false" />
-          <Property Name="Bestõtigungszeitpunkt" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="Bestõtigt" Type="Boolean" Nullable="false" />
-        </EntityType>
-        <EntityType Name="Configtable">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="description" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="vat" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-        </EntityType>
-        <EntityType Name="Propertytype">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="created" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="description" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Memberproperties" Relationship="MeetsModel.fk_Memberproperties_Propertytypes" FromRole="Propertytype" ToRole="Memberproperty" />
-        </EntityType>
-        <Association Name="fk_Memberproperties_Propertytypes">
-          <End Type="MeetsModel.Propertytype" Role="Propertytype" Multiplicity="1" />
-          <End Type="MeetsModel.Memberproperty" Role="Memberproperty" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Propertytype">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="Memberproperty">
-              <PropertyRef Name="propertytype_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="MeetsModelStoreContainer" CdmEntityContainer="MeetsEntities">
+          <EntitySetMapping Name="Configtables">
+            <EntityTypeMapping TypeName="MeetsModel.Configtable">
+              <MappingFragment StoreEntitySet="Configtables">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="vat" ColumnName="vat" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Eventinvitations">
+            <EntityTypeMapping TypeName="MeetsModel.Eventinvitation">
+              <MappingFragment StoreEntitySet="Eventinvitations">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="created" ColumnName="created" />
+                <ScalarProperty Name="event_id" ColumnName="event_id" />
+                <ScalarProperty Name="email" ColumnName="email" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Events">
             <EntityTypeMapping TypeName="MeetsModel.Event">
               <MappingFragment StoreEntitySet="Events">
@@ -712,6 +736,27 @@ Warnung 6002: Für Tabelle/Sicht 'Meets.dbo.View_Event_open' ist kein Primärsch
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Invitationstatus">
+            <EntityTypeMapping TypeName="MeetsModel.Invitationstatu">
+              <MappingFragment StoreEntitySet="Invitationstatus">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="created" ColumnName="created" />
+                <ScalarProperty Name="eventinvitations_id" ColumnName="eventinvitations_id" />
+                <ScalarProperty Name="confirm" ColumnName="confirm" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Memberproperties">
+            <EntityTypeMapping TypeName="MeetsModel.Memberproperty">
+              <MappingFragment StoreEntitySet="Memberproperties">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="created" ColumnName="created" />
+                <ScalarProperty Name="member_id" ColumnName="member_id" />
+                <ScalarProperty Name="propertytype_id" ColumnName="propertytype_id" />
+                <ScalarProperty Name="val" ColumnName="val" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Members">
             <EntityTypeMapping TypeName="MeetsModel.Member">
               <MappingFragment StoreEntitySet="Members">
@@ -720,6 +765,45 @@ Warnung 6002: Für Tabelle/Sicht 'Meets.dbo.View_Event_open' ist kein Primärsch
                 <ScalarProperty Name="email" ColumnName="email" />
                 <ScalarProperty Name="password" ColumnName="password" />
                 <ScalarProperty Name="dateofbirth" ColumnName="dateofbirth" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Membersubscriptions">
+            <EntityTypeMapping TypeName="MeetsModel.Membersubscription">
+              <MappingFragment StoreEntitySet="Membersubscriptions">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="created" ColumnName="created" />
+                <ScalarProperty Name="member_id" ColumnName="member_id" />
+                <ScalarProperty Name="year" ColumnName="year" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Membervalidations">
+            <EntityTypeMapping TypeName="MeetsModel.Membervalidation">
+              <MappingFragment StoreEntitySet="Membervalidation">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="created" ColumnName="created" />
+                <ScalarProperty Name="member_id" ColumnName="member_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Propertytypes">
+            <EntityTypeMapping TypeName="MeetsModel.Propertytype">
+              <MappingFragment StoreEntitySet="Propertytypes">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="created" ColumnName="created" />
+                <ScalarProperty Name="description" ColumnName="description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="BesaetigungDetailViews">
+            <EntityTypeMapping TypeName="MeetsModel.BesaetigungDetailView">
+              <MappingFragment StoreEntitySet="BesaetigungDetailView">
+                <ScalarProperty Name="Eventdatum" ColumnName="Eventdatum" />
+                <ScalarProperty Name="Eventtitel" ColumnName="Eventtitel" />
+                <ScalarProperty Name="Bestõtigungszeitpunkt" ColumnName="Bestõtigungszeitpunkt" />
+                <ScalarProperty Name="Eingeladen" ColumnName="Eingeladen" />
+                <ScalarProperty Name="Bestõtigt" ColumnName="Bestõtigt" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -756,17 +840,19 @@ Warnung 6002: Für Tabelle/Sicht 'Meets.dbo.View_Event_open' ist kein Primärsch
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="sp_RegisterUser" FunctionName="MeetsModel.Store.sp_RegisterUser" />
-          <EntitySetMapping Name="Membervalidations">
-            <EntityTypeMapping TypeName="MeetsModel.Membervalidation">
-              <MappingFragment StoreEntitySet="Membervalidation">
-                <ScalarProperty Name="member_id" ColumnName="member_id" />
-                <ScalarProperty Name="created" ColumnName="created" />
-                <ScalarProperty Name="id" ColumnName="id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="fn_Show_Event_Table" FunctionName="MeetsModel.Store.fn_Show_Event_Table">
+          <FunctionImportMapping FunctionName="MeetsModel.Store.fn_detailViewFromUserEmail" FunctionImportName="fn_detailViewFromUserEmail">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="MeetsModel.fn_detailViewFromUserEmail_Result">
+                <ScalarProperty Name="Eventdatum" ColumnName="Eventdatum" />
+                <ScalarProperty Name="Eventtitel" ColumnName="Eventtitel" />
+                <ScalarProperty Name="Bestõtigungszeitpunkt" ColumnName="Bestõtigungszeitpunkt" />
+                <ScalarProperty Name="Eingeladen" ColumnName="Eingeladen" />
+                <ScalarProperty Name="Bestõtigt" ColumnName="Bestõtigt" />
+                <ScalarProperty Name="email" ColumnName="email" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionName="MeetsModel.Store.fn_Show_Event_Table" FunctionImportName="fn_Show_Event_Table">
             <ResultMapping>
               <ComplexTypeMapping TypeName="MeetsModel.fn_Show_Event_Table_Result">
                 <ScalarProperty Name="id" ColumnName="id" />
@@ -778,47 +864,9 @@ Warnung 6002: Für Tabelle/Sicht 'Meets.dbo.View_Event_open' ist kein Primärsch
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <EntitySetMapping Name="Eventinvitations">
-            <EntityTypeMapping TypeName="MeetsModel.Eventinvitation">
-              <MappingFragment StoreEntitySet="Eventinvitations">
-                <ScalarProperty Name="email" ColumnName="email" />
-                <ScalarProperty Name="event_id" ColumnName="event_id" />
-                <ScalarProperty Name="created" ColumnName="created" />
-                <ScalarProperty Name="id" ColumnName="id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Memberproperties">
-            <EntityTypeMapping TypeName="MeetsModel.Memberproperty">
-              <MappingFragment StoreEntitySet="Memberproperties">
-                <ScalarProperty Name="val" ColumnName="val" />
-                <ScalarProperty Name="propertytype_id" ColumnName="propertytype_id" />
-                <ScalarProperty Name="member_id" ColumnName="member_id" />
-                <ScalarProperty Name="created" ColumnName="created" />
-                <ScalarProperty Name="id" ColumnName="id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Membersubscriptions">
-            <EntityTypeMapping TypeName="MeetsModel.Membersubscription">
-              <MappingFragment StoreEntitySet="Membersubscriptions">
-                <ScalarProperty Name="year" ColumnName="year" />
-                <ScalarProperty Name="member_id" ColumnName="member_id" />
-                <ScalarProperty Name="created" ColumnName="created" />
-                <ScalarProperty Name="id" ColumnName="id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Invitationstatus">
-            <EntityTypeMapping TypeName="MeetsModel.Invitationstatu">
-              <MappingFragment StoreEntitySet="Invitationstatus">
-                <ScalarProperty Name="confirm" ColumnName="confirm" />
-                <ScalarProperty Name="eventinvitations_id" ColumnName="eventinvitations_id" />
-                <ScalarProperty Name="created" ColumnName="created" />
-                <ScalarProperty Name="id" ColumnName="id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="sp_AendereUserdaten" FunctionName="MeetsModel.Store.sp_AendereUserdaten" />
+          <FunctionImportMapping FunctionImportName="sp_delete_Event" FunctionName="MeetsModel.Store.sp_delete_Event" />
+          <FunctionImportMapping FunctionImportName="sp_delete_Member" FunctionName="MeetsModel.Store.sp_delete_Member" />
           <FunctionImportMapping FunctionImportName="sp_holeUserDaten" FunctionName="MeetsModel.Store.sp_holeUserDaten">
             <ResultMapping>
               <ComplexTypeMapping TypeName="MeetsModel.sp_holeUserDaten_Result">
@@ -830,50 +878,8 @@ Warnung 6002: Für Tabelle/Sicht 'Meets.dbo.View_Event_open' ist kein Primärsch
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="fn_detailViewFromUserEmail" FunctionName="MeetsModel.Store.fn_detailViewFromUserEmail">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="MeetsModel.fn_detailViewFromUserEmail_Result">
-                <ScalarProperty Name="Eventdatum" ColumnName="Eventdatum" />
-                <ScalarProperty Name="Eventtitel" ColumnName="Eventtitel" />
-                <ScalarProperty Name="Bestätigungszeitpunkt" ColumnName="Bestätigungszeitpunkt" />
-                <ScalarProperty Name="Eingeladen" ColumnName="Eingeladen" />
-                <ScalarProperty Name="Bestätigt" ColumnName="Bestätigt" />
-                <ScalarProperty Name="email" ColumnName="email" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <EntitySetMapping Name="BesaetigungDetailViews">
-            <EntityTypeMapping TypeName="MeetsModel.BesaetigungDetailView">
-              <MappingFragment StoreEntitySet="BesaetigungDetailView">
-                <ScalarProperty Name="Bestõtigt" ColumnName="Bestõtigt" />
-                <ScalarProperty Name="Bestõtigungszeitpunkt" ColumnName="Bestõtigungszeitpunkt" />
-                <ScalarProperty Name="Eingeladen" ColumnName="Eingeladen" />
-                <ScalarProperty Name="Eventtitel" ColumnName="Eventtitel" />
-                <ScalarProperty Name="Eventdatum" ColumnName="Eventdatum" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="sp_delete_Event" FunctionName="MeetsModel.Store.sp_delete_Event" />
-          <EntitySetMapping Name="Configtables">
-            <EntityTypeMapping TypeName="MeetsModel.Configtable">
-              <MappingFragment StoreEntitySet="Configtables">
-                <ScalarProperty Name="vat" ColumnName="vat" />
-                <ScalarProperty Name="description" ColumnName="description" />
-                <ScalarProperty Name="id" ColumnName="id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Propertytypes">
-            <EntityTypeMapping TypeName="MeetsModel.Propertytype">
-              <MappingFragment StoreEntitySet="Propertytypes">
-                <ScalarProperty Name="description" ColumnName="description" />
-                <ScalarProperty Name="created" ColumnName="created" />
-                <ScalarProperty Name="id" ColumnName="id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="sp_AendereUserdaten" FunctionName="MeetsModel.Store.sp_AendereUserdaten" />
-          </EntityContainerMapping>
+          <FunctionImportMapping FunctionImportName="sp_RegisterUser" FunctionName="MeetsModel.Store.sp_RegisterUser" />
+        </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
   </edmx:Runtime>

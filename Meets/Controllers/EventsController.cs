@@ -23,8 +23,18 @@ namespace Meets.Controllers
         {
             string @email = User.Identity.Name;
             List<BesaetigungDetailView> list = db.BesaetigungDetailViews.SqlQuery("select * from dbo.fn_detailViewFromUserEmail('" + @email + "')").ToList();
-
-            return View(list);
+            List<DetailBesaetigungViewModel> listForView = new List<DetailBesaetigungViewModel>();
+            DetailBesaetigungViewModel dbvm = new DetailBesaetigungViewModel();
+            foreach (BesaetigungDetailView item in list)
+            {
+                dbvm.Bestaetigt = item.Bestõtigt;
+                dbvm.Bestaetigungszeitpunkt = item.Bestõtigungszeitpunkt;
+                dbvm.Eingeladen = item.Eingeladen;
+                dbvm.Eventdatum = item.Eventdatum;
+                dbvm.Eventtitel = item.Eventtitel;
+                listForView.Add(dbvm);
+            }
+            return View(listForView);
         }
 
 

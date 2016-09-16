@@ -1,11 +1,11 @@
-﻿@model List<Meets.Models.BesaetigungDetailView>
+﻿@model List<Meets.Models.DetailBesaetigungViewModel>
 
 @{
     ViewBag.Title = "DetailEventBestaetigt";
     Layout = "~/Views/Shared/_LayoutGeladneDetail.cshtml";
 }
 
-@foreach (Meets.Models.BesaetigungDetailView item in Model)
+@foreach (Meets.Models.DetailBesaetigungViewModel item in Model)
 {
     <div class="backwitheEventsmaller">
         <table>
@@ -19,7 +19,7 @@
             </tr>
             <tr>
                 <th>Bestätigungszeitpunkt:</th>
-                <td style="padding-left:10px;">@Html.DisplayFor(modelItem => item.Bestätigungszeitpunkt)</td>
+                <td style="padding-left:10px;">@Html.DisplayFor(modelItem => item.Bestaetigungszeitpunkt)</td>
             </tr>
             <tr>
                 <th>Eingeleadene E-Mail:</th>
@@ -27,7 +27,7 @@
             </tr>
             <tr>
                 <th>Angenommen Ja/Nein:</th>
-                <td style="padding-left:10px;">@Html.DisplayFor(modelItem => item.Bestätigt)</td>
+                <td style="padding-left:10px;">@Html.DisplayFor(modelItem => item.Bestaetigt)</td>
             </tr>
 
         </table>

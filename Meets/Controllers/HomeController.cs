@@ -15,6 +15,7 @@ namespace Meets.Controllers
         /// <returns></returns>
         [HttpGet]
         public ActionResult Index()
+
         {            
             using (MeetsEntities con = new MeetsEntities())
             {
