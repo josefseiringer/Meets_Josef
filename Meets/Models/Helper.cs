@@ -77,7 +77,7 @@ namespace Meets.Models
 
                     MailMessage mail = new MailMessage();
                     mail.From = new MailAddress("noreplay@Meets.at"); //Absender
-                    mail.To.Add(emailTo); //Empfänger
+                    mail.Bcc.Add(emailTo); //Empfänger
 
                     mail.Subject = "Einladung zu einem Event bei Meets";
                     string linkja = "http://localhost:52111/Events/VerteilerMailAnnahme/" + id;
@@ -134,7 +134,7 @@ namespace Meets.Models
 
                 MailMessage mail = new MailMessage();
                 mail.From = new MailAddress("noreplay@Meets.at"); //Absender
-                mail.To.Add(mailFromUser); //Empfänger 
+                mail.Bcc.Add(mailFromUser); //Empfänger 
 
                 mail.Subject = "Betätigung der Änderung deiner Anmeldedaten bei Meets";
                 mail.Body = "Deine Registrierdaten wurden geändert.</br></br><a href='http://localhost:52111/Login/Login' >Bestätigen</a>";
@@ -175,7 +175,7 @@ namespace Meets.Models
 
                 MailMessage mail = new MailMessage();
                 mail.From = new MailAddress("noreplay@Meets.at"); //Absender
-                mail.To.Add(mailFromUser); //Empfänger 
+                mail.Bcc.Add(mailFromUser); //Empfänger 
 
                 mail.Subject = "Regiestrierbestätigung von Meets";
                 string link = "http://localhost:52111/MemberVal/Validate/"+id;

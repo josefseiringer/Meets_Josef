@@ -326,22 +326,22 @@ namespace Meets.Controllers
             TempData["ErrorMessage"] = "Fehlende oder falsche Eingabe";
             return View();
         }
-
+        [HttpGet]
         public ActionResult Edit(int? id)
         {
             if (User.Identity.Name != null)
             {
                 //Uneingeschränke Liste : Sucht alle Events des angemeldeten Benutzers und Speichert Sie in eine liste
                 Event defUser = (from e in db.Events
-                                       where e.Member.id == e.member_id &&
-                                       e.Member.email == User.Identity.Name
-                                       select e).FirstOrDefault();
+                                where id == e.id &&
+                                e.Member.email == User.Identity.Name
+                                select e).FirstOrDefault();
                 //Eingeschränkte Liste: Sucht alle Events des angemeldeten Benutzers die private sind und speichert sie in einer Liste
                 Event defUserPrivate = (from e in db.Events
-                                              where e.Member.id == e.member_id &&
-                                              e.Member.email == User.Identity.Name &&
-                                              e.viewpublic == false
-                                              select e).FirstOrDefault();
+                                        where id == e.id &&
+                                        e.Member.email == User.Identity.Name &&
+                                        e.viewpublic == false
+                                        select e).FirstOrDefault();
                 // liefert die id ob der angemeldete Benutzer in der Membervalidation eingetragen ist
                 int valid = (from e in db.Membervalidations
                              where e.Member.id == e.member_id &&
@@ -360,6 +360,48 @@ namespace Meets.Controllers
             }return RedirectToAction("EventDefaultUser");
         }
 
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult EditNeu(Event e)
+        {
+            if (e != null)
+            {
+
+                
+                //Suche in der Datenbank die Reihe/Zeile für das Update anhand der E-Mail
+                var query =
+                    from mem in db.Events
+                    where mem.id == e.id
+                    select mem;
+
+                if (query != null)
+                {
+                    foreach (Event mem in query)
+                    {
+                        mem.created = DateTime.Now;
+                        mem.eventdate = e.eventdate;
+                        mem.title = e.title;
+                        mem.description = e.description;
+                        mem.viewpublic = e.viewpublic;
+                        mem.location = e.location;
+                    }
+                    try
+                    {
+                        db.SaveChanges();
+                        TempData["ConfirmMessage"] = "Event wurde geändert.";
+                        return RedirectToAction("EventDefaultUser");
+                    }
+                    catch (Exception ex)
+                    {
+                        TempData["ErrorMessage"] = ex;
+                    }
+                }
+                TempData["ErrorMessage"] = "Fehler mit der Datenbankverbindung";
+                return View();
+            }
+            return RedirectToAction("EventDefaultUser");
+        }
 
         // POST: Events/Edit/von mir
         /// <summary>
