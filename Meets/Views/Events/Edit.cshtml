@@ -18,26 +18,10 @@
         @Html.HiddenFor(model => model.id)
         
 
-        @*<div class="form-group">
-            @Html.LabelFor(model => model.created, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.created, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.created, "", new { @class = "text-danger" })
-            </div>
-        </div>*@
-
-        @*<div class="form-group">
-            @Html.LabelFor(model => model.member_id, "member_id", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("member_id", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.member_id, "", new { @class = "text-danger" })
-            </div>
-        </div>*@
-
         <div class="form-group">
             @Html.LabelFor(model => model.eventdate, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.eventdate, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.eventdate, new { htmlAttributes = new { @class = "form-control", id = "datetimepicker" } })
                 @Html.ValidationMessageFor(model => model.eventdate, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -87,6 +71,11 @@
     </div>
 }
 
-<div>
-    @Html.ActionLink("Back to List", "EventDefaultUser")
-</div>
+<script type="text/javascript">
+    $(function () { // will trigger when the document is ready
+        $('#datetimepicker').datepicker({
+            format: 'dd/mm/yyyy'
+        }); //Initialise any date pickers
+    });
+
+</script>
