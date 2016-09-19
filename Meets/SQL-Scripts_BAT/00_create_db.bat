@@ -1,7 +1,7 @@
 echo off
 
 set logfile=create_db.log
-set servername=DIGITALMAN-PC\SQLEXPRESS
+set servername=localhost
 set username=sa
 set passwd=123user!
 set database=Meets
