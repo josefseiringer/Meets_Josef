@@ -166,9 +166,9 @@ RETURN(
 		SELECT TOP (100) PERCENT CONVERT(VARCHAR(10), 
 		dbo.Events.eventdate, 104) AS Eventdatum, 
 		dbo.Events.title AS Eventtitel, 
-		CONVERT(VARCHAR(10), dbo.Invitationstatus.created, 104) AS Bestätigungszeitpunkt,
+		CONVERT(VARCHAR(10), dbo.Invitationstatus.created, 104) AS Bestaetigungszeitpunkt,
 		dbo.Eventinvitations.email AS Eingeladen, 
-		dbo.Invitationstatus.[confirm] AS Bestätigt, 
+		dbo.Invitationstatus.[confirm] AS Bestaetigt, 
 		dbo.Members.email
 		FROM dbo.Eventinvitations 
 		INNER JOIN dbo.Events 
@@ -185,8 +185,8 @@ GO
 
 CREATE VIEW [dbo].[BesaetigungDetailView]
 AS
-SELECT TOP (100) PERCENT CONVERT(VARCHAR(10), dbo.Events.eventdate, 104) AS Eventdatum, dbo.Events.title AS Eventtitel, CONVERT(VARCHAR(10), dbo.Invitationstatus.created, 104) AS Bestätigungszeitpunkt, dbo.Eventinvitations.email AS Eingeladen, 
-             dbo.Invitationstatus.[confirm] AS Bestätigt
+SELECT TOP (100) PERCENT CONVERT(VARCHAR(10), dbo.Events.eventdate, 104) AS Eventdatum, dbo.Events.title AS Eventtitel, CONVERT(VARCHAR(10), dbo.Invitationstatus.created, 104) AS Bestaetigungszeitpunkt, dbo.Eventinvitations.email AS Eingeladen, 
+             dbo.Invitationstatus.[confirm] AS Bestaetigt
 FROM   dbo.Eventinvitations INNER JOIN
              dbo.Events ON dbo.Eventinvitations.event_id = dbo.Events.id INNER JOIN
              dbo.Invitationstatus ON dbo.Eventinvitations.id = dbo.Invitationstatus.eventinvitations_id INNER JOIN

@@ -27,8 +27,8 @@ namespace Meets.Controllers
             DetailBesaetigungViewModel dbvm = new DetailBesaetigungViewModel();
             foreach (BesaetigungDetailView item in list)
             {
-                dbvm.Bestaetigt = item.Bestõtigt;
-                dbvm.Bestaetigungszeitpunkt = item.Bestõtigungszeitpunkt;
+                dbvm.Bestaetigt = item.Bestaetigt;
+                dbvm.Bestaetigungszeitpunkt = item.Bestaetigungszeitpunkt;
                 dbvm.Eingeladen = item.Eingeladen;
                 dbvm.Eventdatum = item.Eventdatum;
                 dbvm.Eventtitel = item.Eventtitel;

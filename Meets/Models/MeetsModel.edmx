@@ -95,13 +95,13 @@ Warnung 6002: Für Tabelle/Sicht 'Meets.dbo.BesaetigungDetailView' ist kein Prim
           <Key>
             <PropertyRef Name="Eventtitel" />
             <PropertyRef Name="Eingeladen" />
-            <PropertyRef Name="Bestõtigt" />
+            <PropertyRef Name="Bestaetigt" />
           </Key>
           <Property Name="Eventdatum" Type="varchar" MaxLength="10" />
           <Property Name="Eventtitel" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="Bestõtigungszeitpunkt" Type="varchar" MaxLength="10" />
+          <Property Name="Bestaetigungszeitpunkt" Type="varchar" MaxLength="10" />
           <Property Name="Eingeladen" Type="varchar" MaxLength="255" Nullable="false" />
-          <Property Name="Bestõtigt" Type="bit" Nullable="false" />
+          <Property Name="Bestaetigt" Type="bit" Nullable="false" />
         </EntityType>
         <!--Während der Generierung sind Fehler aufgetreten:
 Warnung 6002: Für Tabelle/Sicht 'Meets.dbo.View_Event' ist kein Primärschlüssel definiert. Der Schlüssel wurde abgeleitet, und die Definition wurde als schreibgeschützte Tabelle/Sicht erstellt.-->
@@ -252,9 +252,9 @@ Warnung 6002: Für Tabelle/Sicht 'Meets.dbo.View_Event_open' ist kein Primärsch
               <RowType>
                 <Property Name="Eventdatum" Type="varchar" MaxLength="10" />
                 <Property Name="Eventtitel" Type="varchar" MaxLength="50" Nullable="false" />
-                <Property Name="Bestõtigungszeitpunkt" Type="varchar" MaxLength="10" />
+                <Property Name="Bestaetigungszeitpunkt" Type="varchar" MaxLength="10" />
                 <Property Name="Eingeladen" Type="varchar" MaxLength="255" Nullable="false" />
-                <Property Name="Bestõtigt" Type="bit" Nullable="false" />
+                <Property Name="Bestaetigt" Type="bit" Nullable="false" />
                 <Property Name="email" Type="varchar" MaxLength="255" Nullable="false" />
               </RowType>
             </CollectionType>
@@ -310,9 +310,9 @@ Warnung 6002: Für Tabelle/Sicht 'Meets.dbo.View_Event_open' ist kein Primärsch
             <DefiningQuery>SELECT 
     [BesaetigungDetailView].[Eventdatum] AS [Eventdatum], 
     [BesaetigungDetailView].[Eventtitel] AS [Eventtitel], 
-    [BesaetigungDetailView].[Bestõtigungszeitpunkt] AS [Bestõtigungszeitpunkt], 
+    [BesaetigungDetailView].[Bestaetigungszeitpunkt] AS [Bestaetigungszeitpunkt], 
     [BesaetigungDetailView].[Eingeladen] AS [Eingeladen], 
-    [BesaetigungDetailView].[Bestõtigt] AS [Bestõtigt]
+    [BesaetigungDetailView].[Bestaetigt] AS [Bestaetigt]
     FROM [dbo].[BesaetigungDetailView] AS [BesaetigungDetailView]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="View_Event" EntityType="Self.View_Event" store:Type="Views" store:Schema="dbo">
@@ -377,9 +377,9 @@ Warnung 6002: Für Tabelle/Sicht 'Meets.dbo.View_Event_open' ist kein Primärsch
         <ComplexType Name="fn_detailViewFromUserEmail_Result">
           <Property Name="Eventdatum" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="Eventtitel" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Bestõtigungszeitpunkt" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Bestaetigungszeitpunkt" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="Eingeladen" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Bestõtigt" Type="Boolean" Nullable="false" />
+          <Property Name="Bestaetigt" Type="Boolean" Nullable="false" />
           <Property Name="email" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
         </ComplexType>
         <ComplexType Name="fn_Show_Event_Table_Result">
@@ -492,13 +492,13 @@ Warnung 6002: Für Tabelle/Sicht 'Meets.dbo.View_Event_open' ist kein Primärsch
           <Key>
             <PropertyRef Name="Eventtitel" />
             <PropertyRef Name="Eingeladen" />
-            <PropertyRef Name="Bestõtigt" />
+            <PropertyRef Name="Bestaetigt" />
           </Key>
           <Property Name="Eventdatum" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="Eventtitel" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Bestõtigungszeitpunkt" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Bestaetigungszeitpunkt" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="Eingeladen" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Bestõtigt" Type="Boolean" Nullable="false" />
+          <Property Name="Bestaetigt" Type="Boolean" Nullable="false" />
         </EntityType>
         <EntityType Name="View_Event">
           <Key>
@@ -801,9 +801,9 @@ Warnung 6002: Für Tabelle/Sicht 'Meets.dbo.View_Event_open' ist kein Primärsch
               <MappingFragment StoreEntitySet="BesaetigungDetailView">
                 <ScalarProperty Name="Eventdatum" ColumnName="Eventdatum" />
                 <ScalarProperty Name="Eventtitel" ColumnName="Eventtitel" />
-                <ScalarProperty Name="Bestõtigungszeitpunkt" ColumnName="Bestõtigungszeitpunkt" />
+                <ScalarProperty Name="Bestaetigungszeitpunkt" ColumnName="Bestaetigungszeitpunkt" />
                 <ScalarProperty Name="Eingeladen" ColumnName="Eingeladen" />
-                <ScalarProperty Name="Bestõtigt" ColumnName="Bestõtigt" />
+                <ScalarProperty Name="Bestaetigt" ColumnName="Bestaetigt" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -845,9 +845,9 @@ Warnung 6002: Für Tabelle/Sicht 'Meets.dbo.View_Event_open' ist kein Primärsch
               <ComplexTypeMapping TypeName="MeetsModel.fn_detailViewFromUserEmail_Result">
                 <ScalarProperty Name="Eventdatum" ColumnName="Eventdatum" />
                 <ScalarProperty Name="Eventtitel" ColumnName="Eventtitel" />
-                <ScalarProperty Name="Bestõtigungszeitpunkt" ColumnName="Bestõtigungszeitpunkt" />
+                <ScalarProperty Name="Bestaetigungszeitpunkt" ColumnName="Bestaetigungszeitpunkt" />
                 <ScalarProperty Name="Eingeladen" ColumnName="Eingeladen" />
-                <ScalarProperty Name="Bestõtigt" ColumnName="Bestõtigt" />
+                <ScalarProperty Name="Bestaetigt" ColumnName="Bestaetigt" />
                 <ScalarProperty Name="email" ColumnName="email" />
               </ComplexTypeMapping>
             </ResultMapping>

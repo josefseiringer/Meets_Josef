@@ -15,9 +15,9 @@ namespace Meets.Models
     {
         public string Eventdatum { get; set; }
         public string Eventtitel { get; set; }
-        public string Bestõtigungszeitpunkt { get; set; }
+        public string Bestaetigungszeitpunkt { get; set; }
         public string Eingeladen { get; set; }
-        public bool Bestõtigt { get; set; }
+        public bool Bestaetigt { get; set; }
         public string email { get; set; }
     }
 }

@@ -524,6 +524,7 @@
     <Content Include="Views\Events\DetailEventBestaetigt.cshtml" />
     <Content Include="Views\Shared\_LayoutGeladneDetail.cshtml" />
     <Content Include="Views\Shared\_LayoutCreateEvent.cshtml" />
+    <Content Include="Views\Shared\_LayoutPropertyUser.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
