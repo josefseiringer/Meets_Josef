@@ -22,7 +22,7 @@ namespace Meets.Controllers
             using (MeetsEntities cont = new MeetsEntities())
             {
 
-
+                //Zusatzinfos laden wenn vorhanden und dem View übergeben
 
 
 
@@ -49,22 +49,13 @@ namespace Meets.Controllers
                 Member memVal = (from m in cont.Members
                                  where m.email == mail
                                  select m).FirstOrDefault();
-                //MemberFormModel mfm = new MemberFormModel();
-                //mfm.Klartextpasswort = null;
-                //mfm.id = memVal.id;
-                //mfm.created = memVal.created;
-                //mfm.email = memVal.email;
-                //mfm.dateofbirth = memVal.dateofbirth;
-                //mfm.password = memVal.password;
-
+                
+                //Instanz von ProfilViewModel erstellen und pvm verweist darauf
                 ProfileViewModel pvm = new ProfileViewModel();               
 
-                pvm.Email = memVal.email;
-                if (pvm.NewPasswort == null && pvm.Passwortvergleich == null)
-                {
-                    pvm.NewPasswort = null;
-                    pvm.Passwortvergleich = null;
-                }
+                pvm.Email = memVal.email;                
+                pvm.NewPasswort = null;
+                pvm.Passwortvergleich = null;                
                 
                 
                 if (memVal.id != 0)
