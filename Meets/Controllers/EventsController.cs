@@ -36,8 +36,7 @@ namespace Meets.Controllers
             }
             return View(listForView);
         }
-
-
+        
         [HttpGet]
         public ActionResult VerteilerMailAnnahme(int @id)
         {
@@ -53,8 +52,7 @@ namespace Meets.Controllers
             ViewBag.invit = invit;
             return View(aktuell);
         }
-
-
+        
         /// <summary>
         /// Bei Annahme oder Ablehnung Status Speichern in die Ivitatiostatus Tabelle
         /// </summary>
@@ -233,57 +231,7 @@ namespace Meets.Controllers
             }
             return RedirectToAction("Login", "Login");
         }
-
-        ///// <summary>
-        ///// Erstes View der Ansicht der Events des bestimmten Benutzers wird nicht verwendet
-        ///// </summary>
-        ///// <returns></returns>
-        //[Authorize]
-        //public ActionResult Index()
-        //{
-        //    try
-        //    {
-        //        TempData["ConfirmMessage"] = "Login erfolgreich";
-        //        //var events = db.Events.Include(x => x.Member);
-        //        List<Event> events2 = (from e in db.Events
-        //                       where e.Member.id == e.member_id &&
-        //                       e.Member.email == User.Identity.Name
-        //                       select e).ToList();
-        //        string ma = null;
-        //        ma = User.Identity.Name;
-        //        TempData["mail"] = ma;
-        //        //return View(events.ToList());
-        //        return View(events2);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        Debug.WriteLine($"Fehler {ex.Message}");
-        //        TempData["ErrorMessage"] = "Fehler mit der Datenbankverbindung";
-        //        return View();
-        //    }
-        //}
-
-        ///// <summary>
-        ///// Mögliche Detail Ansicht wird nicht verwendet
-        ///// </summary>
-        ///// <param name="id"></param>
-        ///// <returns></returns>
-        //[Authorize]
-        //// GET: Events/Details/5
-        //public ActionResult Details(int? id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-        //    }
-        //    Event @event = db.Events.Find(id);
-        //    if (@event == null)
-        //    {
-        //        return HttpNotFound();
-        //    }
-        //    return View(@event);
-        //}
-
+        
         /// <summary>
         /// Erzeugen eines Events
         /// </summary>
@@ -374,8 +322,7 @@ namespace Meets.Controllers
                 }
             }return RedirectToAction("EventDefaultUser");
         }
-
-
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult EditNeu(Event e)
@@ -418,46 +365,6 @@ namespace Meets.Controllers
             return RedirectToAction("EventDefaultUser");
         }
 
-        // POST: Events/Edit/
-        /// <summary>
-        /// Update vom bestehenden Event wobei das gleiche Event nicht zwei mal abgespeichert werden kann
-        /// durch UIX in der Datenbank
-        /// </summary>
-        /// <param name="e"></param>
-        /// <returns></returns>
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult Edit(Event e)
-        //{
-        //    try
-        //    {
-        //        if (e != null)
-        //        {
-
-        //            e.created = DateTime.Now;
-        //            e.member_id = (from ev in db.Events
-        //                           where ev.Member.email == User.Identity.Name
-        //                           select ev.Member.id).FirstOrDefault();
-        //            if (e.member_id != 0)
-        //            {
-        //                db.Events.Add(e);
-        //                db.SaveChanges();
-        //                return RedirectToAction("EventDefaultUser");
-        //            }
-        //            TempData["ErrorMessage"] = "Fehler mit der Datenbankverbindung";
-        //            return View();
-
-        //        }
-        //        TempData["ErrorMessage"] = "Fehlende oder falsche Eingabe";
-        //        return View();
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        TempData["ErrorMessage"] = "Es kann nicht zweimal das selbe Event eingetragen werden! Ausnamefehler der Web Applikation:"+ex;
-        //        return View();
-        //    }     
-        //}
-
         /// <summary>
         /// Möglichkeit ein bestehendes Event zu löschen
         /// </summary>
@@ -494,6 +401,10 @@ namespace Meets.Controllers
             return RedirectToAction("EventDefaultUser");
         }
 
+        /// <summary>
+        /// Gibt nicht verwaltete Ressourcen und optional verwaltete Ressourcen frei
+        /// </summary>
+        /// <param name="disposing"></param>
         protected override void Dispose(bool disposing)
         {
             if (disposing)

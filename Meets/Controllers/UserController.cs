@@ -173,6 +173,8 @@ namespace Meets.Controllers
                         {
                             TempData["ConfirmMessage"] = zugangsaenderung;
                         }
+
+                        TempData["ConfirmMessage"] = "Änderung des Benutzernamens erfolgreich";
                         return RedirectToAction("EventDefaultUser", "Events");
                     }
                     catch (Exception ex)

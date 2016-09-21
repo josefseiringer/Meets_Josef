@@ -18,10 +18,10 @@ namespace Meets.Controllers
         // GET: Login
         public ActionResult Login()
         {
-            if (TempData["ConfirmMessage"] != null)
-            {               
-               TempData["ConfirmMessage"] = "Änderung des Benutzernamens erfolgreich";                                
-            }
+            //if (TempData["ConfirmMessage"] != null)
+            //{               
+            //   TempData["ConfirmMessage"] = "Änderung des Benutzernamens erfolgreich";                                
+            //}
             
             return View();
         }
@@ -54,6 +54,7 @@ namespace Meets.Controllers
                     TempData["ConfirmMessage"] = "Login erfolgreich";
                     return RedirectToAction("EventDefaultUser", "Events");
                 }
+                TempData["ErrorMessage"] = "Email existiert nicht!";
                 return RedirectToAction("Login", "Login");
             }
             

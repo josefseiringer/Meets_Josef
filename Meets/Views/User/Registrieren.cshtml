@@ -8,55 +8,57 @@
 
 @using (Html.BeginForm("RegistrierungSpeichern", "User"))
 {
-    <table style="margin-top:10px;" cellpadding="10">
-        <tr>
-            <td class="tdpadding">@Html.LabelFor(x => x.Email)</td>
-            <td class="mytabeltext">@Html.TextBoxFor(x => x.Email, htmlAttributes: new { @class = "mylabel" })</td>
-        </tr>
-        <tr>
-            <td></td>
-            <td class="mytabeltext">
-                @Html.ValidationMessageFor(model => model.Email, String.Empty, new { @class = "text-danger" })
-            </td>
-        </tr>
-        <tr>
-            <td class="tdpadding">@Html.LabelFor(x => x.Passwort)</td>
-            <td class="mytabeltext">@Html.PasswordFor(x => x.Passwort, htmlAttributes: new { @class = "mylabel" })</td>
-           
-        </tr>
-        <tr>
-            <td></td>
-            <td class="mytabeltext">
-                @Html.ValidationMessageFor(model => model.Passwort, String.Empty, new { @class = "text-danger" })
-            </td>
-        </tr>
-        <tr>
-            <td class="tdpadding">@Html.LabelFor(x => x.Passwortvergleich)</td>
-            <td class="mytabeltext">@Html.PasswordFor(x => x.Passwortvergleich, htmlAttributes: new { @class = "mylabel" })</td>            
-        </tr>
-        <tr>
-            <td></td>
-            <td class="mytabeltext">@Html.ValidationMessageFor(model => model.Passwortvergleich, String.Empty, new { @class = "text-danger" })</td>
-        </tr>
-        <tr>
-            <td class="tdpadding">@Html.LabelFor(x => x.Geburtsdatum)</td>
-            <td class="mytabeltext">@Html.TextBoxFor(x => x.Geburtsdatum, htmlAttributes: new { @class = "mylabel" })</td> 
-        </tr>
-        <tr>
-            <td></td>
-            <td class="mytabeltext">
-                @Html.ValidationMessageFor(model => model.Geburtsdatum, String.Empty, new { @class = "text-danger" })
-                @if (ViewBag.ErrorMesage != null)
-                {
-                  <label class="text-danger">@ViewBag.ErrorMesage</label>
-                }
-            </td>
+    <div class="contentRegInnen">
+        <table style="margin-top:10px;">
+            <tr>
+                <td class="tdpadding">@Html.LabelFor(x => x.Email)</td>
+                <td class="mytabeltext">@Html.TextBoxFor(x => x.Email, htmlAttributes: new { @class = "mylabel" })</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td class="mytabeltext">
+                    @Html.ValidationMessageFor(model => model.Email, String.Empty, new { @class = "text-danger" })
+                </td>
+            </tr>
+            <tr>
+                <td class="tdpadding">@Html.LabelFor(x => x.Passwort)</td>
+                <td class="mytabeltext">@Html.PasswordFor(x => x.Passwort, htmlAttributes: new { @class = "mylabel" })</td>
 
-        </tr>
-        <tr>
-            <td><input class="btnstyle" type="submit" value="Registrieren" /></td>
-        </tr>
-    </table>
+            </tr>
+            <tr>
+                <td></td>
+                <td class="mytabeltext">
+                    @Html.ValidationMessageFor(model => model.Passwort, String.Empty, new { @class = "text-danger" })
+                </td>
+            </tr>
+            <tr>
+                <td class="tdpadding">@Html.LabelFor(x => x.Passwortvergleich)</td>
+                <td class="mytabeltext">@Html.PasswordFor(x => x.Passwortvergleich, htmlAttributes: new { @class = "mylabel" })</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td class="mytabeltext">@Html.ValidationMessageFor(model => model.Passwortvergleich, String.Empty, new { @class = "text-danger" })</td>
+            </tr>
+            <tr>
+                <td class="tdpadding">@Html.LabelFor(x => x.Geburtsdatum)</td>
+                <td class="mytabeltext">@Html.TextBoxFor(x => x.Geburtsdatum, htmlAttributes: new { @class = "mylabel" })</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td class="mytabeltext">
+                    @Html.ValidationMessageFor(model => model.Geburtsdatum, String.Empty, new { @class = "text-danger" })
+                    @if (ViewBag.ErrorMesage != null)
+                {
+                        <label class="text-danger">@ViewBag.ErrorMesage</label>
+                    }
+                </td>
+
+            </tr>
+            <tr>
+                <td style="padding-top:30px;"><input class="btnstyle" type="submit" value="Registrieren" /></td>
+            </tr>
+        </table>
+    </div>
 }
     <div class="regnow">
         <img src="~/img/register.png" />

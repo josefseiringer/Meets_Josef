@@ -96,6 +96,7 @@ nav{
 .centerInput{height:100%;margin: 0 auto;}
 
 /*TABELLEN GESTALTEN IN REGISTRIERUNG*/
+
 .contentReg{
     padding: 20px;
     width: 1100px;
@@ -108,14 +109,25 @@ nav{
     background-color: rgba(255, 255, 255, 0.3);
     /*background-color: #A5D3F3;*/
 }
-.regnow{width:235px;height:233px;position:relative;left:510px; bottom:300px;}
+.contentRegInnen{
+    padding: 20px;
+    width: 800px;
+    height: 450px;
+    border: solid 1px #808080;
+    border-radius: 10px;
+    -webkit-box-shadow: 0px 2px 0px 2px #808080;
+    box-shadow: 0px 2px 0px 2px #808080;
+    margin: 0 auto;
+    background-color: rgba(255, 255, 255, 0.3);
+}
+.regnow{width:235px;height:233px;position:relative;left:610px; bottom:320px;}
 .tdpadding{padding-right:20px;padding-left:20px;}
 .mylabel{width:250px;padding:5px 10px;}
-.mytabeltext{width:250px}
+.mytabeltext{width:250px;padding-bottom:15px;}
 .spaltenabstand{margin-bottom:10px;}
 
 /*LoginStyles*/
-.loginFigur{width:240px;height:198px; position:relative;left:500px; bottom:80px; border:solid 2px #000000;border-radius:10px;}
+.loginFigur{width:240px;height:198px; position:relative;left:500px; bottom:180px; border:solid 2px #000000;border-radius:10px;}
 .rounded{
     border-radius:10px;
 }
