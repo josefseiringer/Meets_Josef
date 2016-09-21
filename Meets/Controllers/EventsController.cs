@@ -14,7 +14,7 @@ namespace Meets.Controllers
 {
     public class EventsController : Controller
     {
-        
+        //Datenbankzugriff für alle ActioResult Methoden ohne Using
         private MeetsEntities db = new MeetsEntities();
 
         [HttpGet]
@@ -127,7 +127,7 @@ namespace Meets.Controllers
         /// <summary>
         /// Speicherung in der Datenbank das eine Einladung verschickt wurde ink. E-Mail an den einzuladenden
         /// </summary>
-        /// <param name="vfm"></param>
+        /// <param name="vfm">VerteilerFormModel</param>
         /// <returns></returns>
         [HttpPost]
         public ActionResult VerteilerSender(VerteilerFormModel vfm)
@@ -174,10 +174,13 @@ namespace Meets.Controllers
         [Authorize]
         [HttpGet]
         public ActionResult EventDefaultUser()
-        {
-            TempData["ConfirmMessage"] = "Login erfolgreich";
+        {            
+            
+            //Mail Adresse aus anderem ActionResult diesem AR übergeben ohne Authentifizierungscookie
             ViewBag.mail = TempData["mail"];
             string ma = ViewBag.mail;
+            
+
             if (User.Identity.Name != null)
             {
                 //Uneingeschränke Liste : Sucht alle Events des angemeldeten Benutzers und Speichert Sie in eine liste
@@ -196,12 +199,14 @@ namespace Meets.Controllers
                              where e.Member.id == e.member_id &&
                              e.Member.email == User.Identity.Name
                              select e.id).FirstOrDefault();
-
+                //Wenn die Liste einen count hat dann
                 if (defUser.Count == 0)
                 {
+                    //Meldung noch keine Einträge dem View übergeben
                     ViewBag.leereListe = "Du hast noch keine Einträge erstellt.";
                     return View(defUserPrivate);
                 }
+                //Wenn der Benutzer in der Membervalidation eingetragen ist sprich not null nicht null ist
                 if (valid != 0)
                 {
                     return View(defUser);
@@ -214,78 +219,77 @@ namespace Meets.Controllers
             }
             if (ma != null)
             {
+                //per gesendeter e-Mail Adresse Seine erstellten Events anzeigen
                 List<Event> defUserPerMail = (from e in db.Events
                                               where e.Member.id == e.member_id &&
                                               e.Member.email == ma
                                               select e).ToList();
-
+                //Falls noch kein Event vorhanden dann
                 if (defUserPerMail.Count == 0)
                 {
                     ViewBag.leereListe = "Sie haben noch keine Einträge erstellt.";
                     return View(defUserPerMail);
                 }
-
-                //return View(defUserPerMail);
             }
             return RedirectToAction("Login", "Login");
         }
 
-        /// <summary>
-        /// Erstes View der Ansicht der Events des bestimmten Benutzers wird nicht verwendet
-        /// </summary>
-        /// <returns></returns>
-        [Authorize]
-        public ActionResult Index()
-        {
-            try
-            {
-                TempData["ConfirmMessage"] = "Login erfolgreich";
-                //var events = db.Events.Include(x => x.Member);
-                List<Event> events2 = (from e in db.Events
-                               where e.Member.id == e.member_id &&
-                               e.Member.email == User.Identity.Name
-                               select e).ToList();
-                string ma = null;
-                ma = User.Identity.Name;
-                TempData["mail"] = ma;
-                //return View(events.ToList());
-                return View(events2);
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine($"Fehler {ex.Message}");
-                TempData["ErrorMessage"] = "Fehler mit der Datenbankverbindung";
-                return View();
-            }
-        }
+        ///// <summary>
+        ///// Erstes View der Ansicht der Events des bestimmten Benutzers wird nicht verwendet
+        ///// </summary>
+        ///// <returns></returns>
+        //[Authorize]
+        //public ActionResult Index()
+        //{
+        //    try
+        //    {
+        //        TempData["ConfirmMessage"] = "Login erfolgreich";
+        //        //var events = db.Events.Include(x => x.Member);
+        //        List<Event> events2 = (from e in db.Events
+        //                       where e.Member.id == e.member_id &&
+        //                       e.Member.email == User.Identity.Name
+        //                       select e).ToList();
+        //        string ma = null;
+        //        ma = User.Identity.Name;
+        //        TempData["mail"] = ma;
+        //        //return View(events.ToList());
+        //        return View(events2);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        Debug.WriteLine($"Fehler {ex.Message}");
+        //        TempData["ErrorMessage"] = "Fehler mit der Datenbankverbindung";
+        //        return View();
+        //    }
+        //}
 
-        /// <summary>
-        /// Mögliche Detail Ansicht wird nicht verwendet
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        [Authorize]
-        // GET: Events/Details/5
-        public ActionResult Details(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Event @event = db.Events.Find(id);
-            if (@event == null)
-            {
-                return HttpNotFound();
-            }
-            return View(@event);
-        }
+        ///// <summary>
+        ///// Mögliche Detail Ansicht wird nicht verwendet
+        ///// </summary>
+        ///// <param name="id"></param>
+        ///// <returns></returns>
+        //[Authorize]
+        //// GET: Events/Details/5
+        //public ActionResult Details(int? id)
+        //{
+        //    if (id == null)
+        //    {
+        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+        //    }
+        //    Event @event = db.Events.Find(id);
+        //    if (@event == null)
+        //    {
+        //        return HttpNotFound();
+        //    }
+        //    return View(@event);
+        //}
 
         /// <summary>
         /// Erzeugen eines Events
         /// </summary>
         /// <returns></returns>
         [Authorize]
-        // GET: Events/Create
+        [HttpGet]
         public ActionResult Create()
         {
             int valid = (from e in db.Membervalidations
@@ -414,45 +418,45 @@ namespace Meets.Controllers
             return RedirectToAction("EventDefaultUser");
         }
 
-        // POST: Events/Edit/von mir
+        // POST: Events/Edit/
         /// <summary>
         /// Update vom bestehenden Event wobei das gleiche Event nicht zwei mal abgespeichert werden kann
         /// durch UIX in der Datenbank
         /// </summary>
         /// <param name="e"></param>
         /// <returns></returns>
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(Event e)
-        {
-            try
-            {
-                if (e != null)
-                {
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public ActionResult Edit(Event e)
+        //{
+        //    try
+        //    {
+        //        if (e != null)
+        //        {
 
-                    e.created = DateTime.Now;
-                    e.member_id = (from ev in db.Events
-                                   where ev.Member.email == User.Identity.Name
-                                   select ev.Member.id).FirstOrDefault();
-                    if (e.member_id != 0)
-                    {
-                        db.Events.Add(e);
-                        db.SaveChanges();
-                        return RedirectToAction("EventDefaultUser");
-                    }
-                    TempData["ErrorMessage"] = "Fehler mit der Datenbankverbindung";
-                    return View();
+        //            e.created = DateTime.Now;
+        //            e.member_id = (from ev in db.Events
+        //                           where ev.Member.email == User.Identity.Name
+        //                           select ev.Member.id).FirstOrDefault();
+        //            if (e.member_id != 0)
+        //            {
+        //                db.Events.Add(e);
+        //                db.SaveChanges();
+        //                return RedirectToAction("EventDefaultUser");
+        //            }
+        //            TempData["ErrorMessage"] = "Fehler mit der Datenbankverbindung";
+        //            return View();
 
-                }
-                TempData["ErrorMessage"] = "Fehlende oder falsche Eingabe";
-                return View();
-            }
-            catch (Exception ex)
-            {
-                TempData["ErrorMessage"] = "Es kann nicht zweimal das selbe Event eingetragen werden! Ausnamefehler der Web Applikation:"+ex;
-                return View();
-            }     
-        }
+        //        }
+        //        TempData["ErrorMessage"] = "Fehlende oder falsche Eingabe";
+        //        return View();
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        TempData["ErrorMessage"] = "Es kann nicht zweimal das selbe Event eingetragen werden! Ausnamefehler der Web Applikation:"+ex;
+        //        return View();
+        //    }     
+        //}
 
         /// <summary>
         /// Möglichkeit ein bestehendes Event zu löschen
@@ -460,7 +464,7 @@ namespace Meets.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [Authorize]
-        // GET: Events/Delete/5
+        [HttpGet]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -474,13 +478,12 @@ namespace Meets.Controllers
             }
             return View(@event);
         }
-
+        
         /// <summary>
         /// POST Methode die das löschen ausführt
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        // POST: Events/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)

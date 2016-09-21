@@ -19,9 +19,10 @@ namespace Meets.Controllers
         public ActionResult Login()
         {
             if (TempData["ConfirmMessage"] != null)
-            {
-                TempData["ConfirmMessage"] = "Änderung des Benutzernamens erfolgreich";
+            {               
+               TempData["ConfirmMessage"] = "Änderung des Benutzernamens erfolgreich";                                
             }
+            
             return View();
         }
 
@@ -50,6 +51,7 @@ namespace Meets.Controllers
                     //mittels [Authorize] kann bei Actionmethoden auf dieses Cookie zugreifen
                     FormsAuthentication.SetAuthCookie(lfm.Email, false);
 
+                    TempData["ConfirmMessage"] = "Login erfolgreich";
                     return RedirectToAction("EventDefaultUser", "Events");
                 }
                 return RedirectToAction("Login", "Login");
