@@ -24,26 +24,28 @@
         }
         @if (ViewBag.valMemProp != null)
         {
-            <table class="table-bordered">
-                <tr>   
-                    <th style="width:200px;padding: 0 10px;"><h4>Art/Name des Zusatzes:</h4></th>                 
-                    @foreach (Meets.Models.Memberproperty item in ViewBag.valMemProp)
-                    {
-                        <td style="padding:0 10px;">
-                            <h4 style="color:blue;">@item.val</h4>
-                        </td>
-                    }                    
-                </tr>
-                <tr>
-                    <th style="width:200px;padding: 0 10px;"><h4>Erstellter Zusatz:</h4></th>
-                    @foreach (Meets.Models.Propertytype itemProp in ViewBag.PropType)
-                    {
-                        <td style="padding: 0 10px;">
-                            <h4 style="color:seagreen;">@itemProp.description</h4>
-                        </td>
-                    }                    
-                </tr>
-            </table>
+            <div class="scrollen">
+                <table class="table-bordered table-responsive">
+                    <tr>   
+                        <th  style="width:200px;padding: 0 10px;"><h4>Art/Name des Zusatzes:</h4></th>                 
+                        @foreach (Meets.Models.Memberproperty item in ViewBag.valMemProp)
+                        {
+                            <td style="padding:0 10px;">
+                                <h4 style="color:midnightblue;">@item.val</h4>
+                            </td>
+                        }                    
+                    </tr>
+                    <tr>
+                        <th style="padding: 0 10px;"><h4>Erstellter Zusatz:</h4></th>
+                        @foreach (Meets.Models.Propertytype itemProp in ViewBag.PropType)
+                        {
+                            <td style="padding: 0 10px;">
+                                <h4 style="color:seagreen;">@itemProp.description</h4>
+                            </td>
+                        }                    
+                    </tr>
+                </table>
+            </div>
         }
     </div>
     <h4>Eintrag hinzufügen:</h4>
