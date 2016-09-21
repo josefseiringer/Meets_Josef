@@ -269,6 +269,8 @@
     <Compile Include="Models\View_Event_open.cs">
       <DependentUpon>MeetsModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ZusatzinfoViewModelMemberproperties.cs" />
+    <Compile Include="Models\ZusatzinfoViewModelPropertytype.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -525,6 +527,7 @@
     <Content Include="Views\Shared\_LayoutGeladneDetail.cshtml" />
     <Content Include="Views\Shared\_LayoutCreateEvent.cshtml" />
     <Content Include="Views\Shared\_LayoutPropertyUser.cshtml" />
+    <Content Include="Views\User\Zusatzinfos.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -1,0 +1,69 @@
+﻿@model List<Meets.Models.Member>
+@{
+    ViewBag.Title = "Zusatzinfos";
+    Layout = "~/Views/Shared/_LayoutMeetsEdit.cshtml";
+}
+<div class="zusatz">
+    @if (ViewBag.BindingError != null)
+    {
+        <h3 class="text-danger">@ViewBag.BindingError</h3>
+    }
+    <div class="inlay">
+        @foreach (var item in Model)
+        {
+            <table>
+                <tr>
+                    <th style="width:200px;padding: 0 10px;"><h4>E-Mail User:</h4></th>
+                    <td><h4>@Html.DisplayFor(modelItem => item.email)</h4></td>
+                </tr>
+                <tr>
+                    <th style="padding: 0 10px;"><h4>Geburtsdatum:</h4></th>
+                    <td><h4>@Html.DisplayFor(modelItem => item.dateofbirth)</h4></td>
+                </tr>
+            </table>
+        }
+        @if (ViewBag.valMemProp != null)
+        {
+            <table class="table-bordered">
+                <tr>   
+                    <th style="width:200px;padding: 0 10px;"><h4>Art/Name des Zusatzes:</h4></th>                 
+                    @foreach (Meets.Models.Memberproperty item in ViewBag.valMemProp)
+                    {
+                        <td style="padding:0 10px;">
+                            <h4 style="color:blue;">@item.val</h4>
+                        </td>
+                    }                    
+                </tr>
+                <tr>
+                    <th style="width:200px;padding: 0 10px;"><h4>Erstellter Zusatz:</h4></th>
+                    @foreach (Meets.Models.Propertytype itemProp in ViewBag.PropType)
+                    {
+                        <td style="padding: 0 10px;">
+                            <h4 style="color:seagreen;">@itemProp.description</h4>
+                        </td>
+                    }                    
+                </tr>
+            </table>
+        }
+    </div>
+    <h4>Eintrag hinzufügen:</h4>
+    @using (Html.BeginForm())
+    {
+        <div class="inlay">
+            <table>
+                <tr>
+                    <th><h4>Art/Name des Zusatzes:</h4></th>
+                    <td style="padding-left:10px;"><input class="mylabel" type="text" name="value" /></td>
+                </tr>
+                <tr>
+                    <th><h4>Zusatz eingeben:</h4></th>
+                    <td style="padding-left:10px;"><input class="mylabel" type="text" name="description" /></td>
+                </tr>
+            </table>
+        </div>
+        <input class="btnstyleLeft" type="submit" value="Eintrag hinzufügen" />
+    }     
+    
+    
+</div>
+

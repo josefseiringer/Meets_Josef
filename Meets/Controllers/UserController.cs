@@ -21,18 +21,86 @@ namespace Meets.Controllers
             string defaultUserEmail = User.Identity.Name;
             using (MeetsEntities cont = new MeetsEntities())
             {
-
                 //Zusatzinfos laden wenn vorhanden und dem View übergeben
+                List<Member> memVal = (from m in cont.Members
+                                 where m.email == defaultUserEmail
+                                 select m).ToList();
+                if (memVal != null)
+                {
+                    List<Memberproperty> memProp = (from mp in cont.Memberproperties
+                                              where mp.member_id == mp.Member.id
+                                              select mp).ToList();
 
+                    if (memProp!=null)
+                    {
+                        ViewBag.valMemProp = memProp;
+                    }                   
+                    //wenn nicht leer
+                    if (memProp != null)
+                    {
+                        //neue Liste vom Type Propertytype
+                        List<Propertytype> fertig = new List<Propertytype>();
+                        //durch Liste interieren und daten auf neue Liste speichern
+                        foreach (var item in memProp)
+                        {
+                            Propertytype pt = new Propertytype();
 
+                            Propertytype propType = (from ptt in cont.Propertytypes
+                                                     where ptt.id == item.propertytype_id
+                                                     select ptt).FirstOrDefault();
+                            pt.created = propType.created;
+                            pt.description = propType.description;
+                            pt.id = propType.id;
+                            fertig.Add(pt);
+                        }
+                        
+                        if (fertig != null)
+                        {
+                            ViewBag.PropType = fertig;
+                        }                        
+                    }
+                }               
+
+                if (memVal != null)
+                {                   
+                    cont.SaveChanges();
+                    return View(memVal);
+                }
+                ViewBag.BindingError = "Keine Datenbankverbindung";
+                return View();
+            }               
+        }
+
+        [HttpPost]
+        public ActionResult Zusatzinfos(string value,string description)
+        {
+            string email = User.Identity.Name;
+            using(MeetsEntities cont = new MeetsEntities())
+            {
+                //Member Id holen und auf member_id in Memberproperties Speichern
+                int memValId = (from m in cont.Members
+                                 where m.email == email
+                                 select m.id).FirstOrDefault();
+                //instanzen erstellen mit variablen von Propertytype und speichern
+                Propertytype pt = new Propertytype();
+                pt.created = DateTime.Now;
+                pt.description = description;
+                cont.Propertytypes.Add(pt);
+                cont.SaveChanges();
+
+                //instanzen erstellen mit variablen von Zwischentabelle Memberproperties un speichern
+                Memberproperty mp = new Memberproperty();
+                mp.created = DateTime.Now;
+                mp.member_id = memValId;
+                mp.propertytype_id = pt.id;
+                mp.val = value;
+                cont.Memberproperties.Add(mp);
 
                 cont.SaveChanges();
-                return null;
-            }
-
-               
+                return RedirectToAction("Zusatzinfos");
+            }         
         }
-        
+
 
         /// <summary>
         /// GET Methode Benutzer Editieren
