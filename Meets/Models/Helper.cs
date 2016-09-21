@@ -12,7 +12,11 @@ namespace Meets.Models
 {
     public class Helper
     {
-
+        /// <summary>
+        /// EventListe liefere Event
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public static List<Event> LiefereDatabaseEvents(int? id)
         {
             List<Event> sendevent = null;
@@ -57,11 +61,11 @@ namespace Meets.Models
         }
 
         /// <summary>
-        /// Email über smtp mit HtmlBody
+        /// Email Verständigung zu eingeladenem Event über smtp mit HtmlBody
         /// </summary>
-        /// <param name="emailTo"></param>
-        /// <param name="id"></param>
-        /// <param name="eventTitle"></param>
+        /// <param name="emailTo">E-Mail Adresse des Empfängers</param>
+        /// <param name="id">Id aus Datenbank Meets.Events des einzuladendem Event</param>
+        /// <param name="eventTitle">Titel des Events</param>
         /// <returns>string mit Erfolgs Meldung</returns>
         public static string SendEventToEmail(string emailTo, int id, string eventTitle)
         {
@@ -89,13 +93,14 @@ namespace Meets.Models
 
                     //mail.AlternateViews htmlView = AlternateView.CreateAlternateViewFromString()
                     //SmtpClient client = new SmtpClient("sauron.itcc.local", 25);
-                    SmtpClient client = new SmtpClient("smtp.live.com", 25);
+                    //SmtpClient client = new SmtpClient("smtp.live.com", 25);
+                    SmtpClient client = new SmtpClient("localhost", 25);
 
                     //!!! nicht SSL im BBRZ verwenden !!!           
 
                     client.Credentials = new System.Net.NetworkCredential(mailSelf, passwd);
 
-                    client.EnableSsl = true;
+                    //client.EnableSsl = true;
 
                     client.Send(mail); //Senden 
 
@@ -117,10 +122,10 @@ namespace Meets.Models
 
 
         /// <summary>
-        /// Methode Mail Senden zu Registrierten Benutzer
+        /// Methode Mail Senden zu Registrierten Benutzer für Passwortänderung
         /// </summary>
-        /// <param name="mailFromUser"></param>
-        /// <returns>string</returns>
+        /// <param name="mailFromUser">Mailadresse von Benutzer</param>
+        /// <returns>string Erfolg/Fehlermeldung</returns>
 
         public static string SendMailRegTo(string mailFromUser)
         {
@@ -142,7 +147,8 @@ namespace Meets.Models
 
                 //mail.AlternateViews htmlView = AlternateView.CreateAlternateViewFromString()
                 //SmtpClient client = new SmtpClient("sauron.itcc.local", 25);
-                SmtpClient client = new SmtpClient("smtp.live.com", 25);
+                //SmtpClient client = new SmtpClient("smtp.live.com", 25);
+                SmtpClient client = new SmtpClient("localhost", 25);
                 //!!! nicht SSL im BBRZ verwenden !!!           
 
                 client.Credentials = new System.Net.NetworkCredential(mailSelf, passwd);
@@ -162,7 +168,12 @@ namespace Meets.Models
             }
 
         }
-
+        /// <summary>
+        /// Mailversand zur User Registrierung
+        /// </summary>
+        /// <param name="mailFromUser">Mailadresse des empfängers</param>
+        /// <param name="id">id aus Datenbank Meets.Member für Übergabe in Datenbank Meets.Membervalidation</param>
+        /// <returns></returns>
         public static string SendMailRegTo(string mailFromUser, int id)
         {
             string awt = null;            
@@ -185,12 +196,13 @@ namespace Meets.Models
 
                 //mail.AlternateViews htmlView = AlternateView.CreateAlternateViewFromString()
                 //SmtpClient client = new SmtpClient("sauron.itcc.local", 25);
-                SmtpClient client = new SmtpClient("smtp.live.com", 25);
+                //SmtpClient client = new SmtpClient("smtp.live.com", 25);
+                SmtpClient client = new SmtpClient("localhost", 25);
                 //!!! nicht SSL im BBRZ verwenden !!!           
 
                 client.Credentials = new System.Net.NetworkCredential(mailSelf, passwd);
 
-                client.EnableSsl = true;
+                //client.EnableSsl = true;
 
                 client.Send(mail); //Senden 
 
