@@ -161,19 +161,19 @@ namespace Meets.Models
                 return awt;
 
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                awt = ex + " Fehler beim Versenden der Email";
+                awt = " Fehler beim Versenden der Email";
                 return awt;
             }
 
         }
         /// <summary>
-        /// Mailversand zur User Registrierung
+        ///Überladene Methode Mailversand zur User Registrierung
         /// </summary>
         /// <param name="mailFromUser">Mailadresse des empfängers</param>
         /// <param name="id">id aus Datenbank Meets.Member für Übergabe in Datenbank Meets.Membervalidation</param>
-        /// <returns></returns>
+        /// <returns>string Erfolg/Fehlermeldung</returns>
         public static string SendMailRegTo(string mailFromUser, int id)
         {
             string awt = null;            

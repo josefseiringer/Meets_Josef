@@ -21,7 +21,7 @@
             <tr>
                 <th><h4>E-Mail:</h4></th>
                 <th><h4>Neues Passwort:</h4></th>
-                <th><h4>Passwort wiederholen:</h4></th>
+                <th style="padding-left:20px;"><h4>Passwort wiederholen:</h4></th>
             </tr>
             <tr>
                 <td class="mytabeltext">
@@ -30,47 +30,36 @@
                 <td>
                     @Html.PasswordFor(modelItem => modelItem.NewPasswort, htmlAttributes: new { @class = "mylabel" })
                 </td>
-                <td>@Html.PasswordFor(modelItem => modelItem.Passwortvergleich, htmlAttributes: new { @class = "mylabel" })</td>
-            </tr>
-            <tr>
-                <td class="text-danger">
-                    @if (ViewBag.errorEmail != null)
-                    {
-                        @ViewBag.errorEmail;
-                    }
+                <td style="padding-left:20px;">
+                    @Html.PasswordFor(modelItem => modelItem.Passwortvergleich, htmlAttributes: new { @class = "mylabel" })
                 </td>
-
-                <td class="text-danger">
-                    @if (ViewBag.notPasswd != null)
-                    {
-                        @ViewBag.notPasswd
-
-                    }
-                </td>             
-                
-                @*<td>@Html.ValidationMessageFor(modelItem => modelItem.Passwortvergleich)</td>*@
-                @if (ViewBag.equals != null)
-                {
-                    <td><p class="text-danger">@ViewBag.equals</p></td>
-                }
-
             </tr>
             <tr>
-                @if (ViewBag.errdaten != null)
-                {
+                <td class="text-danger">
+                    @if (ViewBag.errorEmail != null) { @ViewBag.errorEmail; }
+                </td>
+                <td class="text-danger">
+                    @if (ViewBag.notPasswd != null) { @ViewBag.notPasswd }
+                </td>             
+                @if (ViewBag.equals != null) { 
+                    <td style="padding-left:20px;"><p class="text-danger">@ViewBag.equals</p></td> 
+                }
+            </tr>
+            <tr>
+                @if (ViewBag.errdaten != null) {
                     <td class="text-danger" colspan="3">@ViewBag.errdaten</td>
                 }
             </tr>
         </table>
     </div>
-    <div style="margin-top:-200px; float:right;">
+    <div style="margin-top:-50px; float:right;">
         <input style="float:right;" class="btnstyle" type="submit" value="Speichern" />
     </div>
-    <br style="clear:both;" />
-    <div>
-        <a href="~/User/Zusatzinfos"><label class="btn btn-info" >Zusatzinfos...</label></a>
-    </div>
 }
+<br style="clear:both;" />
+<div>
+    <a href="~/User/Zusatzinfos"><label class="btn btn-info">Zusatzinfos...</label></a>
+</div>
 
 
 

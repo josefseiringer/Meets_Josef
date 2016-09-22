@@ -18,16 +18,10 @@ namespace Meets.Controllers
         // GET: Login
         public ActionResult Login()
         {
-            //if (TempData["ConfirmMessage"] != null)
-            //{               
-            //   TempData["ConfirmMessage"] = "Änderung des Benutzernamens erfolgreich";                                
-            //}
-            
+                        
             return View();
         }
-
        
-
         //post Controller anders mit LinQ
         /// <summary>
         /// POST Methode Login mit erstellen eines Session cookis
