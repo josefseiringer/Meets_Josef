@@ -176,6 +176,7 @@ namespace Meets.Controllers
             
             //Mail Adresse aus anderem ActionResult diesem AR übergeben ohne Authentifizierungscookie
             ViewBag.mail = TempData["mail"];
+            //Vom ViewBag auf Locale Variable Speichern
             string ma = ViewBag.mail;
             
 
@@ -202,15 +203,19 @@ namespace Meets.Controllers
                 {
                     //Meldung noch keine Einträge dem View übergeben
                     ViewBag.leereListe = "Du hast noch keine Einträge erstellt.";
-                    return View(defUserPrivate);
+                    return View();
                 }
                 //Wenn der Benutzer in der Membervalidation eingetragen ist sprich not null nicht null ist
                 if (valid != 0)
                 {
+                    //Lambda expression Liste sortieren nach Eventdatum neu zu alt
+                    defUser = defUser.OrderByDescending(d => d.eventdate).ToList();
                     return View(defUser);
                 }
                 else
                 {
+                    //Liste sortieren nach Eventdatum neu zu alt
+                    defUserPrivate = defUserPrivate.OrderByDescending(d => d.eventdate).ToList();
                     return View(defUserPrivate);
                 }
                 
@@ -376,11 +381,14 @@ namespace Meets.Controllers
         {
             if (id == null)
             {
+                /*Äquivalent zu HTTP-Status 400. BadRequest gibt an, dass die Anforderung vom Server nicht interpretiert werden konnte. BadRequest wird gesendet, wenn kein anderer Fehler zutrifft oder der genaue Fehler nicht bekannt bzw. für diesen kein Fehlercode definiert ist.*/
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+            //gesuchte Event id auf variable speichern
             Event @event = db.Events.Find(id);
             if (@event == null)
             {
+                //Gibt eine Instanz der HttpNotFoundResult-Klasse zurück
                 return HttpNotFound();
             }
             return View(@event);
@@ -395,7 +403,7 @@ namespace Meets.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            //Event @event = db.Events.Find(id);
+            //Prozedur löscht aus allen abhängigen Tabellen den Eventeintrag anhand der Id
             db.sp_delete_Event(id);                      
             db.SaveChanges();
             return RedirectToAction("EventDefaultUser");

@@ -29,6 +29,8 @@ namespace Meets.Controllers
                     ViewBag.keineOffenenBeiträge = "Es sind keine offenen Veranstaltungen vorhanden";
                     return View();
                 }
+                //Lambda expression zum Sortieren nach Eventdatum von Neu zu alt
+                openEvent = openEvent.OrderByDescending(o => o.eventdate).ToList();
                 return View(openEvent);             
             }
             
