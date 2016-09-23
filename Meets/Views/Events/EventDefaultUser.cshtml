@@ -10,7 +10,8 @@
 <div style="margin-bottom:10px;"><h3 style="float:right">@User.Identity.Name</h3></div>
 <label class="linkAsBtn">@Html.ActionLink("Event Hinzufügen", "Create", "Events")</label>
 <label class="linkAsBtn">@Html.ActionLink("Benutzer bearbeiten", "Edit", "User")</label>
-<lable class="linkAsBtn">@Html.ActionLink("Betätigte Events", "DetailEventBestaetigt","Events") </lable>
+<label class="linkAsBtn">@Html.ActionLink("Eingeladen zu", "InviteTo", "Events")</label>
+<lable class="linkAsBtn">@Html.ActionLink("Betätigte Events", "DetailEventBestaetigt","Events")</lable>
 @*@if (ViewBag.leereListe == null)
 {
     <label class="linkAsBtn">@Html.ActionLink("Events teilen", "Verteiler", "Events")</label>

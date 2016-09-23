@@ -74,6 +74,142 @@ namespace Meets.Models
             return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<fn_Show_Event_Table_Result>("[MeetsEntities].[fn_Show_Event_Table](@email)", emailParameter);
         }
     
+        public virtual int dt_adduserobject()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("dt_adduserobject");
+        }
+    
+        public virtual int dt_droppropertiesbyid(Nullable<int> id, string property)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("id", id) :
+                new ObjectParameter("id", typeof(int));
+    
+            var propertyParameter = property != null ?
+                new ObjectParameter("property", property) :
+                new ObjectParameter("property", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("dt_droppropertiesbyid", idParameter, propertyParameter);
+        }
+    
+        public virtual int dt_dropuserobjectbyid(Nullable<int> id)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("id", id) :
+                new ObjectParameter("id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("dt_dropuserobjectbyid", idParameter);
+        }
+    
+        public virtual int dt_generateansiname(ObjectParameter name)
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("dt_generateansiname", name);
+        }
+    
+        public virtual ObjectResult<Nullable<int>> dt_getobjwithprop(string property, string value)
+        {
+            var propertyParameter = property != null ?
+                new ObjectParameter("property", property) :
+                new ObjectParameter("property", typeof(string));
+    
+            var valueParameter = value != null ?
+                new ObjectParameter("value", value) :
+                new ObjectParameter("value", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("dt_getobjwithprop", propertyParameter, valueParameter);
+        }
+    
+        public virtual ObjectResult<Nullable<int>> dt_getobjwithprop_u(string property, string uvalue)
+        {
+            var propertyParameter = property != null ?
+                new ObjectParameter("property", property) :
+                new ObjectParameter("property", typeof(string));
+    
+            var uvalueParameter = uvalue != null ?
+                new ObjectParameter("uvalue", uvalue) :
+                new ObjectParameter("uvalue", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("dt_getobjwithprop_u", propertyParameter, uvalueParameter);
+        }
+    
+        public virtual ObjectResult<dt_getpropertiesbyid_Result> dt_getpropertiesbyid(Nullable<int> id, string property)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("id", id) :
+                new ObjectParameter("id", typeof(int));
+    
+            var propertyParameter = property != null ?
+                new ObjectParameter("property", property) :
+                new ObjectParameter("property", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<dt_getpropertiesbyid_Result>("dt_getpropertiesbyid", idParameter, propertyParameter);
+        }
+    
+        public virtual ObjectResult<dt_getpropertiesbyid_u_Result> dt_getpropertiesbyid_u(Nullable<int> id, string property)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("id", id) :
+                new ObjectParameter("id", typeof(int));
+    
+            var propertyParameter = property != null ?
+                new ObjectParameter("property", property) :
+                new ObjectParameter("property", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<dt_getpropertiesbyid_u_Result>("dt_getpropertiesbyid_u", idParameter, propertyParameter);
+        }
+    
+        public virtual int dt_setpropertybyid(Nullable<int> id, string property, string value, byte[] lvalue)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("id", id) :
+                new ObjectParameter("id", typeof(int));
+    
+            var propertyParameter = property != null ?
+                new ObjectParameter("property", property) :
+                new ObjectParameter("property", typeof(string));
+    
+            var valueParameter = value != null ?
+                new ObjectParameter("value", value) :
+                new ObjectParameter("value", typeof(string));
+    
+            var lvalueParameter = lvalue != null ?
+                new ObjectParameter("lvalue", lvalue) :
+                new ObjectParameter("lvalue", typeof(byte[]));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("dt_setpropertybyid", idParameter, propertyParameter, valueParameter, lvalueParameter);
+        }
+    
+        public virtual int dt_setpropertybyid_u(Nullable<int> id, string property, string uvalue, byte[] lvalue)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("id", id) :
+                new ObjectParameter("id", typeof(int));
+    
+            var propertyParameter = property != null ?
+                new ObjectParameter("property", property) :
+                new ObjectParameter("property", typeof(string));
+    
+            var uvalueParameter = uvalue != null ?
+                new ObjectParameter("uvalue", uvalue) :
+                new ObjectParameter("uvalue", typeof(string));
+    
+            var lvalueParameter = lvalue != null ?
+                new ObjectParameter("lvalue", lvalue) :
+                new ObjectParameter("lvalue", typeof(byte[]));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("dt_setpropertybyid_u", idParameter, propertyParameter, uvalueParameter, lvalueParameter);
+        }
+    
+        public virtual ObjectResult<Nullable<int>> dt_verstamp006()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("dt_verstamp006");
+        }
+    
+        public virtual ObjectResult<Nullable<int>> dt_verstamp007()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("dt_verstamp007");
+        }
+    
         public virtual int sp_AendereUserdaten(string email, byte[] password)
         {
             var emailParameter = email != null ?
