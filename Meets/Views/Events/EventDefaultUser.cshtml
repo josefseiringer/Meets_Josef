@@ -20,71 +20,75 @@
 {
     <div style="width:1000px;height:150px; margin: 20px auto; border:3px solid #ff0000;border-radius:10px;padding-top:40px;"><h3 style="text-align:center;">@ViewBag.leereListe</h3></div>
 }
-
-@foreach (Meets.Models.Event item in Model)
+else
 {
-    <div class="backwitheEvent">
-        <table>
-            @*<tr>
-                <td style="padding-left:10px;">@Html.HiddenFor(modelItem => item.id)</td>
-            </tr>*@
-            <tr>
-                <td style="padding-left:10px;">@Html.HiddenFor(modelItem => item.id )</td>
-            </tr>
-            @*<tr>
-                <th>Titel:</th>
-                <td style="padding-left:10px;">@Html.DisplayFor(modelItem => item.title)</td>
-            </tr>*@
-            <tr>
-                <th>Titel:</th>
-                <td style="padding-left:10px;">@Html.DisplayFor(modelItem => item.title)</td>
-            </tr>
-            @*<tr>
-                <th>Eventdatum:</th>
-                <td style="padding-left:10px;">@Html.DisplayFor(modelItem => item.evdate)</td>
-            </tr>*@
-            <tr>
-                <th>Eventdatum:</th>
-                <td style="padding-left:10px;">@Html.DisplayFor(modelItem => item.eventdate)</td>
-            </tr>
-            @*<tr>
-                <th>Beschreibung:</th>
-                <td style="padding-left:10px;">@Html.DisplayFor(modelItem => item.evdesc)</td>
-            </tr>*@
-            <tr>
-                <th>Beschreibung:</th>
-                <td style="padding-left:10px;">@Html.DisplayFor(modelItem => item.description)</td>
-            </tr>
-            @*<tr>
-                <th>Für alle Einsehbar</th>
-                <td style="padding-left:10px;">@Html.DisplayFor(modelItem => item.pub)</td>
-            </tr>*@
-            <tr>
-                <th>Für alle Einsehbar</th>
-                <td style="padding-left:10px;">@Html.DisplayFor(modelItem => item.viewpublic)</td>
-            </tr>
-            @*<tr>
-                <th>Standort:</th>
-                <td style="padding-left:10px;">@Html.DisplayFor(modelItem => item.loc)</td>
-            </tr>*@
-            <tr>
-                <th>Standort:</th>
-                <td style="padding-left:10px;">@Html.DisplayFor(modelItem => item.location)</td>
-            </tr>
-            <tr>
-                <th>Links:</th>
-                <td style="padding-left:10px;">
-                    @Html.ActionLink("Edit", "Edit", new { id = item.id }) |
-                    @*@Html.ActionLink("Details", "Details", new { id = item.id }) |*@
-                    @Html.ActionLink("Delete", "Delete", new { id = item.id }) |
-                    @Html.ActionLink("Verteilen an","Verteiler", new { id = item.id})
-                   
-                </td>
-            </tr>
-        </table>
-       
-    </div>
+    foreach (Meets.Models.Event item in Model)
+    {
+        <div class="backwitheEvent">
+            <table>
+                @*<tr>
+                        <td style="padding-left:10px;">@Html.HiddenFor(modelItem => item.id)</td>
+                    </tr>*@
+                <tr>
+                    <td style="padding-left:10px;">@Html.HiddenFor(modelItem => item.id)</td>
+                </tr>
+                @*<tr>
+                        <th>Titel:</th>
+                        <td style="padding-left:10px;">@Html.DisplayFor(modelItem => item.title)</td>
+                    </tr>*@
+                <tr>
+                    <th>Titel:</th>
+                    <td style="padding-left:10px;">@Html.DisplayFor(modelItem => item.title)</td>
+                </tr>
+                @*<tr>
+                        <th>Eventdatum:</th>
+                        <td style="padding-left:10px;">@Html.DisplayFor(modelItem => item.evdate)</td>
+                    </tr>*@
+                <tr>
+                    <th>Eventdatum:</th>
+                    <td style="padding-left:10px;">@Html.DisplayFor(modelItem => item.eventdate)</td>
+                </tr>
+                @*<tr>
+                        <th>Beschreibung:</th>
+                        <td style="padding-left:10px;">@Html.DisplayFor(modelItem => item.evdesc)</td>
+                    </tr>*@
+                <tr>
+                    <th>Beschreibung:</th>
+                    <td style="padding-left:10px;">@Html.DisplayFor(modelItem => item.description)</td>
+                </tr>
+                @*<tr>
+                        <th>Für alle Einsehbar</th>
+                        <td style="padding-left:10px;">@Html.DisplayFor(modelItem => item.pub)</td>
+                    </tr>*@
+                <tr>
+                    <th>Für alle Einsehbar</th>
+                    <td style="padding-left:10px;">@Html.DisplayFor(modelItem => item.viewpublic)</td>
+                </tr>
+                @*<tr>
+                        <th>Standort:</th>
+                        <td style="padding-left:10px;">@Html.DisplayFor(modelItem => item.loc)</td>
+                    </tr>*@
+                <tr>
+                    <th>Standort:</th>
+                    <td style="padding-left:10px;">@Html.DisplayFor(modelItem => item.location)</td>
+                </tr>
+                <tr>
+                    <th>Links:</th>
+                    <td style="padding-left:10px;">
+                        @Html.ActionLink("Edit", "Edit", new { id = item.id }) |
+                        @*@Html.ActionLink("Details", "Details", new { id = item.id }) |*@
+                        @Html.ActionLink("Delete", "Delete", new { id = item.id }) |
+                        @Html.ActionLink("Verteilen an", "Verteiler", new { id = item.id })
+
+                    </td>
+                </tr>
+            </table>
+
+        </div>
+    }
 }
+
+
 
 
 

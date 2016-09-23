@@ -209,13 +209,13 @@ namespace Meets.Controllers
                 if (valid != 0)
                 {
                     //Lambda expression Liste sortieren nach Eventdatum neu zu alt
-                    defUser = defUser.OrderByDescending(d => d.eventdate).ToList();
+                    defUser = defUser.Where(d => d.eventdate >= DateTime.Now).OrderByDescending(d => d.eventdate).ToList();
                     return View(defUser);
                 }
                 else
                 {
                     //Liste sortieren nach Eventdatum neu zu alt
-                    defUserPrivate = defUserPrivate.OrderByDescending(d => d.eventdate).ToList();
+                    defUserPrivate = defUserPrivate.Where(d => d.eventdate >= DateTime.Now).OrderByDescending(d => d.eventdate).ToList();
                     return View(defUserPrivate);
                 }
                 
@@ -271,14 +271,14 @@ namespace Meets.Controllers
                 e.created = DateTime.Now;
                 e.member_id = (from ev in db.Events
                             where ev.Member.email == User.Identity.Name
-                            select ev.member_id).FirstOrDefault();                
-                if (e.member_id != 0)
-                {                    
+                            select ev.member_id).FirstOrDefault();
+                if (e.member_id != 0 && e.description != null && e.eventdate != null && e.location != null && e.title != null)
+                {
                     db.Events.Add(e);
                     db.SaveChanges();
                     return RedirectToAction("EventDefaultUser");
                 }
-                else if(User.Identity.Name != null)
+                else if (User.Identity.Name != null && e.description != null && e.eventdate != null && e.location != null && e.title != null)
                 {
                     e.member_id = (from m in db.Members
                                    where m.email == User.Identity.Name
@@ -287,11 +287,13 @@ namespace Meets.Controllers
                     db.SaveChanges();
                     return RedirectToAction("EventDefaultUser");
                 }
-            TempData["ErrorMessage"] = "Fehler mit der Datenbankverbindung";
-            return View();                
-                
+                else
+                {
+                    ViewBag.fehlendeeingabe = "Fehlende oder falsche Eingabe";
+                    return View();
+                }
             }
-            TempData["ErrorMessage"] = "Fehlende oder falsche Eingabe";
+            TempData["ErrorMessage"] = "Fehler mit der Datenbankverbindung";
             return View();
         }
         [HttpGet]

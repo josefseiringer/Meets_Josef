@@ -16,13 +16,13 @@
     <div id="container">
         <nav class="navigation">
             <a href="~/Abmelden/Logout"><input class="btnstyleHeader" type="button" value="Abmelden" /></a>
-            <a href="~/Events/EventDefaultUser"><input class="btnstyleHeader" type="button" value="zurück" /></a>
+            @*<a href="~/Events/EventDefaultUser"><input class="btnstyleHeader" type="button" value="zurück" /></a>*@
             
         </nav>
         <div id="content">
             <div class="backcolor">
                 <h2 class="center" style="font-family:Corbel;">Du bist jetzt als @User.Identity.Name angemeldet.</h2>
-                <h2 class="center" style="font-family:Corbel;">Übersicht deiner Veranstalltungen</h2>
+                <h2 class="center" style="font-family:Corbel;">Übersicht deiner Veranstaltungen</h2>
             </div>
             <div class="contentEvent">
                 @RenderBody()
