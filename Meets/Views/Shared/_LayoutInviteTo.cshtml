@@ -1,0 +1,73 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+    <link href="~/Content/MyStyle.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+    <link href="~/Content/toastr.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery-1.12.4.js"></script>
+    <script src="~/Scripts/bootstrap.js"></script>
+    <script src="~/Scripts/jquery.validate.js"></script>
+    <script src="~/Scripts/toastr.js"></script>
+</head>
+<body style="font-family:Corbel;color:#000000;font-weight:500;">
+    <div id="container">
+        <nav class="navigation">
+            <a href="~/Abmelden/Logout"><input class="btnstyleHeader" type="button" value="Abmelden" /></a>
+            <a href="~/Events/EventDefaultUser"><input class="btnstyleHeader" type="button" value="zurück" /></a>
+
+        </nav>
+        <div id="content">
+            <div class="backcolor">
+                <h2 class="center" style="font-family:Corbel;">Du bist jetzt als @User.Identity.Name angemeldet.</h2>
+                <h2 class="center" style="font-family:Corbel;">Übersicht deiner Veranstaltungen die du Angenommen hast und eingeladen wurdest.</h2>
+            </div>
+            <div class="contentEvent">
+                @RenderBody()
+            </div>
+        </div>
+    </div>
+    @Scripts.Render("~/bundles/jquery")
+    @*Einbinden der Validierung*@
+    @Scripts.Render("~/bundles/jqueryval")
+    @*Einbinden für Datepicker*@
+    @Scripts.Render("~/bundles/jqueryui")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+    <script type="text/javascript">
+        toastr.options = {
+            "closeButton": true,
+            "debug": false,
+            "positionClass": "toast-top-right",
+            "onclick": null,
+            "showDuration": "300",
+            "hideDuration": "1000",
+            "timeOut": "5000",
+            "extendedTimeOut": "1000",
+            "showEasing": "swing",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+        }
+        $(document).ready(function () {
+
+            @if (TempData["ErrorMessage"] != null)
+            {
+                <text>
+                    toastr.error("", "@TempData["ErrorMessage"]");
+                </text>
+            }
+
+            @if (TempData["ConfirmMessage"] != null)
+            {
+                <text>
+                    toastr.success("", "@TempData["ConfirmMessage"]");
+                </text>
+            }
+
+            });
+    </script>
+
+</body>
+</html>

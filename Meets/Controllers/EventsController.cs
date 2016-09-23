@@ -19,6 +19,44 @@ namespace Meets.Controllers
 
         [HttpGet]
         [Authorize]
+        public ActionResult InviteTo()
+        {
+
+            string eingeloggt = User.Identity.Name;
+            //int eventInvId = (from evi in db.Eventinvitations
+            //                    where evi.email == eingeloggt
+            //                    select evi.id).FirstOrDefault();
+            List<Event> listInviteTo = (from ev in db.Events
+                                        join evi in db.Eventinvitations on ev.id equals evi.event_id
+                                        join ivs in db.Invitationstatus on evi.id equals ivs.eventinvitations_id
+                                        where evi.email == eingeloggt && ivs.confirm == true
+                                        select ev).ToList();
+
+            if (listInviteTo.Count != 0)
+            {
+                List<InviteToViewModel> ergebnisListe = new List<InviteToViewModel>();
+                InviteToViewModel iv;
+                foreach (Event ev in listInviteTo)
+                {
+                    iv = new InviteToViewModel();
+                    iv.EventDatum = ev.eventdate;
+                    iv.Titel = ev.title;
+                    iv.Beschreibung = ev.description;
+                    iv.Location = ev.location;
+                    iv.emailVon = ev.Member.email;
+                    ergebnisListe.Add(iv);
+                }
+                db.SaveChanges();
+
+                ergebnisListe = ergebnisListe.OrderByDescending(o => o.EventDatum).ToList();
+                return View(ergebnisListe);
+            }
+            ViewBag.noInvite = "Kein Event vorhanden das du angenommen hast und Eingeladen wurdest!";
+            return View();
+        }
+
+        [HttpGet]
+        [Authorize]
         public ActionResult DetailEventBestaetigt()
         {
             string @email = User.Identity.Name;

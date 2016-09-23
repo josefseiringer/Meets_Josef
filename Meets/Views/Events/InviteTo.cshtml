@@ -1,0 +1,50 @@
+﻿@model List<Meets.Models.InviteToViewModel>
+
+@{
+    ViewBag.Title = "InviteTo";
+    Layout = "~/Views/Shared/_LayoutInviteTo.cshtml";
+}
+
+
+
+    @if (ViewBag.noInvite != null)
+    {
+        <div style="width:1000px;height:150px; margin: 20px auto; border:3px solid #ff0000;border-radius:10px;padding-top:40px;"><h3 style="text-align:center;">@ViewBag.noInvite</h3></div>
+    }
+    else
+    {
+        <div class="contentScroll02">
+            @foreach (Meets.Models.InviteToViewModel item in Model)
+            {
+            <div class="backwitheEvent">
+                <table>
+                    <tr>
+                        <th style="width:150px;padding-left:20px;">@Html.Label("Event Datum:", htmlAttributes: new { @class = "control-label" })</th>
+                        <td>@Html.DisplayFor(modelItem => item.EventDatum)</td>
+                    </tr>
+                    <tr>
+                        <th style="width:150px;padding-left:20px;">@Html.Label("Event Titel:", htmlAttributes: new { @class = "control-label" })</th>
+                        <td>@Html.DisplayFor(modelItem => item.Titel)</td>
+                    </tr>
+                    <tr>
+                        <th style="width:150px;padding-left:20px;">@Html.Label("Beschreibung:", htmlAttributes: new { @class = "control-label" })</th>
+                        <td>@Html.DisplayFor(modelItem => item.Beschreibung)</td>
+                    </tr>
+                    <tr>
+                        <th style="width:150px;padding-left:20px;">@Html.Label("Standort:", htmlAttributes: new { @class = "control-label" })</th>
+                        <td>@Html.DisplayFor(modelItem => item.Location)</td>
+                    </tr>
+                    <tr>
+                        <th style="width:150px;padding-left:20px;">@Html.Label("Einladung von:", htmlAttributes: new { @class = "control-label" })</th>
+                        <td>@Html.DisplayFor(modelItem => item.emailVon)</td>
+                    </tr>
+                </table>
+            </div>
+            }
+        </div>
+        
+    }
+
+
+
+

@@ -230,6 +230,7 @@
     <Compile Include="Models\Invitationstatu.cs">
       <DependentUpon>MeetsModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\InviteToViewModel.cs" />
     <Compile Include="Models\LoginFormModel.cs" />
     <Compile Include="Models\MeetsModel.Context.cs">
       <AutoGen>True</AutoGen>
@@ -534,6 +535,8 @@
     <Content Include="Views\Shared\_LayoutCreateEvent.cshtml" />
     <Content Include="Views\Shared\_LayoutPropertyUser.cshtml" />
     <Content Include="Views\User\Zusatzinfos.cshtml" />
+    <Content Include="Views\Shared\_LayoutInviteTo.cshtml" />
+    <Content Include="Views\Events\InviteTo.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
