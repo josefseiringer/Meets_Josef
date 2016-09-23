@@ -116,7 +116,9 @@ namespace Meets.Controllers
                 Event aktuell = (from ev in db.Events
                                  where id == ev.id
                                  select ev).FirstOrDefault();
+               //ViewBag.errorDoppelteEmail = TempData["errorDoppelteEmail"];
                 
+
                 return View(aktuell);
             }
             return View();
@@ -134,8 +136,6 @@ namespace Meets.Controllers
             //string mailTo = null;
             if (vfm != null)
             {
-                //Senden an E-Mail Empfänger durch E-Mail und Id
-                mailEventSent = Helper.SendEventToEmail(vfm.Email, vfm.id, vfm.EventTitle);
                 //suche aktuelles event
                 Event aktuell = (from ev in db.Events
                                  where vfm.id == ev.id
@@ -153,8 +153,18 @@ namespace Meets.Controllers
                     ei.created = DateTime.Now;
                     //Entitätsmenge speichern
                     db.Eventinvitations.Add(ei);
-                    db.SaveChanges();
-
+                    try
+                    {
+                        
+                        db.SaveChanges();
+                        //Senden an E-Mail Empfänger durch E-Mail und Id
+                        mailEventSent = Helper.SendEventToEmail(vfm.Email, vfm.id, vfm.EventTitle);
+                    }
+                    catch (Exception)
+                    {
+                        ViewBag.errorDoppelteEmail = "An " + vfm.Email + " wurde diese E-Mail bereits verschickt!";
+                        return View(aktuell);
+                    }
                 }
                 //Rückgabenachricht aus Methode SendEventToEmail an TempData übergeben
                 TempData["ConfirmMessage"] = mailEventSent;

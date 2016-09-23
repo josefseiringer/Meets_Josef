@@ -27,6 +27,10 @@
         <tr>
             <th>Standort:</th>
             <td>@Model.location</td>
-        </tr>
-    </table>    
+        </tr>                
+    </table> 
+        @if (ViewBag.errorDoppelteEmail != null)
+        {
+            <div style="margin-left:130px;"><h4 style="color:blue;">@ViewBag.errorDoppelteEmail</h4></div>
+        }    
 </div>
