@@ -1,53 +1,50 @@
-﻿@model Meets.Models.OpenInviteViewModel
+﻿@model List<Meets.Models.Event>
 
 @{
     ViewBag.Title = "OpenInvite";
     Layout = "~/Views/Shared/_LayoutPageOpenInvite.cshtml";
 }
 
-@if (Model.OpenListEvent.Count == 0)
+@if (Model.Count == 0)
 {
     <div style="width:1000px;height:150px; margin: 20px auto; border:3px solid #0da535;border-radius:10px;padding-top:40px;"><h2 style="text-align:center;">Keine öffentlichen Events vorhanden!</h2></div>
 }
 else
 {
-    using (Html.BeginForm("OpenInvite", "Events"))
+
+    foreach (var item in Model)
     {
-        for (int i = 0; i < Model.OpenListEvent.Count; i++)
+        using (Html.BeginForm("OpenInvite", "Events", new {@id = item.id }))
         {
             <div class="backwitheEvent">
                 <table>
                     <tr>
-                        <td>@Html.HiddenFor(modelItem => Model.OpenListEvent[i].id)</td>
-                    </tr>                    
-                    <tr>
-                        <th>Titel:</th>
-                        <td style="padding-left:10px;">@Html.DisplayFor(modelItem => Model.OpenListEvent[i].title)</td>
+                        <td class="hidden">@item.id</td>
                     </tr>
                     <tr>
-                        <th>Eventdatum:</th>
-                        <td style="padding-left:10px;">@Html.DisplayFor(modelItem => Model.OpenListEvent[i].eventdate)</td>
+                        <th>Event Datum:</th>
+                        <td style="padding-left:20px;">@item.eventdate</td>
                     </tr>
                     <tr>
-                        <th>Beschreibung:</th>
-                        <td style="padding-left:10px;">@Html.DisplayFor(modelItem => Model.OpenListEvent[i].description)</td>
+                        <th>Event Titel:</th>
+                        <td style="padding-left:20px;">@item.title</td>
                     </tr>
                     <tr>
-                        <th>Standort:</th>
-                        <td style="padding-left:10px;">@Html.DisplayFor(modelItem => Model.OpenListEvent[i].location)</td>
+                        <th>Event Beschreibung:</th>
+                        <td style="padding-left:20px;">@item.description</td>
                     </tr>
                     <tr>
-                        <th>Event von:</th>
-                        <td style="padding-left:10px;">@Html.DisplayFor(modelItem => Model.OpenListEvent[i].Member.email)</td>
+                        <th>Event E-Mail:</th>
+                        <td style="padding-left:20px;">@item.Member.email</td>
                     </tr>
                 </table>
                 <div>
                     <input class="btnstyle" type="submit" name="ja" value="Annehmen" />
                     <input class="btnstyle" type="submit" name="nein" value="Ablehnen" />
-                    <input class="hidden" type="submit" name="id" value="@Model.OpenListEvent" />
                 </div>
             </div>
         }
+
 
     }
 }

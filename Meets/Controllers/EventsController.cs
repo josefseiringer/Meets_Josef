@@ -218,27 +218,26 @@ namespace Meets.Controllers
         [Authorize]
         [HttpGet]
         public ActionResult OpenInvite()
-        {
-            OpenInviteViewModel oivm = new OpenInviteViewModel();
+        {          
             
             //lokale Variable für default user e-mail
             string userMail = User.Identity.Name;
-            oivm.OpenListEvent = (from ev in db.Events
-                                  where ev.viewpublic == true
-                                  select ev).ToList();
+            List<Event> OpenListEvent = (from ev in db.Events
+                                         where ev.viewpublic == true && ev.Member.email != User.Identity.Name
+                                         select ev).ToList();
 
-
-            oivm.OpenListEvent = oivm.OpenListEvent.Where(o => o.eventdate > DateTime.Now).OrderByDescending(o => o.eventdate).ToList();
-            return View(oivm);
+            OpenListEvent = OpenListEvent.Where(o => o.eventdate > DateTime.Now).OrderByDescending(o => o.eventdate).ToList();
+            return View(OpenListEvent);
         }
 
         [Authorize]
         [HttpPost]
-        public ActionResult OpenInvite(OpenInviteViewModel oivm, string ja, string nein)
+        public ActionResult OpenInvite(Event ev, string ja, string nein)
         {
-            if (oivm != null)
+            if (ev != null)
             {
-                int eventid = oivm.OpenListEvent[0].id;                
+                int eventid = ev.id;
+                //int eventid = id;
                 //Instanz von Eventinvitation erzeugen 
                 Eventinvitation evi = new Eventinvitation();
 
