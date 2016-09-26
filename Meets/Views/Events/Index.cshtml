@@ -15,38 +15,38 @@
 <label class="linkAsBtn">
     @Html.ActionLink("Engeladen zu", "Einladung", "Events")
 </label>
-    @foreach (var item in Model)
-    {
-        <div class="backwitheEvent">
-            <table>
-                <tr>
-                    <th>Erstelldatum:</th>
-                    <td style="padding-left:10px;">@Html.DisplayFor(modelItem => item.created)</td>
-                </tr>
-                <tr>
-                    <th>Titel:</th>
-                    <td style="padding-left:10px;">@Html.DisplayFor(modelItem => item.title)</td>
-                </tr>
-                <tr>
-                    <th>Eventdatum:</th>
-                    <td style="padding-left:10px;">@Html.DisplayFor(modelItem => item.eventdate)</td>
-                </tr>
-                <tr>
-                    <th>Beschreibung:</th>
-                    <td style="padding-left:10px;">@Html.DisplayFor(modelItem => item.description)</td>
-                </tr>
-                <tr>
-                    <th>Für alle Einsehbar</th>
-                    <td style="padding-left:10px;">@Html.DisplayFor(modelItem => item.viewpublic)</td>
-                </tr>
-                <tr>
-                    <th>Standort:</th>
-                    <td style="padding-left:10px;">@Html.DisplayFor(modelItem => item.location)</td>
-                </tr>
-                <tr>
-                    <th>E-Mail des Erstellers:</th>
-                    <td style="padding-left:10px;">@Html.DisplayFor(modelItem => item.Member.email)</td>
-                </tr>
-            </table>
-        </div>
-    }
+@foreach (var item in Model)
+{
+    <div class="backwitheEvent">
+        <table>
+            <tr>
+                <th>Erstelldatum:</th>
+                <td style="padding-left:10px;">@Html.DisplayFor(modelItem => item.created)</td>
+            </tr>
+            <tr>
+                <th>Titel:</th>
+                <td style="padding-left:10px;">@Html.DisplayFor(modelItem => item.title)</td>
+            </tr>
+            <tr>
+                <th>Eventdatum:</th>
+                <td style="padding-left:10px;">@Html.DisplayFor(modelItem => item.eventdate)</td>
+            </tr>
+            <tr>
+                <th>Beschreibung:</th>
+                <td style="padding-left:10px;">@Html.DisplayFor(modelItem => item.description)</td>
+            </tr>
+            <tr>
+                <th>Für alle Einsehbar</th>
+                <td style="padding-left:10px;">@Html.DisplayFor(modelItem => item.viewpublic)</td>
+            </tr>
+            <tr>
+                <th>Standort:</th>
+                <td style="padding-left:10px;">@Html.DisplayFor(modelItem => item.location)</td>
+            </tr>
+            <tr>
+                <th>E-Mail des Erstellers:</th>
+                <td style="padding-left:10px;">@Html.DisplayFor(modelItem => item.Member.email)</td>
+            </tr>
+        </table>
+    </div>
+}

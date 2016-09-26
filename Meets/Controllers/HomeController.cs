@@ -30,7 +30,8 @@ namespace Meets.Controllers
                     return View();
                 }
                 //Lambda expression zum Sortieren nach Eventdatum von Neu zu alt
-                openEvent = openEvent.OrderByDescending(o => o.eventdate).ToList();
+                
+                openEvent = openEvent.Where(o => o.eventdate > DateTime.Now).OrderByDescending(o => o.eventdate).ToList();
                 return View(openEvent);             
             }
             

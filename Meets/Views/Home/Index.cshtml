@@ -24,48 +24,42 @@
                 <h2 class="center" style="font-family:Corbel;">Offene Veranstaltungen</h2>
             </div>
             <div class="contentScroll">
-            @foreach (var item in Model)
-            {
-                <div class="backwitheEvent">
-                    <table>
-                        @*<tr>
-                            <th>Erstelldatum:</th>
-                            <td style="padding-left:10px;">@Html.DisplayFor(modelItem =>item.created)</td>
-                        </tr>*@
-                        <tr>
-                            <th>Titel:</th>
-                            <td style="padding-left:10px;">@Html.DisplayFor(modelItem => item.title)</td>
-                        </tr>
-                        <tr>
-                            <th>Eventdatum:</th>
-                            <td style="padding-left:10px;">@Html.DisplayFor(modelItem => item.eventdate)</td>
-                        </tr>
-                        <tr>
-                            <th>Beschreibung:</th>
-                            <td style="padding-left:10px;">@Html.DisplayFor(modelItem => item.description)</td>
-                        </tr>
-                        <tr>
-                            <th>Für alle Einsehbar</th>
-                            <td style="padding-left:10px;">@Html.DisplayFor(modelItem => item.viewpublic)</td>
-                        </tr>
-                        <tr>
-                            <th>Standort:</th>
-                            <td style="padding-left:10px;">@Html.DisplayFor(modelItem => item.location)</td>
-                        </tr>
-                    </table>
-                </div>
-            }
+                @if (Model.Count == 0)
+                {
+                    <div style="width:1000px;height:150px; margin: 20px auto; border:3px solid #0da535;border-radius:10px;padding-top:40px;"><h2 style="text-align:center;">Keine öffentlichen Events vorhanden!</h2></div>
+                }
+                else
+                {
+                    foreach (var item in Model)
+                    {
+                        <div class="backwitheEvent">
+                            <table>
+                                <tr>
+                                    <th>Titel:</th>
+                                    <td style="padding-left:10px;">@Html.DisplayFor(modelItem => item.title)</td>
+                                </tr>
+                                <tr>
+                                    <th>Eventdatum:</th>
+                                    <td style="padding-left:10px;">@Html.DisplayFor(modelItem => item.eventdate)</td>
+                                </tr>
+                                <tr>
+                                    <th>Beschreibung:</th>
+                                    <td style="padding-left:10px;">@Html.DisplayFor(modelItem => item.description)</td>
+                                </tr>
+                                <tr>
+                                    <th>Für alle Einsehbar</th>
+                                    <td style="padding-left:10px;">@Html.DisplayFor(modelItem => item.viewpublic)</td>
+                                </tr>
+                                <tr>
+                                    <th>Standort:</th>
+                                    <td style="padding-left:10px;">@Html.DisplayFor(modelItem => item.location)</td>
+                                </tr>
+                            </table>
+                        </div>
+                    }
+                }
            </div>
         </div>        
     </div>
-    @*@if (ViewBag.ErrorDatabase != null)
-    {
-        <script type="text/javascript">
-            alert("@ViewBag.keineOffenenBeiträge");
-        </script>
-        <script type="text/javascript">
-            alert("@ViewBag.keinePrivatenBeiträge");
-        </script>
-    }*@
 </body>
 </html>
