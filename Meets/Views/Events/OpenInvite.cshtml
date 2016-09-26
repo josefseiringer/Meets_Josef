@@ -1,0 +1,54 @@
+﻿@model Meets.Models.OpenInviteViewModel
+
+@{
+    ViewBag.Title = "OpenInvite";
+    Layout = "~/Views/Shared/_LayoutPageOpenInvite.cshtml";
+}
+
+@if (Model.OpenListEvent.Count == 0)
+{
+    <div style="width:1000px;height:150px; margin: 20px auto; border:3px solid #0da535;border-radius:10px;padding-top:40px;"><h2 style="text-align:center;">Keine öffentlichen Events vorhanden!</h2></div>
+}
+else
+{
+    using (Html.BeginForm("OpenInvite", "Events"))
+    {
+        for (int i = 0; i < Model.OpenListEvent.Count; i++)
+        {
+            <div class="backwitheEvent">
+                <table>
+                    <tr>
+                        <td>@Html.HiddenFor(modelItem => Model.OpenListEvent[i].id)</td>
+                    </tr>                    
+                    <tr>
+                        <th>Titel:</th>
+                        <td style="padding-left:10px;">@Html.DisplayFor(modelItem => Model.OpenListEvent[i].title)</td>
+                    </tr>
+                    <tr>
+                        <th>Eventdatum:</th>
+                        <td style="padding-left:10px;">@Html.DisplayFor(modelItem => Model.OpenListEvent[i].eventdate)</td>
+                    </tr>
+                    <tr>
+                        <th>Beschreibung:</th>
+                        <td style="padding-left:10px;">@Html.DisplayFor(modelItem => Model.OpenListEvent[i].description)</td>
+                    </tr>
+                    <tr>
+                        <th>Standort:</th>
+                        <td style="padding-left:10px;">@Html.DisplayFor(modelItem => Model.OpenListEvent[i].location)</td>
+                    </tr>
+                    <tr>
+                        <th>Event von:</th>
+                        <td style="padding-left:10px;">@Html.DisplayFor(modelItem => Model.OpenListEvent[i].Member.email)</td>
+                    </tr>
+                </table>
+                <div>
+                    <input class="btnstyle" type="submit" name="ja" value="Annehmen" />
+                    <input class="btnstyle" type="submit" name="nein" value="Ablehnen" />
+                    <input class="hidden" type="submit" name="id" value="@Model.OpenListEvent" />
+                </div>
+            </div>
+        }
+
+    }
+}
+

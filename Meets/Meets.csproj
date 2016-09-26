@@ -262,6 +262,7 @@
       <DependentUpon>MeetsModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\MembervalidationFormModel.cs" />
+    <Compile Include="Models\OpenInviteViewModel.cs" />
     <Compile Include="Models\ProfileViewModel.cs" />
     <Compile Include="Models\Propertytype.cs">
       <DependentUpon>MeetsModel.tt</DependentUpon>
@@ -538,6 +539,8 @@
     <Content Include="Views\User\Zusatzinfos.cshtml" />
     <Content Include="Views\Shared\_LayoutInviteTo.cshtml" />
     <Content Include="Views\Events\InviteTo.cshtml" />
+    <Content Include="Views\Shared\_LayoutPageOpenInvite.cshtml" />
+    <Content Include="Views\Events\OpenInvite.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

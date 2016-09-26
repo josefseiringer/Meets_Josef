@@ -12,6 +12,7 @@
 <label class="linkAsBtn">@Html.ActionLink("Benutzer bearbeiten", "Edit", "User")</label>
 <label class="linkAsBtn">@Html.ActionLink("Eingeladen zu", "InviteTo", "Events")</label>
 <lable class="linkAsBtn">@Html.ActionLink("Betätigte Events", "DetailEventBestaetigt","Events")</lable>
+<lable class="linkAsBtn">@Html.ActionLink("Öffentliche Events", "OpenInvite", "Events")</lable>
 @*@if (ViewBag.leereListe == null)
 {
     <label class="linkAsBtn">@Html.ActionLink("Events teilen", "Verteiler", "Events")</label>
@@ -54,7 +55,6 @@ else
                     <th>Links:</th>
                     <td style="padding-left:10px;">
                         @Html.ActionLink("Edit", "Edit", new { id = item.id }) |
-                        @*@Html.ActionLink("Details", "Details", new { id = item.id }) |*@
                         @Html.ActionLink("Delete", "Delete", new { id = item.id }) |
                         @Html.ActionLink("Verteilen an", "Verteiler", new { id = item.id })
 

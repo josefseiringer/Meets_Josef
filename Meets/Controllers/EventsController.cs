@@ -106,11 +106,13 @@ namespace Meets.Controllers
                 var idEventInvit = (from ei in db.Eventinvitations
                                     where ei.event_id == ev.id
                                     select ei.id).FirstOrDefault();
+               
                 //instanz erzeugen und variable ivs zeigt darauf
                 Invitationstatu ivs = new Invitationstatu();
                 ////bei Annehmen eventinvitation_id mit true speichern in den Invitationstatus
                 if (ja != null)
-                {      
+                {
+                       
                     ivs.created = DateTime.Now;
                     ivs.eventinvitations_id = idEventInvit;
                     ivs.confirm = true;
@@ -212,6 +214,92 @@ namespace Meets.Controllers
             TempData["ErrorMessage"] = "Fehler mit der Datenbankverbindung";
             return View();
         }
+
+        [Authorize]
+        [HttpGet]
+        public ActionResult OpenInvite()
+        {
+            OpenInviteViewModel oivm = new OpenInviteViewModel();
+            
+            //lokale Variable für default user e-mail
+            string userMail = User.Identity.Name;
+            oivm.OpenListEvent = (from ev in db.Events
+                                  where ev.viewpublic == true
+                                  select ev).ToList();
+
+
+            oivm.OpenListEvent = oivm.OpenListEvent.Where(o => o.eventdate > DateTime.Now).OrderByDescending(o => o.eventdate).ToList();
+            return View(oivm);
+        }
+
+        [Authorize]
+        [HttpPost]
+        public ActionResult OpenInvite(OpenInviteViewModel oivm, string ja, string nein)
+        {
+            if (oivm != null)
+            {
+                int eventid = oivm.OpenListEvent[0].id;                
+                //Instanz von Eventinvitation erzeugen 
+                Eventinvitation evi = new Eventinvitation();
+
+                //instanz erzeugen und variable ivs zeigt darauf
+                Invitationstatu ivs = new Invitationstatu();
+
+                ////bei Annehmen eventinvitation_id mit true speichern in den Invitationstatus
+                if (ja != null)
+                {
+                    evi.created = DateTime.Now;
+                    evi.email = User.Identity.Name;
+                    evi.event_id = eventid;
+                    db.Eventinvitations.Add(evi);
+                    db.SaveChanges();
+
+                    //id aus Eventinvitation holen
+                    var idEventInvit = (from ei in db.Eventinvitations
+                                        where ei.event_id == eventid
+                                        select ei.id).FirstOrDefault();
+
+                    ivs.created = DateTime.Now;
+                    ivs.eventinvitations_id = idEventInvit;
+                    ivs.confirm = true;
+                    db.Invitationstatus.Add(ivs);
+                    db.SaveChanges();
+
+                    TempData["ConfirmMessage"] = "Annahme wurde bestätigt";
+
+                    return RedirectToAction("EventDefaultUser");
+                }
+                //bei Ablehen eventinvitation_id mit false speichern in den Invitationstatus
+                else if (nein != null)
+                {
+                    evi.created = DateTime.Now;
+                    evi.email = User.Identity.Name;
+                    evi.event_id = eventid;
+                    db.Eventinvitations.Add(evi);
+                    db.SaveChanges();
+
+                    //id aus Eventinvitation holen
+                    var idEventInvit = (from ei in db.Eventinvitations
+                                        where ei.event_id == eventid
+                                        select ei.id).FirstOrDefault();
+
+                    //sammel für speichern in Invitation
+                    ivs.created = DateTime.Now;
+                    ivs.eventinvitations_id = idEventInvit;
+                    ivs.confirm = false;
+                    db.Invitationstatus.Add(ivs);
+                    db.SaveChanges();
+
+                    TempData["ConfirmMessage"] = "Du hast abgelehnt";
+
+                    return RedirectToAction("EventDefaultUser");
+                }
+            }
+            TempData["ErrorMessage"] = "Verbindungsproblem mit der Datenbank";
+            return RedirectToAction("EventDefaultUser");            
+        }
+
+
 
         /// <summary>
         /// Ansicht Events des gerade angemeldeten Benutzers
