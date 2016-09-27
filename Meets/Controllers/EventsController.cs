@@ -109,7 +109,7 @@ namespace Meets.Controllers
                
                 //instanz erzeugen und variable ivs zeigt darauf
                 Invitationstatu ivs = new Invitationstatu();
-                ////bei Annehmen eventinvitation_id mit true speichern in den Invitationstatus
+                //bei Annehmen eventinvitation_id mit true speichern in den Invitationstatus
                 if (ja != null)
                 {
                        
@@ -251,22 +251,29 @@ namespace Meets.Controllers
                     evi.email = User.Identity.Name;
                     evi.event_id = eventid;
                     db.Eventinvitations.Add(evi);
-                    db.SaveChanges();
+                    try
+                    {
+                        db.SaveChanges();
 
-                    //id aus Eventinvitation holen
-                    var idEventInvit = (from ei in db.Eventinvitations
-                                        where ei.event_id == eventid
-                                        select ei.id).FirstOrDefault();
+                        //id aus Eventinvitation holen
+                        var idEventInvit = (from ei in db.Eventinvitations
+                                            where ei.event_id == eventid
+                                            select ei.id).FirstOrDefault();
 
-                    ivs.created = DateTime.Now;
-                    ivs.eventinvitations_id = idEventInvit;
-                    ivs.confirm = true;
-                    db.Invitationstatus.Add(ivs);
-                    db.SaveChanges();
+                        ivs.created = DateTime.Now;
+                        ivs.eventinvitations_id = idEventInvit;
+                        ivs.confirm = true;
+                        db.Invitationstatus.Add(ivs);
+                        db.SaveChanges();
 
-                    TempData["ConfirmMessage"] = "Annahme wurde bestätigt";
+                        TempData["ConfirmMessage"] = "Annahme wurde bestätigt";
 
-                    return RedirectToAction("EventDefaultUser");
+                        return RedirectToAction("EventDefaultUser");
+                    }
+                    catch
+                    {
+                        ViewBag.schonvorhanden = "Dieses Event wurde schon Angenommen/Abgelehnt";
+                    }
                 }
                 //bei Ablehen eventinvitation_id mit false speichern in den Invitationstatus
                 else if (nein != null)
@@ -275,23 +282,33 @@ namespace Meets.Controllers
                     evi.email = User.Identity.Name;
                     evi.event_id = eventid;
                     db.Eventinvitations.Add(evi);
-                    db.SaveChanges();
+                    try
+                    {
+                        db.SaveChanges();
+                        //id aus Eventinvitation holen
+                        var idEventInvit = (from ei in db.Eventinvitations
+                                            where ei.event_id == eventid
+                                            select ei.id).FirstOrDefault();
 
-                    //id aus Eventinvitation holen
-                    var idEventInvit = (from ei in db.Eventinvitations
-                                        where ei.event_id == eventid
-                                        select ei.id).FirstOrDefault();
+                        //sammel für speichern in Invitation
+                        ivs.created = DateTime.Now;
+                        ivs.eventinvitations_id = idEventInvit;
+                        ivs.confirm = false;
+                        db.Invitationstatus.Add(ivs);
+                        db.SaveChanges();
 
-                    //sammel für speichern in Invitation
-                    ivs.created = DateTime.Now;
-                    ivs.eventinvitations_id = idEventInvit;
-                    ivs.confirm = false;
-                    db.Invitationstatus.Add(ivs);
-                    db.SaveChanges();
+                        TempData["ConfirmMessage"] = "Du hast abgelehnt";
 
-                    TempData["ConfirmMessage"] = "Du hast abgelehnt";
+                        return RedirectToAction("EventDefaultUser");
 
-                    return RedirectToAction("EventDefaultUser");
+                    }
+                    catch (Exception)
+                    {
+
+                        ViewBag.schonvorhanden="Dieses Event wurde schon Angenommen/Abgelehnt";
+                    }            
+
+                    
                 }
             }
             TempData["ErrorMessage"] = "Verbindungsproblem mit der Datenbank";

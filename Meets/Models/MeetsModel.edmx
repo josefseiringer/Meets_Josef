@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="MeetsModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="MeetsModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Configtables">
           <Key>
             <PropertyRef Name="id" />
@@ -227,47 +227,6 @@ Warnung 6002: Für Tabelle/Sicht 'Meets.dbo.View_Event_open' ist kein Primärsch
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Function Name="dt_adduserobject" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
-        <Function Name="dt_droppropertiesbyid" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="id" Type="int" Mode="In" />
-          <Parameter Name="property" Type="varchar" Mode="In" />
-        </Function>
-        <Function Name="dt_dropuserobjectbyid" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="id" Type="int" Mode="In" />
-        </Function>
-        <Function Name="dt_generateansiname" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="name" Type="varchar" Mode="InOut" />
-        </Function>
-        <Function Name="dt_getobjwithprop" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="property" Type="varchar" Mode="In" />
-          <Parameter Name="value" Type="varchar" Mode="In" />
-        </Function>
-        <Function Name="dt_getobjwithprop_u" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="property" Type="varchar" Mode="In" />
-          <Parameter Name="uvalue" Type="nvarchar" Mode="In" />
-        </Function>
-        <Function Name="dt_getpropertiesbyid" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="id" Type="int" Mode="In" />
-          <Parameter Name="property" Type="varchar" Mode="In" />
-        </Function>
-        <Function Name="dt_getpropertiesbyid_u" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="id" Type="int" Mode="In" />
-          <Parameter Name="property" Type="varchar" Mode="In" />
-        </Function>
-        <Function Name="dt_setpropertybyid" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="id" Type="int" Mode="In" />
-          <Parameter Name="property" Type="varchar" Mode="In" />
-          <Parameter Name="value" Type="varchar" Mode="In" />
-          <Parameter Name="lvalue" Type="image" Mode="In" />
-        </Function>
-        <Function Name="dt_setpropertybyid_u" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="id" Type="int" Mode="In" />
-          <Parameter Name="property" Type="varchar" Mode="In" />
-          <Parameter Name="uvalue" Type="nvarchar" Mode="In" />
-          <Parameter Name="lvalue" Type="image" Mode="In" />
-        </Function>
-        <Function Name="dt_verstamp006" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
-        <Function Name="dt_verstamp007" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="fn_Check_User_FromEmail" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int">
           <Parameter Name="email" Type="varchar" Mode="In" />
         </Function>
@@ -407,8 +366,7 @@ Warnung 6002: Für Tabelle/Sicht 'Meets.dbo.View_Event_open' ist kein Primärsch
             <End Role="Membervalidation" EntitySet="Membervalidation" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="MeetsModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -707,10 +665,10 @@ Warnung 6002: Für Tabelle/Sicht 'Meets.dbo.View_Event_open' ist kein Primärsch
             <Parameter Name="password" Mode="In" Type="Binary" />
           </FunctionImport>
           <FunctionImport Name="fn_detailViewFromUserEmail" IsComposable="true" ReturnType="Collection(MeetsModel.fn_detailViewFromUserEmail_Result)">
-            <Parameter Name="email" Mode="In" Type="String" />
+          <Parameter Name="email" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="fn_Show_Event_Table" IsComposable="true" ReturnType="Collection(MeetsModel.fn_Show_Event_Table_Result)">
-            <Parameter Name="email" Mode="In" Type="String" />
+          <Parameter Name="email" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="dt_adduserobject" />
           <FunctionImport Name="dt_droppropertiesbyid">
@@ -758,13 +716,13 @@ Warnung 6002: Für Tabelle/Sicht 'Meets.dbo.View_Event_open' ist kein Primärsch
             <Parameter Name="password" Mode="In" Type="Binary" />
           </FunctionImport>
           <FunctionImport Name="sp_delete_Event">
-            <Parameter Name="event" Mode="In" Type="Int32" />
+          <Parameter Name="event" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="sp_delete_Member">
-            <Parameter Name="member" Mode="In" Type="Int32" />
+          <Parameter Name="member" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="sp_holeUserDaten" ReturnType="Collection(MeetsModel.sp_holeUserDaten_Result)">
-            <Parameter Name="email" Mode="In" Type="String" />
+          <Parameter Name="email" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="sp_RegisterUser">
             <Parameter Name="email" Mode="In" Type="String" />
@@ -958,36 +916,6 @@ Warnung 6002: Für Tabelle/Sicht 'Meets.dbo.View_Event_open' ist kein Primärsch
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="dt_adduserobject" FunctionName="MeetsModel.Store.dt_adduserobject" />
-          <FunctionImportMapping FunctionImportName="dt_droppropertiesbyid" FunctionName="MeetsModel.Store.dt_droppropertiesbyid" />
-          <FunctionImportMapping FunctionImportName="dt_dropuserobjectbyid" FunctionName="MeetsModel.Store.dt_dropuserobjectbyid" />
-          <FunctionImportMapping FunctionImportName="dt_generateansiname" FunctionName="MeetsModel.Store.dt_generateansiname" />
-          <FunctionImportMapping FunctionImportName="dt_getobjwithprop" FunctionName="MeetsModel.Store.dt_getobjwithprop" />
-          <FunctionImportMapping FunctionImportName="dt_getobjwithprop_u" FunctionName="MeetsModel.Store.dt_getobjwithprop_u" />
-          <FunctionImportMapping FunctionImportName="dt_getpropertiesbyid" FunctionName="MeetsModel.Store.dt_getpropertiesbyid">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="MeetsModel.dt_getpropertiesbyid_Result">
-                <ScalarProperty Name="property" ColumnName="property" />
-                <ScalarProperty Name="version" ColumnName="version" />
-                <ScalarProperty Name="value" ColumnName="value" />
-                <ScalarProperty Name="lvalue" ColumnName="lvalue" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="dt_getpropertiesbyid_u" FunctionName="MeetsModel.Store.dt_getpropertiesbyid_u">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="MeetsModel.dt_getpropertiesbyid_u_Result">
-                <ScalarProperty Name="property" ColumnName="property" />
-                <ScalarProperty Name="version" ColumnName="version" />
-                <ScalarProperty Name="uvalue" ColumnName="uvalue" />
-                <ScalarProperty Name="lvalue" ColumnName="lvalue" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="dt_setpropertybyid" FunctionName="MeetsModel.Store.dt_setpropertybyid" />
-          <FunctionImportMapping FunctionImportName="dt_setpropertybyid_u" FunctionName="MeetsModel.Store.dt_setpropertybyid_u" />
-          <FunctionImportMapping FunctionImportName="dt_verstamp006" FunctionName="MeetsModel.Store.dt_verstamp006" />
-          <FunctionImportMapping FunctionImportName="dt_verstamp007" FunctionName="MeetsModel.Store.dt_verstamp007" />
           <FunctionImportMapping FunctionImportName="sp_AendereUserdaten" FunctionName="MeetsModel.Store.sp_AendereUserdaten" />
           <FunctionImportMapping FunctionImportName="sp_delete_Event" FunctionName="MeetsModel.Store.sp_delete_Event" />
           <FunctionImportMapping FunctionImportName="sp_delete_Member" FunctionName="MeetsModel.Store.sp_delete_Member" />

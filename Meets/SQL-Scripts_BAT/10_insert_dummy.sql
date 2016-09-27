@@ -9,16 +9,16 @@ exec dbo.sp_RegisterUser 'j.seiringer@gmail.com',@HashThis,'1973-25-07'
 exec dbo.sp_RegisterUser 'm.seiringer@gmail.com',@HashThis,'1975-22-12';
 GO
 
-insert into [Events] (member_id,eventdate,title,[description],viewpublic,location) values(1,'2016-16-09','Wordpress Einfhrung','Was ist ein CMS und wie installiere ich Wordpress',1,'U3-Zippererstrasse-->Simmeringer Hauptstrasse 58');
+insert into [Events] (member_id,eventdate,title,[description],viewpublic,location) values(1,'2016-25-09','Wordpress Einfhrung','Was ist ein CMS und wie installiere ich Wordpress',1,'U3-Zippererstrasse-->Simmeringer Hauptstrasse 58');
 GO
 
-insert into [Events] (member_id,eventdate,title,[description],viewpublic,location) values(2,'2016-23-09','Wordpress fortgeschritten','Arbeiten mit Themes und Styles',1,'U3-Zippererstrasse-->Simmeringer Hauptstrasse 58');
+insert into [Events] (member_id,eventdate,title,[description],viewpublic,location) values(2,'2016-30-09','Wordpress fortgeschritten','Arbeiten mit Themes und Styles',1,'U3-Zippererstrasse-->Simmeringer Hauptstrasse 58');
 GO
 
-insert into [Events] (member_id,eventdate,title,[description],viewpublic,location) values(3,'2016-28-09','C#-MVC Einfhrung','Was ist C# und MVC berhaupt',0,'U3-Zippererstrasse-->Simmeringer Hauptstrasse 58');
+insert into [Events] (member_id,eventdate,title,[description],viewpublic,location) values(3,'2016-15-10','C#-MVC Einfhrung','Was ist C# und MVC berhaupt',0,'U3-Zippererstrasse-->Simmeringer Hauptstrasse 58');
 GO
 
-insert into [Events] (member_id,eventdate,title,[description],viewpublic,location) values(4,'2016-15-10','C#-MVC fortgeschritten','Der eigene Webauftritt',0,'U3-Zippererstrasse-->Simmeringer Hauptstrasse 58');
+insert into [Events] (member_id,eventdate,title,[description],viewpublic,location) values(4,'2016-18-10','C#-MVC fortgeschritten','Der eigene Webauftritt',0,'U3-Zippererstrasse-->Simmeringer Hauptstrasse 58');
 GO
 
 INSERT INTO Membervalidation(member_id) VALUES (2);

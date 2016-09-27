@@ -29,7 +29,7 @@ namespace Meets.Models
         [DataType(DataType.Date)]
         //Variante 3 CustomValidation
         //[CustomValidation(typeof(AlterValidator), "ValidateEndTimeRange")]
-        [DisplayFormat(DataFormatString = "{0:dd.MM.yyyy}", ApplyFormatInEditMode = true)]
+        [DisplayFormat(DataFormatString = "{0:d}", ApplyFormatInEditMode = true)]
         public DateTime Geburtsdatum { get; set; }
 
 
