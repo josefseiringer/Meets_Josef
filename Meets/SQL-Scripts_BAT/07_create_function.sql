@@ -1,5 +1,20 @@
 USE Meets;
 GO
+-- gibt einen int zurück wieviele haben zugesagt
+CREATE PROCEDURE sp_GetConfirms
+	@eventId int
+AS
+BEGIN
+	select count(confirm) as zusagen from [Events]
+	join Eventinvitations
+	on [Events].id = Eventinvitations.event_id
+	join Invitationstatus
+	on Eventinvitations.id = Invitationstatus.eventinvitations_id
+	where [Events].id = @eventId and confirm = 1;
+END
+GO
+
+
 
 create procedure sp_AendereUserdaten
 @email varchar(255),
