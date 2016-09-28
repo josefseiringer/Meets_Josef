@@ -18,6 +18,9 @@ namespace Meets
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
                         "~/Scripts/jquery.validate*"));
 
+            bundles.Add(new ScriptBundle("~/bundles/jqueryui").Include(
+                       "~/Scripts/jquery-ui-{version}.js"));
+
             // Verwenden Sie die Entwicklungsversion von Modernizr zum Entwickeln und Erweitern Ihrer Kenntnisse. Wenn Sie dann
             // für die Produktion bereit sind, verwenden Sie das Buildtool unter "http://modernizr.com", um nur die benötigten Tests auszuwählen.
             bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(
@@ -32,6 +35,7 @@ namespace Meets
                       "~/Content/bootstrap.css",                      
                       "~/Content/site.css",
                       "~/Content/jquery.datetimepicker.css",
+                      "~/Content/themes/base/datepicker.css",
                       "~/Content/toastr.css",
                       "~/Content/bootstrap-datepicker.css"));
         }
