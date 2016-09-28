@@ -61,18 +61,15 @@ namespace Meets.Controllers
         {
             string @email = User.Identity.Name;
             List<BesaetigungDetailView> list = db.BesaetigungDetailViews.SqlQuery("select * from dbo.fn_detailViewFromUserEmail('" + @email + "')").ToList();
-            List<DetailBesaetigungViewModel> listForView = new List<DetailBesaetigungViewModel>();
-            DetailBesaetigungViewModel dbvm = new DetailBesaetigungViewModel();
-            foreach (BesaetigungDetailView item in list)
+            if (list.Count != 0)
             {
-                dbvm.Bestaetigt = item.Bestaetigt;
-                dbvm.Bestaetigungszeitpunkt = item.Bestaetigungszeitpunkt;
-                dbvm.Eingeladen = item.Eingeladen;
-                dbvm.Eventdatum = item.Eventdatum;
-                dbvm.Eventtitel = item.Eventtitel;
-                listForView.Add(dbvm);
+                return View(list);
             }
-            return View(listForView);
+            else
+            {
+                ViewBag.noEntries = "Keine bestätigten Events vorhanden!";
+                return View();
+            }
         }
         
         [HttpGet]
