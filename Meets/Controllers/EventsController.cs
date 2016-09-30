@@ -366,8 +366,15 @@ namespace Meets.Controllers
                 else
                 {
                     //Liste sortieren nach Eventdatum neu zu alt
+                   
                     defUserPrivate = defUserPrivate.Where(d => d.eventdate >= DateTime.Now).OrderByDescending(d => d.eventdate).ToList();
-                    return View(defUserPrivate);
+                    if (defUserPrivate.Count == 0)
+                    {
+                        ViewBag.neueEvents = "keine aktuellen Events vorhanden";
+                        return View(defUserPrivate);
+                    }
+                    return View(defUserPrivate);                    
+                    
                 }
                 
             }
