@@ -48,7 +48,7 @@ namespace Meets.Controllers
                     TempData["ConfirmMessage"] = "Login erfolgreich";
                     return RedirectToAction("EventDefaultUser", "Events");
                 }
-                TempData["ErrorMessage"] = "Email existiert nicht!";
+                TempData["ErrorMessage"] = "Email/Passwort existiert nicht!";
                 return RedirectToAction("Login", "Login");
             }
             

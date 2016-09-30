@@ -233,7 +233,7 @@ namespace Meets.Controllers
         {
             if (ev != null)
             {
-                int eventid = ev.id;
+                //int eventid = ev.id;
                 //int eventid = id;
                 //Instanz von Eventinvitation erzeugen 
                 Eventinvitation evi = new Eventinvitation();
@@ -246,19 +246,20 @@ namespace Meets.Controllers
                 {
                     evi.created = DateTime.Now;
                     evi.email = User.Identity.Name;
-                    evi.event_id = eventid;
+                    evi.event_id = ev.id;
                     db.Eventinvitations.Add(evi);
                     try
                     {
                         db.SaveChanges();
 
                         //id aus Eventinvitation holen
-                        var idEventInvit = (from ei in db.Eventinvitations
-                                            where ei.event_id == eventid
-                                            select ei.id).FirstOrDefault();
+                        //var idEventInvit = (from ei in db.Eventinvitations
+                        //                    where ei.event_id == eventid
+                        //                    select ei.id).FirstOrDefault();
 
                         ivs.created = DateTime.Now;
-                        ivs.eventinvitations_id = idEventInvit;
+                        ivs.eventinvitations_id = evi.id;//id von evi übernehmen
+                        //ivs.eventinvitations_id = idEventInvit;
                         ivs.confirm = true;
                         db.Invitationstatus.Add(ivs);
                         db.SaveChanges();
@@ -269,7 +270,9 @@ namespace Meets.Controllers
                     }
                     catch
                     {
-                        ViewBag.schonvorhanden = "Dieses Event wurde schon Angenommen/Abgelehnt";
+                        //ViewBag.schonvorhanden = "Dieses Event wurde schon Angenommen/Abgelehnt";
+                        TempData["ConfirmMessage"] = "Dieses Event wurde schon Angenommen/Abgelehnt";
+                        return RedirectToAction("OpenInvite");
                     }
                 }
                 //bei Ablehen eventinvitation_id mit false speichern in den Invitationstatus
@@ -277,19 +280,19 @@ namespace Meets.Controllers
                 {
                     evi.created = DateTime.Now;
                     evi.email = User.Identity.Name;
-                    evi.event_id = eventid;
+                    evi.event_id = ev.id;
                     db.Eventinvitations.Add(evi);
                     try
                     {
                         db.SaveChanges();
                         //id aus Eventinvitation holen
-                        var idEventInvit = (from ei in db.Eventinvitations
-                                            where ei.event_id == eventid
-                                            select ei.id).FirstOrDefault();
+                        //var idEventInvit = (from ei in db.Eventinvitations
+                                           // where ei.event_id == eventid
+                                           // select ei.id).FirstOrDefault();
 
                         //sammel für speichern in Invitation
                         ivs.created = DateTime.Now;
-                        ivs.eventinvitations_id = idEventInvit;
+                        ivs.eventinvitations_id = evi.id;//id von evi übernehmen
                         ivs.confirm = false;
                         db.Invitationstatus.Add(ivs);
                         db.SaveChanges();
@@ -297,19 +300,18 @@ namespace Meets.Controllers
                         TempData["ConfirmMessage"] = "Du hast abgelehnt";
 
                         return RedirectToAction("EventDefaultUser");
-
                     }
                     catch (Exception)
                     {
-
-                        ViewBag.schonvorhanden="Dieses Event wurde schon Angenommen/Abgelehnt";
-                    }            
-
+                        //ViewBag.schonvorhanden="Dieses Event wurde schon Angenommen/Abgelehnt";
+                        TempData["ConfirmMessage"] = "Dieses Event wurde schon Angenommen/Abgelehnt";
+                        return RedirectToAction("OpenInvite");
+                    }          
                     
                 }
             }
             TempData["ErrorMessage"] = "Verbindungsproblem mit der Datenbank";
-            return RedirectToAction("EventDefaultUser");            
+            return RedirectToAction("OpenInvite");       
         }
 
 
@@ -438,6 +440,11 @@ namespace Meets.Controllers
                 }
                 else
                 {
+                    int valid = (from ev in db.Membervalidations
+                                 where ev.Member.id == ev.member_id &&
+                                 ev.Member.email == User.Identity.Name
+                                 select ev.id).FirstOrDefault();
+                    ViewBag.nurPrivate = valid;
                     ViewBag.fehlendeeingabe = "Fehlende oder falsche Eingabe";
                     return View();
                 }

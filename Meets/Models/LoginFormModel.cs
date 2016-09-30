@@ -15,7 +15,7 @@ namespace Meets.Models
         [StringLength(255, ErrorMessage = "Maximal 255 Zeichen")]
         public string Email { get; set; }
 
-        [Required(ErrorMessage = "This field is required.", AllowEmptyStrings = false)]
+        [Required(ErrorMessage = "Pflichtfeld", AllowEmptyStrings = false)]
         public string Password { get; set; }
     }
 }
