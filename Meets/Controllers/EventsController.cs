@@ -138,6 +138,23 @@ namespace Meets.Controllers
             
             return RedirectToAction("VerteilerMailAnnahme", @eventid);
         }
+        /// <summary>
+        /// Liste der Verschickten Einladungen des Angemeldeten Users
+        /// </summary>
+        /// <returns>Events Liste</returns>
+        [Authorize]
+        [HttpGet]
+        public ActionResult VerteilteEvents()
+        {
+            List<Eventinvitation> verteilteEventsListe = (from evi in db.Eventinvitations
+                                           where evi.event_id == evi.Event.id && evi.Event.member_id == evi.Event.Member.id && evi.Event.Member.email == User.Identity.Name
+                                           select evi).ToList();
+
+
+            verteilteEventsListe = verteilteEventsListe.Where(v => v.Event.eventdate >= DateTime.Now).OrderByDescending(v => v.Event.eventdate).ToList();
+            return View(verteilteEventsListe);
+        }
+
 
         /// <summary>
         /// Ansicht des gesuchten Events zum verteilen

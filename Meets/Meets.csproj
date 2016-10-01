@@ -541,6 +541,8 @@
     <Content Include="Views\Events\InviteTo.cshtml" />
     <Content Include="Views\Shared\_LayoutPageOpenInvite.cshtml" />
     <Content Include="Views\Events\OpenInvite.cshtml" />
+    <Content Include="Views\Shared\_LayoutListeVerteilteEvents.cshtml" />
+    <Content Include="Views\Events\VerteilteEvents.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

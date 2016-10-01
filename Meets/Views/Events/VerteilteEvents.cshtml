@@ -1,0 +1,39 @@
+﻿@model List<Meets.Models.Eventinvitation>
+
+@{
+    ViewBag.Title = "VerteilteEvents";
+    Layout = "~/Views/Shared/_LayoutListeVerteilteEvents.cshtml";
+}
+@if (Model.Count == 0)
+{
+    <div style="width:1000px;height:150px; margin: 20px auto; border:3px solid #0da535;border-radius:10px;padding-top:40px;"><h2 style="text-align:center;">Keine verteilte Events vorhanden!</h2></div>
+}
+else
+{
+
+    foreach (var item in Model)
+    {        
+        <div class="backwitheEvent">
+            <table>
+                <tr>
+                    <th>Event Datum:</th>
+                    <td style="padding-left:20px;">@item.Event.eventdate</td>
+                </tr>
+                <tr>
+                    <th>Event Titel:</th>
+                    <td style="padding-left:20px;">@item.Event.title</td>
+                </tr>
+                <tr>
+                    <th>Event Beschreibung:</th>
+                    <td style="padding-left:20px;">@item.Event.description</td>
+                </tr>
+                <tr>
+                    <th>Verteilt an E-Mail:</th>
+                    <td style="padding-left:20px;">@item.email</td>
+                </tr>
+            </table>
+        </div>
+
+    }
+}
+
