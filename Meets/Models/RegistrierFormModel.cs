@@ -15,13 +15,15 @@ namespace Meets.Models
         [Required(ErrorMessage = "Pflichtfeld", AllowEmptyStrings = false)]
         //E-Mail mittels Jquery Validation überprüfen
         [EmailAddress(ErrorMessage = "Ungültige Emailadresse")]
-        [StringLength(255, ErrorMessage = "Maximal 255 Zeichen")]
+        [StringLength(30, ErrorMessage = "Maximal 30 Zeichen")]
         public string Email { get; set; }
 
         [Required(ErrorMessage = "Pflichtfeld", AllowEmptyStrings = false)]
+        [StringLength(30, ErrorMessage = "Minimal 5 und Maximal 30 Zeichen", MinimumLength = 5)]
         public string Passwort { get; set; }
 
         [Required(ErrorMessage = "Pflichtfeld", AllowEmptyStrings = false)]
+        [StringLength(30, ErrorMessage = "Minimal 5 und Maximal 30 Zeichen", MinimumLength = 5)]
         [Compare("Passwort", ErrorMessage = "Vergleichsfehler")]
         public string Passwortvergleich { get; set; }
 

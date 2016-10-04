@@ -7,7 +7,7 @@ namespace Meets.Models
 {
     public class DetailBesaetigungViewModel
     {
-        public string Eventdatum { get; set; }
+        public DateTime Eventdatum { get; set; }
         public string Eventtitel { get; set; }
         public string Bestaetigungszeitpunkt { get; set; }
         public string Eingeladen { get; set; }
