@@ -53,7 +53,7 @@ nav{
 /*.scrollenTab{overflow-y:auto;overflow-x:hidden;}*/
 
 .backwitheEventHoeher{padding-top:10px; margin:10px auto; width:682px; min-height:200px;border:solid 1px #808080;border-radius:10px;-webkit-box-shadow: 0px 2px 2px 2px #808080;box-shadow: 0px 2px 2px 2px #808080;padding-left:10px;padding-right:10px;background-color:aliceblue;}
-.backwitheEvent {padding-top:10px; margin:20px auto; width:682px; min-height:160px;border:solid 1px #808080;border-radius:10px;-webkit-box-shadow: 0px 2px 2px 2px #808080;box-shadow: 0px 2px 2px 2px #808080;padding-left:10px;padding-right:10px;background-color:aliceblue;}
+.backwitheEvent {padding: 10px 0; margin:20px auto; width:682px; min-height:160px;border:solid 1px #808080;border-radius:10px;-webkit-box-shadow: 0px 2px 2px 2px #808080;box-shadow: 0px 2px 2px 2px #808080;padding-left:10px;padding-right:10px;background-color:aliceblue;}
 
 .backwitheEventsmaller {
     padding-top:10px; 
@@ -80,7 +80,7 @@ nav{
 .contentScroll {
     padding: 20px;
     width: 1100px;
-    height: 490px;
+    height: 460px;
     border: solid 1px #808080;
     overflow-y: scroll;
     overflow-x:hidden;
@@ -100,7 +100,7 @@ nav{
 .contentReg{
     padding: 20px;
     width: 1100px;
-    height: 490px;
+    height: 480px;
     border: solid 1px #808080;
     border-radius: 10px;
     -webkit-box-shadow: 0px 2px 0px 2px #808080;
@@ -112,7 +112,7 @@ nav{
 .contentRegInnen{
     padding: 20px;
     width: 800px;
-    height: 450px;
+    height: 430px;
     border: solid 1px #808080;
     border-radius: 10px;
     -webkit-box-shadow: 0px 2px 0px 2px #808080;
@@ -242,4 +242,16 @@ nav{
     -webkit-box-shadow: 0px 2px 0px 2px #808080;
     box-shadow: 0px 2px 0px 2px #808080;
 
+}
+#footer {
+    width: 1240px;
+    height: 35px;
+    padding: 10px 20px;
+    /*border: solid 1px #000000;
+    border-radius: 0 0 20px 20px;
+    -webkit-box-shadow: 0px 2px 2px 2px #000000;
+    box-shadow: 0px 2px 2px 2px #000000;*/
+    position:relative;
+    top:96px;
+    left:-22px;
 }
