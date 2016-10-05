@@ -247,7 +247,7 @@ namespace Meets.Controllers
             catch (Exception)
             {
                 //Fehlermeldung an View
-                ViewBag.ErrorDatabase = "Problem mit Datenbankverbindung";
+                ViewBag.ErrorDatabase = "Email schon vergeben.";
                 return View("Registrieren");
             }
         }
