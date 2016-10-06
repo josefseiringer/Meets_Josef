@@ -44,7 +44,7 @@ namespace JSONAutocompleteTest.Controllers
             m.password = tmppw;
             db.Members.Add(m);
             db.SaveChanges();
-            return View();
+            return RedirectToAction("Index");
 
         }
 
