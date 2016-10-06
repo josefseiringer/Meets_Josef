@@ -22,7 +22,7 @@ namespace JSONAutocompleteTest.Models
 
         [Required(ErrorMessage = "Pflichtfeld", AllowEmptyStrings = false)]
         [StringLength(30, ErrorMessage = "Minimal 5 und Maximal 30 Zeichen", MinimumLength = 5)]
-        [Compare("Passwort", ErrorMessage = "Vergleichsfehler")]
+        [Compare("Klartextpasswort", ErrorMessage = "Vergleichsfehler")]
         public string RetypePassword { get; set; }
 
         [Required(ErrorMessage = "Pflichtfeld", AllowEmptyStrings = false)]

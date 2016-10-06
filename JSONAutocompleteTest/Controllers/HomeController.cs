@@ -15,12 +15,24 @@ namespace JSONAutocompleteTest.Controllers
         [HttpGet]
         public ActionResult Index()
         {
-            MemberViewModel mvm = new MemberViewModel();
-            return View(mvm);  
+            var listMember = (from m in db.Members
+                              select m).ToList();
+            MemberViewModel mvm;
+            List<MemberViewModel> memberList = new List<MemberViewModel>();
+            foreach (Member m in listMember)
+            {
+                mvm = new MemberViewModel();
+                mvm.Email = m.email;
+                mvm.Geburtsdatum = m.dateofbirth;
+                memberList.Add(mvm);
+            }
+            memberList = memberList.OrderBy(m => m.Email).ToList();
+            ViewBag.memberListe = memberList;
+            return View();  
         }
 
         [HttpPost]
-        public ActionResult SaveMember(MemberViewModel mvm)
+        public ActionResult Index(MemberViewModel mvm)
         {           
             
             Member m = new Member();
