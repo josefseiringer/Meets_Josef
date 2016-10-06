@@ -1,0 +1,75 @@
+﻿@model JSONAutocompleteTest.Models.MemberViewModel
+@{
+    ViewBag.Title = "Home Page";
+}
+
+<div class="jumbotron">
+    <h2>Test mit JSON Autocomplete in Verbindung mit MEET's Datenbank</h2>
+    <p class="lead">Tesvariante zur Asynchronen Datenübertragung.<br />Suche der Members aus der Tabelle Members</p>
+@using (Html.BeginForm("SaveMember", "Home"))
+{
+    <table>
+        <tr>
+            <th>Email:</th>
+        </tr>
+        <tr>
+            <td>@Html.TextBoxFor(t=>t.Email)</td>
+            <td>@Html.ValidationMessageFor(vm => vm.Email)</td>
+        </tr>
+        <tr>
+            <th>Passwort:</th>
+        </tr>
+        <tr>
+            <td>@Html.TextBoxFor(p => p.Klartextpasswort)</td>
+            <td>@Html.ValidationMessageFor(p => p.Klartextpasswort)</td>
+        </tr>
+        <tr>
+            <th>Passwort wiederholen:</th>
+        </tr>
+        <tr>
+            <td>@Html.TextBoxFor(pw => pw.RetypePassword)</td>
+            <td>@Html.ValidationMessageFor(pw => pw.RetypePassword)</td>
+        </tr>
+        <tr>
+            <th>Geburtsdatum:</th>
+        </tr>
+        <tr>
+            <td>@Html.TextBoxFor(d => d.Geburtsdatum)</td>
+            <td>@Html.ValidationMessageFor(d => d.Geburtsdatum)</td>
+        </tr>
+        <tr>
+            <td><input type="submit" /></td>
+        </tr>
+    </table>
+}  
+    
+</div>
+@section scripts{
+
+    <script type="text/javascript">
+    $(document).ready(function () {
+        $("#Email").autocomplete({
+            source: function(request,response) {
+                $.ajax({
+                    url: "~/Home/AutoCompleteMember",
+                    type: "POST",
+                    dataType: "json",
+                    data: { term: request.term },
+                    success: function (data) {
+                        response($.map(data, function (item) {
+                            return { label: item.Email, value: item.Email };
+                        }))
+                    }
+                })
+            },
+            messages: {
+                noResults: "", results: ""
+            }
+        });
+    })
+    </script>
+}
+
+
+
+

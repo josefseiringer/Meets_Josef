@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.25123.0
+VisualStudioVersion = 14.0.23107.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Meets", "Meets\Meets.csproj", "{E1E2F111-7794-451F-AB4C-E4411EEC002F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JSONAutocompleteTest", "JSONAutocompleteTest\JSONAutocompleteTest.csproj", "{468001E2-F33D-4CC9-A534-FC96205517A0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{E1E2F111-7794-451F-AB4C-E4411EEC002F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E1E2F111-7794-451F-AB4C-E4411EEC002F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E1E2F111-7794-451F-AB4C-E4411EEC002F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{468001E2-F33D-4CC9-A534-FC96205517A0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{468001E2-F33D-4CC9-A534-FC96205517A0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{468001E2-F33D-4CC9-A534-FC96205517A0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{468001E2-F33D-4CC9-A534-FC96205517A0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="d6549144102d496086048e0828d88e30" Name="Diagram1">
+        <EntityTypeShape EntityType="MeetsModel.Configtable" Width="1.5" PointX="5.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MeetsModel.Eventinvitation" Width="1.5" PointX="3.625" PointY="2.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="MeetsModel.Event" Width="1.5" PointX="0.875" PointY="2.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="MeetsModel.Invitationstatu" Width="1.5" PointX="5.75" PointY="2.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MeetsModel.Memberproperty" Width="1.625" PointX="3.125" PointY="6.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="MeetsModel.Member" Width="1.5" PointX="0.75" PointY="5.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="MeetsModel.Membersubscription" Width="1.875" PointX="0.625" PointY="9.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MeetsModel.Membervalidation" Width="1.5" PointX="3.125" PointY="10" IsExpanded="true" />
+        <EntityTypeShape EntityType="MeetsModel.Propertytype" Width="1.5" PointX="5.625" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MeetsModel.BesaetigungDetailView" Width="1.5" PointX="10" PointY="3.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="MeetsModel.View_Event" Width="1.5" PointX="9.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MeetsModel.View_Event_open" Width="1.5" PointX="10" PointY="5.625" IsExpanded="true" />
+        <AssociationConnector Association="MeetsModel.fk_Eventinvitations_Events" ManuallyRouted="false" />
+        <AssociationConnector Association="MeetsModel.fk_Invitationstatus_Eventinvitations" ManuallyRouted="false" />
+        <AssociationConnector Association="MeetsModel.fk_Events_Members" ManuallyRouted="false" />
+        <AssociationConnector Association="MeetsModel.fk_Memberproperties_Member" ManuallyRouted="false" />
+        <AssociationConnector Association="MeetsModel.fk_Memberproperties_Propertytypes" ManuallyRouted="false" />
+        <AssociationConnector Association="MeetsModel.fk_Membersubscriptions_Member" ManuallyRouted="false" />
+        <AssociationConnector Association="MeetsModel.fk_Membervalidation_Member" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

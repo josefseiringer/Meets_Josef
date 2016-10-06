@@ -1,0 +1,1160 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="MeetsModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Configtables">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="description" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="vat" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Eventinvitations">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="created" Type="datetime" Nullable="false" />
+          <Property Name="event_id" Type="int" Nullable="false" />
+          <Property Name="email" Type="varchar" MaxLength="255" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Events">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="created" Type="datetime" Nullable="false" />
+          <Property Name="member_id" Type="int" Nullable="false" />
+          <Property Name="eventdate" Type="datetime" Nullable="false" />
+          <Property Name="title" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="description" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="viewpublic" Type="bit" Nullable="false" />
+          <Property Name="location" Type="varchar" MaxLength="255" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Invitationstatus">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="created" Type="datetime" Nullable="false" />
+          <Property Name="eventinvitations_id" Type="int" Nullable="false" />
+          <Property Name="confirm" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Memberproperties">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="created" Type="datetime" Nullable="false" />
+          <Property Name="member_id" Type="int" Nullable="false" />
+          <Property Name="propertytype_id" Type="int" Nullable="false" />
+          <Property Name="val" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Members">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="created" Type="datetime" Nullable="false" />
+          <Property Name="email" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="password" Type="varbinary(max)" Nullable="false" />
+          <Property Name="dateofbirth" Type="datetime2" Precision="7" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Membersubscriptions">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="created" Type="datetime" Nullable="false" />
+          <Property Name="member_id" Type="int" Nullable="false" />
+          <Property Name="year" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Membervalidation">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="created" Type="datetime" Nullable="false" />
+          <Property Name="member_id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Propertytypes">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="created" Type="datetime" Nullable="false" />
+          <Property Name="description" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <!--Während der Generierung sind Fehler aufgetreten:
+Warnung 6002: Für Tabelle/Sicht 'Meets.dbo.BesaetigungDetailView' ist kein Primärschlüssel definiert. Der Schlüssel wurde abgeleitet, und die Definition wurde als schreibgeschützte Tabelle/Sicht erstellt.-->
+        <EntityType Name="BesaetigungDetailView">
+          <Key>
+            <PropertyRef Name="Eventtitel" />
+            <PropertyRef Name="Eingeladen" />
+            <PropertyRef Name="Bestaetigt" />
+          </Key>
+          <Property Name="Eventdatum" Type="varchar" MaxLength="10" />
+          <Property Name="Eventtitel" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Bestaetigungszeitpunkt" Type="varchar" MaxLength="10" />
+          <Property Name="Eingeladen" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="Bestaetigt" Type="bit" Nullable="false" />
+        </EntityType>
+        <!--Während der Generierung sind Fehler aufgetreten:
+Warnung 6002: Für Tabelle/Sicht 'Meets.dbo.View_Event' ist kein Primärschlüssel definiert. Der Schlüssel wurde abgeleitet, und die Definition wurde als schreibgeschützte Tabelle/Sicht erstellt.-->
+        <EntityType Name="View_Event">
+          <Key>
+            <PropertyRef Name="Erstellt" />
+            <PropertyRef Name="Ersteller" />
+            <PropertyRef Name="Termin" />
+            <PropertyRef Name="Veranstaltungsname" />
+            <PropertyRef Name="Beschreibung" />
+            <PropertyRef Name="Oeffentlich" />
+            <PropertyRef Name="Standort" />
+          </Key>
+          <Property Name="Erstellt" Type="datetime" Nullable="false" />
+          <Property Name="Ersteller" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="Termin" Type="datetime" Nullable="false" />
+          <Property Name="Veranstaltungsname" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Beschreibung" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="Oeffentlich" Type="bit" Nullable="false" />
+          <Property Name="Standort" Type="varchar" MaxLength="255" Nullable="false" />
+        </EntityType>
+        <!--Während der Generierung sind Fehler aufgetreten:
+Warnung 6002: Für Tabelle/Sicht 'Meets.dbo.View_Event_open' ist kein Primärschlüssel definiert. Der Schlüssel wurde abgeleitet, und die Definition wurde als schreibgeschützte Tabelle/Sicht erstellt.-->
+        <EntityType Name="View_Event_open">
+          <Key>
+            <PropertyRef Name="Erstellt" />
+            <PropertyRef Name="Ersteller" />
+            <PropertyRef Name="Termin" />
+            <PropertyRef Name="Veranstaltungsname" />
+            <PropertyRef Name="Beschreibung" />
+            <PropertyRef Name="Oeffentlich" />
+            <PropertyRef Name="Standort" />
+          </Key>
+          <Property Name="Erstellt" Type="datetime" Nullable="false" />
+          <Property Name="Ersteller" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="Termin" Type="datetime" Nullable="false" />
+          <Property Name="Veranstaltungsname" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Beschreibung" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="Oeffentlich" Type="bit" Nullable="false" />
+          <Property Name="Standort" Type="varchar" MaxLength="255" Nullable="false" />
+        </EntityType>
+        <Association Name="fk_Eventinvitations_Events">
+          <End Role="Events" Type="Self.Events" Multiplicity="1" />
+          <End Role="Eventinvitations" Type="Self.Eventinvitations" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Events">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Eventinvitations">
+              <PropertyRef Name="event_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_Events_Members">
+          <End Role="Members" Type="Self.Members" Multiplicity="1" />
+          <End Role="Events" Type="Self.Events" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Members">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Events">
+              <PropertyRef Name="member_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_Invitationstatus_Eventinvitations">
+          <End Role="Eventinvitations" Type="Self.Eventinvitations" Multiplicity="1" />
+          <End Role="Invitationstatus" Type="Self.Invitationstatus" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Eventinvitations">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Invitationstatus">
+              <PropertyRef Name="eventinvitations_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_Memberproperties_Member">
+          <End Role="Members" Type="Self.Members" Multiplicity="1" />
+          <End Role="Memberproperties" Type="Self.Memberproperties" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Members">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Memberproperties">
+              <PropertyRef Name="member_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_Memberproperties_Propertytypes">
+          <End Role="Propertytypes" Type="Self.Propertytypes" Multiplicity="1" />
+          <End Role="Memberproperties" Type="Self.Memberproperties" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Propertytypes">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Memberproperties">
+              <PropertyRef Name="propertytype_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_Membersubscriptions_Member">
+          <End Role="Members" Type="Self.Members" Multiplicity="1" />
+          <End Role="Membersubscriptions" Type="Self.Membersubscriptions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Members">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Membersubscriptions">
+              <PropertyRef Name="member_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_Membervalidation_Member">
+          <End Role="Members" Type="Self.Members" Multiplicity="1" />
+          <End Role="Membervalidation" Type="Self.Membervalidation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Members">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Membervalidation">
+              <PropertyRef Name="member_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="dt_adduserobject" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="dt_droppropertiesbyid" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id" Type="int" Mode="In" />
+          <Parameter Name="property" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="dt_dropuserobjectbyid" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="dt_generateansiname" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="name" Type="varchar" Mode="InOut" />
+        </Function>
+        <Function Name="dt_getobjwithprop" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="property" Type="varchar" Mode="In" />
+          <Parameter Name="value" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="dt_getobjwithprop_u" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="property" Type="varchar" Mode="In" />
+          <Parameter Name="uvalue" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="dt_getpropertiesbyid" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id" Type="int" Mode="In" />
+          <Parameter Name="property" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="dt_getpropertiesbyid_u" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id" Type="int" Mode="In" />
+          <Parameter Name="property" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="dt_setpropertybyid" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id" Type="int" Mode="In" />
+          <Parameter Name="property" Type="varchar" Mode="In" />
+          <Parameter Name="value" Type="varchar" Mode="In" />
+          <Parameter Name="lvalue" Type="image" Mode="In" />
+        </Function>
+        <Function Name="dt_setpropertybyid_u" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id" Type="int" Mode="In" />
+          <Parameter Name="property" Type="varchar" Mode="In" />
+          <Parameter Name="uvalue" Type="nvarchar" Mode="In" />
+          <Parameter Name="lvalue" Type="image" Mode="In" />
+        </Function>
+        <Function Name="dt_verstamp006" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="dt_verstamp007" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="fn_Check_User_FromEmail" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int">
+          <Parameter Name="email" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="fn_check_user_scalar" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int">
+          <Parameter Name="email" Type="varchar" Mode="In" />
+          <Parameter Name="password" Type="varbinary(max)" Mode="In" />
+        </Function>
+        <Function Name="fn_check_user_Table" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="email" Type="varchar" Mode="In" />
+          <Parameter Name="password" Type="varbinary(max)" Mode="In" />
+          <ReturnType>
+            <CollectionType>
+              <RowType>
+                <Property Name="id" Type="int" Nullable="false" />
+              </RowType>
+            </CollectionType>
+          </ReturnType>
+        </Function>
+        <Function Name="fn_detailViewFromUserEmail" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="email" Type="varchar" Mode="In" />
+          <ReturnType>
+            <CollectionType>
+              <RowType>
+                <Property Name="Eventdatum" Type="varchar" MaxLength="10" />
+                <Property Name="Eventtitel" Type="varchar" MaxLength="50" Nullable="false" />
+                <Property Name="Bestaetigungszeitpunkt" Type="varchar" MaxLength="10" />
+                <Property Name="Eingeladen" Type="varchar" MaxLength="255" Nullable="false" />
+                <Property Name="Bestaetigt" Type="bit" Nullable="false" />
+                <Property Name="email" Type="varchar" MaxLength="255" Nullable="false" />
+              </RowType>
+            </CollectionType>
+          </ReturnType>
+        </Function>
+        <Function Name="fn_diagramobjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
+        <Function Name="fn_hash_password" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="varbinary(max)">
+          <Parameter Name="text_to_hash" Type="varbinary(max)" Mode="In" />
+        </Function>
+        <Function Name="fn_Show_Event_Table" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="email" Type="varchar" Mode="In" />
+          <ReturnType>
+            <CollectionType>
+              <RowType>
+                <Property Name="id" Type="int" />
+                <Property Name="evdate" Type="datetime" />
+                <Property Name="title" Type="varchar" MaxLength="50" />
+                <Property Name="evdesc" Type="varchar" MaxLength="255" />
+                <Property Name="loc" Type="varchar" MaxLength="255" />
+                <Property Name="pub" Type="bit" />
+              </RowType>
+            </CollectionType>
+          </ReturnType>
+        </Function>
+        <Function Name="sp_AendereUserdaten" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="email" Type="varchar" Mode="In" />
+          <Parameter Name="password" Type="varbinary(max)" Mode="In" />
+        </Function>
+        <Function Name="sp_alterdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+          <Parameter Name="version" Type="int" Mode="In" />
+          <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+        </Function>
+        <Function Name="sp_ConfirmEvents" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="email" Type="varchar" Mode="In" />
+          <ReturnType>
+            <CollectionType>
+              <RowType>
+                <Property Name="eventdate" Type="datetime" Nullable="false" />
+                <Property Name="title" Type="varchar" MaxLength="50" Nullable="false" />
+                <Property Name="description" Type="varchar" MaxLength="255" Nullable="false" />
+                <Property Name="location" Type="varchar" MaxLength="255" Nullable="false" />
+                <Property Name="Ersteller" Type="varchar" MaxLength="255" Nullable="false" />
+              </RowType>
+            </CollectionType>
+          </ReturnType>
+        </Function>
+        <Function Name="sp_creatediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+          <Parameter Name="version" Type="int" Mode="In" />
+          <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+        </Function>
+        <Function Name="sp_delete_Event" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="event" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_delete_Member" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="member" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_dropdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_helpdiagramdefinition" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_helpdiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_holeUserDaten" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="email" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="sp_RegisterUser" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="email" Type="varchar" Mode="In" />
+          <Parameter Name="password" Type="varbinary(max)" Mode="In" />
+          <Parameter Name="dateOfBirth" Type="datetime" Mode="In" />
+        </Function>
+        <Function Name="sp_renamediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+          <Parameter Name="new_diagramname" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <EntityContainer Name="MeetsModelStoreContainer">
+          <EntitySet Name="Configtables" EntityType="Self.Configtables" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Eventinvitations" EntityType="Self.Eventinvitations" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Events" EntityType="Self.Events" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Invitationstatus" EntityType="Self.Invitationstatus" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Memberproperties" EntityType="Self.Memberproperties" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Members" EntityType="Self.Members" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Membersubscriptions" EntityType="Self.Membersubscriptions" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Membervalidation" EntityType="Self.Membervalidation" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Propertytypes" EntityType="Self.Propertytypes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="BesaetigungDetailView" EntityType="Self.BesaetigungDetailView" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [BesaetigungDetailView].[Eventdatum] AS [Eventdatum], 
+    [BesaetigungDetailView].[Eventtitel] AS [Eventtitel], 
+    [BesaetigungDetailView].[Bestaetigungszeitpunkt] AS [Bestaetigungszeitpunkt], 
+    [BesaetigungDetailView].[Eingeladen] AS [Eingeladen], 
+    [BesaetigungDetailView].[Bestaetigt] AS [Bestaetigt]
+    FROM [dbo].[BesaetigungDetailView] AS [BesaetigungDetailView]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="View_Event" EntityType="Self.View_Event" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [View_Event].[Erstellt] AS [Erstellt], 
+    [View_Event].[Ersteller] AS [Ersteller], 
+    [View_Event].[Termin] AS [Termin], 
+    [View_Event].[Veranstaltungsname] AS [Veranstaltungsname], 
+    [View_Event].[Beschreibung] AS [Beschreibung], 
+    [View_Event].[Oeffentlich] AS [Oeffentlich], 
+    [View_Event].[Standort] AS [Standort]
+    FROM [dbo].[View_Event] AS [View_Event]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="View_Event_open" EntityType="Self.View_Event_open" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [View_Event_open].[Erstellt] AS [Erstellt], 
+    [View_Event_open].[Ersteller] AS [Ersteller], 
+    [View_Event_open].[Termin] AS [Termin], 
+    [View_Event_open].[Veranstaltungsname] AS [Veranstaltungsname], 
+    [View_Event_open].[Beschreibung] AS [Beschreibung], 
+    [View_Event_open].[Oeffentlich] AS [Oeffentlich], 
+    [View_Event_open].[Standort] AS [Standort]
+    FROM [dbo].[View_Event_open] AS [View_Event_open]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="fk_Eventinvitations_Events" Association="Self.fk_Eventinvitations_Events">
+            <End Role="Events" EntitySet="Events" />
+            <End Role="Eventinvitations" EntitySet="Eventinvitations" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Events_Members" Association="Self.fk_Events_Members">
+            <End Role="Members" EntitySet="Members" />
+            <End Role="Events" EntitySet="Events" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Invitationstatus_Eventinvitations" Association="Self.fk_Invitationstatus_Eventinvitations">
+            <End Role="Eventinvitations" EntitySet="Eventinvitations" />
+            <End Role="Invitationstatus" EntitySet="Invitationstatus" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Memberproperties_Member" Association="Self.fk_Memberproperties_Member">
+            <End Role="Members" EntitySet="Members" />
+            <End Role="Memberproperties" EntitySet="Memberproperties" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Memberproperties_Propertytypes" Association="Self.fk_Memberproperties_Propertytypes">
+            <End Role="Propertytypes" EntitySet="Propertytypes" />
+            <End Role="Memberproperties" EntitySet="Memberproperties" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Membersubscriptions_Member" Association="Self.fk_Membersubscriptions_Member">
+            <End Role="Members" EntitySet="Members" />
+            <End Role="Membersubscriptions" EntitySet="Membersubscriptions" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Membervalidation_Member" Association="Self.fk_Membervalidation_Member">
+            <End Role="Members" EntitySet="Members" />
+            <End Role="Membervalidation" EntitySet="Membervalidation" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="MeetsModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <ComplexType Name="fn_check_user_Table_Result">
+          <Property Name="id" Type="Int32" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="fn_detailViewFromUserEmail_Result">
+          <Property Name="Eventdatum" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Eventtitel" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Bestaetigungszeitpunkt" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Eingeladen" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Bestaetigt" Type="Boolean" Nullable="false" />
+          <Property Name="email" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="fn_Show_Event_Table_Result">
+          <Property Name="id" Type="Int32" />
+          <Property Name="evdate" Type="DateTime" />
+          <Property Name="title" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="evdesc" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="loc" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="pub" Type="Boolean" />
+        </ComplexType>
+        <ComplexType Name="sp_ConfirmEvents_Result">
+          <Property Name="eventdate" Type="DateTime" Nullable="false" />
+          <Property Name="title" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="description" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="location" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Ersteller" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+        </ComplexType>
+        <EntityType Name="Configtable">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="description" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="vat" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Eventinvitation">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="created" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="event_id" Type="Int32" Nullable="false" />
+          <Property Name="email" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Event" Relationship="Self.fk_Eventinvitations_Events" FromRole="Eventinvitations" ToRole="Events" />
+          <NavigationProperty Name="Invitationstatus" Relationship="Self.fk_Invitationstatus_Eventinvitations" FromRole="Eventinvitations" ToRole="Invitationstatus" />
+        </EntityType>
+        <EntityType Name="Event">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="created" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="member_id" Type="Int32" Nullable="false" />
+          <Property Name="eventdate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="title" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="description" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="viewpublic" Type="Boolean" Nullable="false" />
+          <Property Name="location" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Eventinvitations" Relationship="Self.fk_Eventinvitations_Events" FromRole="Events" ToRole="Eventinvitations" />
+          <NavigationProperty Name="Member" Relationship="Self.fk_Events_Members" FromRole="Events" ToRole="Members" />
+        </EntityType>
+        <EntityType Name="Invitationstatu">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="created" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="eventinvitations_id" Type="Int32" Nullable="false" />
+          <Property Name="confirm" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Eventinvitation" Relationship="Self.fk_Invitationstatus_Eventinvitations" FromRole="Invitationstatus" ToRole="Eventinvitations" />
+        </EntityType>
+        <EntityType Name="Memberproperty">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="created" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="member_id" Type="Int32" Nullable="false" />
+          <Property Name="propertytype_id" Type="Int32" Nullable="false" />
+          <Property Name="val" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Member" Relationship="Self.fk_Memberproperties_Member" FromRole="Memberproperties" ToRole="Members" />
+          <NavigationProperty Name="Propertytype" Relationship="Self.fk_Memberproperties_Propertytypes" FromRole="Memberproperties" ToRole="Propertytypes" />
+        </EntityType>
+        <EntityType Name="Member">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="created" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="email" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="password" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
+          <Property Name="dateofbirth" Type="DateTime" Nullable="false" Precision="7" />
+          <NavigationProperty Name="Events" Relationship="Self.fk_Events_Members" FromRole="Members" ToRole="Events" />
+          <NavigationProperty Name="Memberproperties" Relationship="Self.fk_Memberproperties_Member" FromRole="Members" ToRole="Memberproperties" />
+          <NavigationProperty Name="Membersubscriptions" Relationship="Self.fk_Membersubscriptions_Member" FromRole="Members" ToRole="Membersubscriptions" />
+          <NavigationProperty Name="Membervalidations" Relationship="Self.fk_Membervalidation_Member" FromRole="Members" ToRole="Membervalidation" />
+        </EntityType>
+        <EntityType Name="Membersubscription">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="created" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="member_id" Type="Int32" Nullable="false" />
+          <Property Name="year" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Member" Relationship="Self.fk_Membersubscriptions_Member" FromRole="Membersubscriptions" ToRole="Members" />
+        </EntityType>
+        <EntityType Name="Membervalidation">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="created" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="member_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Member" Relationship="Self.fk_Membervalidation_Member" FromRole="Membervalidation" ToRole="Members" />
+        </EntityType>
+        <EntityType Name="Propertytype">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="created" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="description" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Memberproperties" Relationship="Self.fk_Memberproperties_Propertytypes" FromRole="Propertytypes" ToRole="Memberproperties" />
+        </EntityType>
+        <EntityType Name="BesaetigungDetailView">
+          <Key>
+            <PropertyRef Name="Eventtitel" />
+            <PropertyRef Name="Eingeladen" />
+            <PropertyRef Name="Bestaetigt" />
+          </Key>
+          <Property Name="Eventdatum" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Eventtitel" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Bestaetigungszeitpunkt" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Eingeladen" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Bestaetigt" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="View_Event">
+          <Key>
+            <PropertyRef Name="Erstellt" />
+            <PropertyRef Name="Ersteller" />
+            <PropertyRef Name="Termin" />
+            <PropertyRef Name="Veranstaltungsname" />
+            <PropertyRef Name="Beschreibung" />
+            <PropertyRef Name="Oeffentlich" />
+            <PropertyRef Name="Standort" />
+          </Key>
+          <Property Name="Erstellt" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Ersteller" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Termin" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Veranstaltungsname" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Beschreibung" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Oeffentlich" Type="Boolean" Nullable="false" />
+          <Property Name="Standort" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
+        <EntityType Name="View_Event_open">
+          <Key>
+            <PropertyRef Name="Erstellt" />
+            <PropertyRef Name="Ersteller" />
+            <PropertyRef Name="Termin" />
+            <PropertyRef Name="Veranstaltungsname" />
+            <PropertyRef Name="Beschreibung" />
+            <PropertyRef Name="Oeffentlich" />
+            <PropertyRef Name="Standort" />
+          </Key>
+          <Property Name="Erstellt" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Ersteller" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Termin" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Veranstaltungsname" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Beschreibung" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Oeffentlich" Type="Boolean" Nullable="false" />
+          <Property Name="Standort" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
+        <Association Name="fk_Eventinvitations_Events">
+          <End Role="Events" Type="Self.Event" Multiplicity="1" />
+          <End Role="Eventinvitations" Type="Self.Eventinvitation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Events">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Eventinvitations">
+              <PropertyRef Name="event_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_Invitationstatus_Eventinvitations">
+          <End Role="Eventinvitations" Type="Self.Eventinvitation" Multiplicity="1" />
+          <End Role="Invitationstatus" Type="Self.Invitationstatu" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Eventinvitations">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Invitationstatus">
+              <PropertyRef Name="eventinvitations_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_Events_Members">
+          <End Role="Members" Type="Self.Member" Multiplicity="1" />
+          <End Role="Events" Type="Self.Event" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Members">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Events">
+              <PropertyRef Name="member_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_Memberproperties_Member">
+          <End Role="Members" Type="Self.Member" Multiplicity="1" />
+          <End Role="Memberproperties" Type="Self.Memberproperty" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Members">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Memberproperties">
+              <PropertyRef Name="member_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_Memberproperties_Propertytypes">
+          <End Role="Propertytypes" Type="Self.Propertytype" Multiplicity="1" />
+          <End Role="Memberproperties" Type="Self.Memberproperty" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Propertytypes">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Memberproperties">
+              <PropertyRef Name="propertytype_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_Membersubscriptions_Member">
+          <End Role="Members" Type="Self.Member" Multiplicity="1" />
+          <End Role="Membersubscriptions" Type="Self.Membersubscription" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Members">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Membersubscriptions">
+              <PropertyRef Name="member_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_Membervalidation_Member">
+          <End Role="Members" Type="Self.Member" Multiplicity="1" />
+          <End Role="Membervalidation" Type="Self.Membervalidation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Members">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Membervalidation">
+              <PropertyRef Name="member_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="MeetsEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Configtables" EntityType="Self.Configtable" />
+          <EntitySet Name="Eventinvitations" EntityType="Self.Eventinvitation" />
+          <EntitySet Name="Events" EntityType="Self.Event" />
+          <EntitySet Name="Invitationstatus" EntityType="Self.Invitationstatu" />
+          <EntitySet Name="Memberproperties" EntityType="Self.Memberproperty" />
+          <EntitySet Name="Members" EntityType="Self.Member" />
+          <EntitySet Name="Membersubscriptions" EntityType="Self.Membersubscription" />
+          <EntitySet Name="Membervalidations" EntityType="Self.Membervalidation" />
+          <EntitySet Name="Propertytypes" EntityType="Self.Propertytype" />
+          <EntitySet Name="BesaetigungDetailViews" EntityType="Self.BesaetigungDetailView" />
+          <EntitySet Name="View_Event" EntityType="Self.View_Event" />
+          <EntitySet Name="View_Event_open" EntityType="Self.View_Event_open" />
+          <AssociationSet Name="fk_Eventinvitations_Events" Association="Self.fk_Eventinvitations_Events">
+            <End Role="Events" EntitySet="Events" />
+            <End Role="Eventinvitations" EntitySet="Eventinvitations" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Invitationstatus_Eventinvitations" Association="Self.fk_Invitationstatus_Eventinvitations">
+            <End Role="Eventinvitations" EntitySet="Eventinvitations" />
+            <End Role="Invitationstatus" EntitySet="Invitationstatus" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Events_Members" Association="Self.fk_Events_Members">
+            <End Role="Members" EntitySet="Members" />
+            <End Role="Events" EntitySet="Events" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Memberproperties_Member" Association="Self.fk_Memberproperties_Member">
+            <End Role="Members" EntitySet="Members" />
+            <End Role="Memberproperties" EntitySet="Memberproperties" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Memberproperties_Propertytypes" Association="Self.fk_Memberproperties_Propertytypes">
+            <End Role="Propertytypes" EntitySet="Propertytypes" />
+            <End Role="Memberproperties" EntitySet="Memberproperties" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Membersubscriptions_Member" Association="Self.fk_Membersubscriptions_Member">
+            <End Role="Members" EntitySet="Members" />
+            <End Role="Membersubscriptions" EntitySet="Membersubscriptions" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Membervalidation_Member" Association="Self.fk_Membervalidation_Member">
+            <End Role="Members" EntitySet="Members" />
+            <End Role="Membervalidation" EntitySet="Membervalidations" />
+          </AssociationSet>
+          <FunctionImport Name="fn_check_user_Table" IsComposable="true" ReturnType="Collection(MeetsModel.fn_check_user_Table_Result)">
+            <Parameter Name="email" Mode="In" Type="String" />
+            <Parameter Name="password" Mode="In" Type="Binary" />
+          </FunctionImport>
+          <FunctionImport Name="fn_detailViewFromUserEmail" IsComposable="true" ReturnType="Collection(MeetsModel.fn_detailViewFromUserEmail_Result)">
+            <Parameter Name="email" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="fn_Show_Event_Table" IsComposable="true" ReturnType="Collection(MeetsModel.fn_Show_Event_Table_Result)">
+            <Parameter Name="email" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ConfirmEvents" IsComposable="true" ReturnType="Collection(MeetsModel.sp_ConfirmEvents_Result)">
+            <Parameter Name="email" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="dt_adduserobject" />
+          <FunctionImport Name="dt_droppropertiesbyid">
+            <Parameter Name="id" Mode="In" Type="Int32" />
+            <Parameter Name="property" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="dt_dropuserobjectbyid">
+            <Parameter Name="id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="dt_generateansiname">
+            <Parameter Name="name" Mode="InOut" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="dt_getobjwithprop" ReturnType="Collection(Int32)">
+            <Parameter Name="property" Mode="In" Type="String" />
+            <Parameter Name="value" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="dt_getobjwithprop_u" ReturnType="Collection(Int32)">
+            <Parameter Name="property" Mode="In" Type="String" />
+            <Parameter Name="uvalue" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="dt_getpropertiesbyid" ReturnType="Collection(MeetsModel.dt_getpropertiesbyid_Result)">
+            <Parameter Name="id" Mode="In" Type="Int32" />
+            <Parameter Name="property" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="dt_getpropertiesbyid_u" ReturnType="Collection(MeetsModel.dt_getpropertiesbyid_u_Result)">
+            <Parameter Name="id" Mode="In" Type="Int32" />
+            <Parameter Name="property" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="dt_setpropertybyid">
+            <Parameter Name="id" Mode="In" Type="Int32" />
+            <Parameter Name="property" Mode="In" Type="String" />
+            <Parameter Name="value" Mode="In" Type="String" />
+            <Parameter Name="lvalue" Mode="In" Type="Binary" />
+          </FunctionImport>
+          <FunctionImport Name="dt_setpropertybyid_u">
+            <Parameter Name="id" Mode="In" Type="Int32" />
+            <Parameter Name="property" Mode="In" Type="String" />
+            <Parameter Name="uvalue" Mode="In" Type="String" />
+            <Parameter Name="lvalue" Mode="In" Type="Binary" />
+          </FunctionImport>
+          <FunctionImport Name="dt_verstamp006" ReturnType="Collection(Int32)" />
+          <FunctionImport Name="dt_verstamp007" ReturnType="Collection(Int32)" />
+          <FunctionImport Name="sp_AendereUserdaten">
+            <Parameter Name="email" Mode="In" Type="String" />
+            <Parameter Name="password" Mode="In" Type="Binary" />
+          </FunctionImport>
+          <FunctionImport Name="sp_alterdiagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="version" Mode="In" Type="Int32" />
+            <Parameter Name="definition" Mode="In" Type="Binary" />
+          </FunctionImport>
+          <FunctionImport Name="sp_creatediagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="version" Mode="In" Type="Int32" />
+            <Parameter Name="definition" Mode="In" Type="Binary" />
+          </FunctionImport>
+          <FunctionImport Name="sp_delete_Event">
+            <Parameter Name="event" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_delete_Member">
+            <Parameter Name="member" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_dropdiagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_helpdiagramdefinition" ReturnType="Collection(MeetsModel.sp_helpdiagramdefinition_Result)">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_helpdiagrams" ReturnType="Collection(MeetsModel.sp_helpdiagrams_Result)">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_holeUserDaten" ReturnType="Collection(MeetsModel.sp_holeUserDaten_Result)">
+            <Parameter Name="email" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_RegisterUser">
+            <Parameter Name="email" Mode="In" Type="String" />
+            <Parameter Name="password" Mode="In" Type="Binary" />
+            <Parameter Name="dateOfBirth" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="sp_renamediagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="new_diagramname" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_upgraddiagrams" />
+        </EntityContainer>
+        <ComplexType Name="dt_getpropertiesbyid_Result">
+          <Property Type="String" Name="property" Nullable="false" MaxLength="64" />
+          <Property Type="Int32" Name="version" Nullable="false" />
+          <Property Type="String" Name="value" Nullable="true" MaxLength="255" />
+          <Property Type="Binary" Name="lvalue" Nullable="true" MaxLength="Max" />
+        </ComplexType>
+        <ComplexType Name="dt_getpropertiesbyid_u_Result">
+          <Property Type="String" Name="property" Nullable="false" MaxLength="64" />
+          <Property Type="Int32" Name="version" Nullable="false" />
+          <Property Type="String" Name="uvalue" Nullable="true" MaxLength="255" />
+          <Property Type="Binary" Name="lvalue" Nullable="true" MaxLength="Max" />
+        </ComplexType>
+        <ComplexType Name="sp_helpdiagramdefinition_Result">
+          <Property Type="Int32" Name="version" Nullable="true" />
+          <Property Type="Binary" Name="definition" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_helpdiagrams_Result">
+          <Property Type="String" Name="Database" Nullable="true" MaxLength="128" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="128" />
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
+          <Property Type="Int32" Name="OwnerID" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="sp_holeUserDaten_Result">
+          <Property Type="Int32" Name="id" Nullable="false" />
+          <Property Type="DateTime" Name="created" Nullable="false" Precision="23" />
+          <Property Type="String" Name="email" Nullable="false" MaxLength="255" />
+          <Property Type="Binary" Name="password" Nullable="false" />
+          <Property Type="DateTime" Name="dateofbirth" Nullable="false" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="MeetsModelStoreContainer" CdmEntityContainer="MeetsEntities">
+          <EntitySetMapping Name="Configtables">
+            <EntityTypeMapping TypeName="MeetsModel.Configtable">
+              <MappingFragment StoreEntitySet="Configtables">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="vat" ColumnName="vat" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Eventinvitations">
+            <EntityTypeMapping TypeName="MeetsModel.Eventinvitation">
+              <MappingFragment StoreEntitySet="Eventinvitations">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="created" ColumnName="created" />
+                <ScalarProperty Name="event_id" ColumnName="event_id" />
+                <ScalarProperty Name="email" ColumnName="email" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Events">
+            <EntityTypeMapping TypeName="MeetsModel.Event">
+              <MappingFragment StoreEntitySet="Events">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="created" ColumnName="created" />
+                <ScalarProperty Name="member_id" ColumnName="member_id" />
+                <ScalarProperty Name="eventdate" ColumnName="eventdate" />
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="viewpublic" ColumnName="viewpublic" />
+                <ScalarProperty Name="location" ColumnName="location" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Invitationstatus">
+            <EntityTypeMapping TypeName="MeetsModel.Invitationstatu">
+              <MappingFragment StoreEntitySet="Invitationstatus">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="created" ColumnName="created" />
+                <ScalarProperty Name="eventinvitations_id" ColumnName="eventinvitations_id" />
+                <ScalarProperty Name="confirm" ColumnName="confirm" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Memberproperties">
+            <EntityTypeMapping TypeName="MeetsModel.Memberproperty">
+              <MappingFragment StoreEntitySet="Memberproperties">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="created" ColumnName="created" />
+                <ScalarProperty Name="member_id" ColumnName="member_id" />
+                <ScalarProperty Name="propertytype_id" ColumnName="propertytype_id" />
+                <ScalarProperty Name="val" ColumnName="val" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Members">
+            <EntityTypeMapping TypeName="MeetsModel.Member">
+              <MappingFragment StoreEntitySet="Members">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="created" ColumnName="created" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="dateofbirth" ColumnName="dateofbirth" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Membersubscriptions">
+            <EntityTypeMapping TypeName="MeetsModel.Membersubscription">
+              <MappingFragment StoreEntitySet="Membersubscriptions">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="created" ColumnName="created" />
+                <ScalarProperty Name="member_id" ColumnName="member_id" />
+                <ScalarProperty Name="year" ColumnName="year" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Membervalidations">
+            <EntityTypeMapping TypeName="MeetsModel.Membervalidation">
+              <MappingFragment StoreEntitySet="Membervalidation">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="created" ColumnName="created" />
+                <ScalarProperty Name="member_id" ColumnName="member_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Propertytypes">
+            <EntityTypeMapping TypeName="MeetsModel.Propertytype">
+              <MappingFragment StoreEntitySet="Propertytypes">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="created" ColumnName="created" />
+                <ScalarProperty Name="description" ColumnName="description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="BesaetigungDetailViews">
+            <EntityTypeMapping TypeName="MeetsModel.BesaetigungDetailView">
+              <MappingFragment StoreEntitySet="BesaetigungDetailView">
+                <ScalarProperty Name="Eventdatum" ColumnName="Eventdatum" />
+                <ScalarProperty Name="Eventtitel" ColumnName="Eventtitel" />
+                <ScalarProperty Name="Bestaetigungszeitpunkt" ColumnName="Bestaetigungszeitpunkt" />
+                <ScalarProperty Name="Eingeladen" ColumnName="Eingeladen" />
+                <ScalarProperty Name="Bestaetigt" ColumnName="Bestaetigt" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="View_Event">
+            <EntityTypeMapping TypeName="MeetsModel.View_Event">
+              <MappingFragment StoreEntitySet="View_Event">
+                <ScalarProperty Name="Erstellt" ColumnName="Erstellt" />
+                <ScalarProperty Name="Ersteller" ColumnName="Ersteller" />
+                <ScalarProperty Name="Termin" ColumnName="Termin" />
+                <ScalarProperty Name="Veranstaltungsname" ColumnName="Veranstaltungsname" />
+                <ScalarProperty Name="Beschreibung" ColumnName="Beschreibung" />
+                <ScalarProperty Name="Oeffentlich" ColumnName="Oeffentlich" />
+                <ScalarProperty Name="Standort" ColumnName="Standort" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="View_Event_open">
+            <EntityTypeMapping TypeName="MeetsModel.View_Event_open">
+              <MappingFragment StoreEntitySet="View_Event_open">
+                <ScalarProperty Name="Erstellt" ColumnName="Erstellt" />
+                <ScalarProperty Name="Ersteller" ColumnName="Ersteller" />
+                <ScalarProperty Name="Termin" ColumnName="Termin" />
+                <ScalarProperty Name="Veranstaltungsname" ColumnName="Veranstaltungsname" />
+                <ScalarProperty Name="Beschreibung" ColumnName="Beschreibung" />
+                <ScalarProperty Name="Oeffentlich" ColumnName="Oeffentlich" />
+                <ScalarProperty Name="Standort" ColumnName="Standort" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionName="MeetsModel.Store.fn_check_user_Table" FunctionImportName="fn_check_user_Table">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="MeetsModel.fn_check_user_Table_Result">
+                <ScalarProperty Name="id" ColumnName="id" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionName="MeetsModel.Store.fn_detailViewFromUserEmail" FunctionImportName="fn_detailViewFromUserEmail">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="MeetsModel.fn_detailViewFromUserEmail_Result">
+                <ScalarProperty Name="Eventdatum" ColumnName="Eventdatum" />
+                <ScalarProperty Name="Eventtitel" ColumnName="Eventtitel" />
+                <ScalarProperty Name="Bestaetigungszeitpunkt" ColumnName="Bestaetigungszeitpunkt" />
+                <ScalarProperty Name="Eingeladen" ColumnName="Eingeladen" />
+                <ScalarProperty Name="Bestaetigt" ColumnName="Bestaetigt" />
+                <ScalarProperty Name="email" ColumnName="email" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionName="MeetsModel.Store.fn_Show_Event_Table" FunctionImportName="fn_Show_Event_Table">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="MeetsModel.fn_Show_Event_Table_Result">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="evdate" ColumnName="evdate" />
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="evdesc" ColumnName="evdesc" />
+                <ScalarProperty Name="loc" ColumnName="loc" />
+                <ScalarProperty Name="pub" ColumnName="pub" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionName="MeetsModel.Store.sp_ConfirmEvents" FunctionImportName="sp_ConfirmEvents">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="MeetsModel.sp_ConfirmEvents_Result">
+                <ScalarProperty Name="eventdate" ColumnName="eventdate" />
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="location" ColumnName="location" />
+                <ScalarProperty Name="Ersteller" ColumnName="Ersteller" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="dt_adduserobject" FunctionName="MeetsModel.Store.dt_adduserobject" />
+          <FunctionImportMapping FunctionImportName="dt_droppropertiesbyid" FunctionName="MeetsModel.Store.dt_droppropertiesbyid" />
+          <FunctionImportMapping FunctionImportName="dt_dropuserobjectbyid" FunctionName="MeetsModel.Store.dt_dropuserobjectbyid" />
+          <FunctionImportMapping FunctionImportName="dt_generateansiname" FunctionName="MeetsModel.Store.dt_generateansiname" />
+          <FunctionImportMapping FunctionImportName="dt_getobjwithprop" FunctionName="MeetsModel.Store.dt_getobjwithprop" />
+          <FunctionImportMapping FunctionImportName="dt_getobjwithprop_u" FunctionName="MeetsModel.Store.dt_getobjwithprop_u" />
+          <FunctionImportMapping FunctionImportName="dt_getpropertiesbyid" FunctionName="MeetsModel.Store.dt_getpropertiesbyid">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="MeetsModel.dt_getpropertiesbyid_Result">
+                <ScalarProperty Name="property" ColumnName="property" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="value" ColumnName="value" />
+                <ScalarProperty Name="lvalue" ColumnName="lvalue" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="dt_getpropertiesbyid_u" FunctionName="MeetsModel.Store.dt_getpropertiesbyid_u">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="MeetsModel.dt_getpropertiesbyid_u_Result">
+                <ScalarProperty Name="property" ColumnName="property" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="uvalue" ColumnName="uvalue" />
+                <ScalarProperty Name="lvalue" ColumnName="lvalue" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="dt_setpropertybyid" FunctionName="MeetsModel.Store.dt_setpropertybyid" />
+          <FunctionImportMapping FunctionImportName="dt_setpropertybyid_u" FunctionName="MeetsModel.Store.dt_setpropertybyid_u" />
+          <FunctionImportMapping FunctionImportName="dt_verstamp006" FunctionName="MeetsModel.Store.dt_verstamp006" />
+          <FunctionImportMapping FunctionImportName="dt_verstamp007" FunctionName="MeetsModel.Store.dt_verstamp007" />
+          <FunctionImportMapping FunctionImportName="sp_AendereUserdaten" FunctionName="MeetsModel.Store.sp_AendereUserdaten" />
+          <FunctionImportMapping FunctionImportName="sp_alterdiagram" FunctionName="MeetsModel.Store.sp_alterdiagram" />
+          <FunctionImportMapping FunctionImportName="sp_creatediagram" FunctionName="MeetsModel.Store.sp_creatediagram" />
+          <FunctionImportMapping FunctionImportName="sp_delete_Event" FunctionName="MeetsModel.Store.sp_delete_Event" />
+          <FunctionImportMapping FunctionImportName="sp_delete_Member" FunctionName="MeetsModel.Store.sp_delete_Member" />
+          <FunctionImportMapping FunctionImportName="sp_dropdiagram" FunctionName="MeetsModel.Store.sp_dropdiagram" />
+          <FunctionImportMapping FunctionImportName="sp_helpdiagramdefinition" FunctionName="MeetsModel.Store.sp_helpdiagramdefinition">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="MeetsModel.sp_helpdiagramdefinition_Result">
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_helpdiagrams" FunctionName="MeetsModel.Store.sp_helpdiagrams">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="MeetsModel.sp_helpdiagrams_Result">
+                <ScalarProperty Name="Database" ColumnName="Database" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Owner" ColumnName="Owner" />
+                <ScalarProperty Name="OwnerID" ColumnName="OwnerID" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_holeUserDaten" FunctionName="MeetsModel.Store.sp_holeUserDaten">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="MeetsModel.sp_holeUserDaten_Result">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="created" ColumnName="created" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="dateofbirth" ColumnName="dateofbirth" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_RegisterUser" FunctionName="MeetsModel.Store.sp_RegisterUser" />
+          <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="MeetsModel.Store.sp_renamediagram" />
+          <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="MeetsModel.Store.sp_upgraddiagrams" />
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Kein" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
