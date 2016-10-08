@@ -384,10 +384,10 @@ namespace Meets.Controllers
                              e.Member.email == User.Identity.Name
                              select e.id).FirstOrDefault();
                 //Wenn die Liste einen count hat dann
-                if (defUser.Count == 0)
+                if (defUser.Count == 0 && defUser.ToList()[0].eventdate <= DateTime.Now)
                 {
                     //Meldung noch keine Einträge dem View übergeben
-                    ViewBag.leereListe = "Du hast noch keine Einträge erstellt.";
+                    ViewBag.leereListe = "Du hast noch keine Einträge erstellt, oder die Einträge sind nicht aktuell.";
                     return View();
                 }
                 //Wenn der Benutzer in der Membervalidation eingetragen ist sprich not null nicht null ist
