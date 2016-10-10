@@ -1,7 +1,7 @@
 echo off
 
 set logfile=create_db.log
-set servername=localhost
+set servername=PC001999FD0282
 set username=sa
 set passwd=123user!
 set database=Meets

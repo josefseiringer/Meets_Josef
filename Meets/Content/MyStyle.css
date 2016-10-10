@@ -71,7 +71,7 @@ nav{
     background-color:aliceblue;
 }
 
-.btnstyle{float:right;padding:10px 30px 10px 30px;border-radius:5px;margin-top:-10px;}
+.btnstyle{float:right;padding:10px 30px 10px 30px;border-radius:5px;margin-top:20px;}
 .btnstyle:hover{background-color:burlywood;}
 
 .btnstyleLeft{padding:10px 30px 10px 30px;border-radius:5px;margin-top:10px;}
