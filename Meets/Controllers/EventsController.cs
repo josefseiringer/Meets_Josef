@@ -390,12 +390,12 @@ namespace Meets.Controllers
                     ViewBag.leereListe = "Du hast noch keine Einträge erstellt, oder die Einträge sind nicht aktuell.";
                     return View();
                 }
-                if (defUser.ToList()[0].eventdate <= DateTime.Now)
-                {
-                    //Meldung noch keine Einträge dem View übergeben
-                    ViewBag.leereListe = "Du hast noch keine Einträge erstellt, oder die Einträge sind nicht aktuell.";
-                    return View();
-                }
+                //if (defUser.ToList()[0].eventdate <= DateTime.Now)
+                //{
+                //    //Meldung noch keine Einträge dem View übergeben
+                //    ViewBag.leereListe = "Du hast noch keine Einträge erstellt, oder die Einträge sind nicht aktuell.";
+                //    return View();
+                //}
                 //Wenn der Benutzer in der Membervalidation eingetragen ist sprich not null nicht null ist
                 if (valid != 0)
                 {
