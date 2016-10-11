@@ -74,10 +74,8 @@ namespace Meets.Models
             {
                 try
                 {
-                    //string passwd = "Jomoresa31_bbrz";
-                    //string mailSelf = "josef.seiringer@qualifizierung.or.at";
-                    string passwd = "Jomoresa@31";
-                    string mailSelf = "j.seiringer@live.at";
+                    string passwd = "irgendwas";
+                    string mailSelf = "bla@qualifizierung.or.at";
 
                     MailMessage mail = new MailMessage();
                     mail.From = new MailAddress("noreplay@Meets.at"); //Absender
@@ -132,11 +130,9 @@ namespace Meets.Models
             string awt = null;
             try
             {
-                //string passwd = "Jomoresa31_bbrz";
-                //string mailSelf = "josef.seiringer@qualifizierung.or.at";
-                string passwd = "Jomoresa@31";
-                string mailSelf = "j.seiringer@live.at";
-
+                string passwd = "irgendwas";
+                string mailSelf = "bla@qualifizierung.or.at";
+                
                 MailMessage mail = new MailMessage();
                 mail.From = new MailAddress("noreplay@Meets.at"); //Absender
                 mail.Bcc.Add(mailFromUser); //Empfänger 
@@ -179,10 +175,9 @@ namespace Meets.Models
             string awt = null;            
             try
             {
-                //string passwd = "Jomoresa31_bbrz";
-                //string mailSelf = "josef.seiringer@qualifizierung.or.at";
-                string passwd = "Jomoresa@31";
-                string mailSelf = "j.seiringer@live.at";
+                string passwd = "irgendwas";
+                string mailSelf = "bla@qualifizierung.or.at";
+                
 
                 MailMessage mail = new MailMessage();
                 mail.From = new MailAddress("noreplay@Meets.at"); //Absender
