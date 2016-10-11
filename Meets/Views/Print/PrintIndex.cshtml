@@ -1,0 +1,86 @@
+﻿@model IEnumerable<Meets.Models.Event>
+
+@{
+    ViewBag.Title = "PrintIndex";
+    Layout = "~/Views/Shared/_LayoutMeetsPrint.cshtml";
+}
+
+<div id="mydiv">
+    <div style="border:solid 1px #808080;border-radius:20px;padding:20px;display:inline-block;">
+        <p><img style="width:178px;height:39px;" src="~/img/MeetsPrintTop.png" /></p>
+        <h4>Aktuelle Event/s von @User.Identity.Name</h4>
+        <table style="border-collapse: collapse;">
+            <tr>
+                <th style="text-align:left; padding:10px;border:solid 1px #808080;">
+                    Eventdatum:
+                </th>
+                <th style="text-align:left; padding:10px; border:solid 1px #808080;">
+                    Titel:
+                </th>
+                <th style="text-align:left; padding:10px; border:solid 1px #808080;">
+                    Beschreibung:
+                </th>
+                <th style="text-align:left; padding:10px; border:solid 1px #808080;">
+                    Öffentlich:
+                </th>
+                <th style="text-align:left; padding:10px; border:solid 1px #808080;">
+                    Standort:
+                </th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td style="text-align:left; padding:10px; border:solid 1px #808080;">
+                        <p>@item.eventdate.ToShortDateString()</p>
+                    </td>
+                    <td style="text-align:left; padding:10px; border:solid 1px #808080;">
+                        @Html.DisplayFor(modelItem => item.title)
+                    </td>
+                    <td style="text-align:left; padding:10px; border:solid 1px #808080;">
+                        @Html.DisplayFor(modelItem => item.description)
+                    </td>
+                    <td style="text-align:left; padding:10px; border:solid 1px #808080;">
+                        @if (item.viewpublic == true)
+                        {
+                            <p>Öffentlich</p>
+                        }
+                        else
+                        {
+                            <p>Privat</p>
+                        }
+                    </td>
+                    <td style="text-align:left; padding:10px; border:solid 1px #808080;">
+                        @Html.DisplayFor(modelItem => item.location)
+                    </td>
+                </tr>
+            }
+        </table>
+    </div>
+</div>
+<div style="padding-top:20px;"><input type="button" value="Event drucken" onclick="PrintElem('#mydiv')" /></div>
+
+@section scripts{
+    <script type="text/javascript">
+        function PrintElem(elem) {
+            Popup($(elem).html());
+        }
+
+        function Popup(data) {
+            var mywindow = window.open('', 'Druckansicht der Event/s zur E-Mail', 'min-height=600,min-width=400');
+            mywindow.document.write('<html><head><title>Druckansicht der Event/s zur E-Mail</title>');
+            /*optional stylesheet*/ //mywindow.document.write('<link rel="stylesheet" href="main.css" type="text/css" />');
+            mywindow.document.write('</head><body>');
+            mywindow.document.write(data);
+            mywindow.document.write('</body></html>');
+
+            mywindow.document.close(); // necessary for IE >= 10
+            mywindow.focus(); // necessary for IE >= 10
+
+            mywindow.print();
+            mywindow.close();
+
+            return true;
+        }
+    </script>
+}

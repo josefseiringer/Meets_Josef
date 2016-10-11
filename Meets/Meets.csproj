@@ -192,6 +192,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\MemberValController.cs" />
+    <Compile Include="Controllers\PrintController.cs" />
     <Compile Include="Controllers\RegFertigController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
@@ -342,6 +343,7 @@
     <Content Include="img\headerMeets.jpg" />
     <Content Include="img\HeaderNewMeetsSchmal.jpg" />
     <Content Include="img\loginFigur236x194.jpg" />
+    <Content Include="img\MeetsPrintTop.png" />
     <Content Include="img\register.png" />
     <Content Include="Models\MeetsModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -547,6 +549,8 @@
     <Content Include="Views\Events\OpenInvite.cshtml" />
     <Content Include="Views\Shared\_LayoutListeVerteilteEvents.cshtml" />
     <Content Include="Views\Events\VerteilteEvents.cshtml" />
+    <Content Include="Views\Print\PrintIndex.cshtml" />
+    <Content Include="Views\Shared\_LayoutMeetsPrint.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
