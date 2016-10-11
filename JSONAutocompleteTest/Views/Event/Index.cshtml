@@ -1,0 +1,79 @@
+﻿@model JSONAutocompleteTest.Models.Event
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Eventübersicht nach Eingabe der User E-Mail</h2>
+@using (Html.BeginForm())
+{
+    <div>
+        <div>Email eingeben: <input type="email" name="email" id="Email" /></div>
+    </div>
+    <br />
+    <div><input type="submit" name="email" value="Suche Event zu E-Mail" />&nbsp;<a href="~/Home/Index"><input type="button" value="zurück" /></a></div>
+
+
+    <br />
+    <br />
+    <h2>Eventsliste</h2>
+    <div>
+        <table class="table table-hover">
+            @if (@ViewBag.listEventFromUser != null)
+            {
+            <tr>
+                <th>Eventdatum</th>
+                <th>Event Titel</th>
+                <th>Eventbeschreibung</th>
+                <th>Öffentlich Ja/Nein</th>
+                <th>Event Standort</th>
+                <th>Druckanzeige</th>
+            </tr>
+            
+                foreach (JSONAutocompleteTest.Models.Event item in @ViewBag.listEventFromUser)
+                {
+                    <tr>
+                        <td>@item.eventdate.ToShortDateString()</td>
+                        <td>@item.title</td>
+                        <td>@item.description</td>
+                        @if (@item.viewpublic == true)
+                        {
+                            <td>Öffentlich</td>
+                        }
+                        else
+                        {
+                            <td>Privates Event</td>
+                        }
+                        <td>@item.location</td>
+                        <td>@Html.ActionLink("Druckansicht","PrintViewEvent", new {id = item.id})</td>
+                    </tr>
+                }
+            }            
+        </table>
+    </div>
+
+}
+@section scripts{
+    <script type="text/javascript">
+    $(document).ready(function () {
+        $("#Email").autocomplete({
+            source: function(request,response) {
+                $.ajax({
+                    url: "/Home/AutoCompleteMember",
+                    type: "POST",
+                    dataType: "json",
+                    data: { term: request.term },
+                    success: function (data) {
+                        response($.map(data, function (item) {
+                            return { label: item.email, value: item.email };
+                        }))
+                    }
+                })
+            },
+            messages: {
+                noResults: "", results: ""
+            }
+        });
+    })
+    </script>
+}
+

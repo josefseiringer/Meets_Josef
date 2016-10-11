@@ -1,0 +1,69 @@
+﻿@model JSONAutocompleteTest.Models.Event
+
+@{
+    ViewBag.Title = "PrintViewEvent";
+}
+
+<h2>Druckansicht des Events</h2>
+<div id="mydiv">
+    <h4>Event/s von @ViewBag.email</h4>
+    <br />
+    <div style="border:1px solid #808080;border-radius:20px;padding:20px 20px 0 20px;">
+        <table class="table table-hover">
+            <tr>
+                <th style="width:200px;text-align:left;padding-bottom:20px;">Eventdatum</th>
+                <td style="padding-bottom:20px;">@Model.eventdate.ToShortDateString()</td>
+            </tr>
+            <tr>
+                <th style="width:200px;text-align:left;padding-bottom:20px;">Event Titel</th>
+                <td style="padding-bottom:20px;">@Model.title</td>
+            </tr>
+            <tr>
+                <th style="width:200px;text-align:left;padding-bottom:20px;">Eventbeschreibung</th>
+                <td style="padding-bottom:20px;">@Model.description</td>
+            </tr>
+            <tr>
+                <th style="width:200px;text-align:left;padding-bottom:20px;">Öffentlich Ja/Nein</th>
+                @if (Model.viewpublic == true)
+            {
+                    <td style="padding-bottom:20px;">Öffentlich</td>
+                }
+                else
+                {
+                    <td style="padding-bottom:20px;">Privates Event</td>
+                }
+            </tr>
+            <tr>
+                <th style="width:200px;text-align:left;padding-bottom:20px;">Event Standort</th>
+                <td style="padding-bottom:20px;">@Model.location</td>
+            </tr>
+        </table>
+    </div>
+</div>
+<div style="padding-top:20px;"><input type="button" value="Event drucken" onclick="PrintElem('#mydiv')" />&nbsp;<a href="~/Event/Index"><input type="button" value="zurück" /></a></div>
+
+
+@section scripts{
+    <script type="text/javascript">
+        function PrintElem(elem) {
+            Popup($(elem).html());
+        }
+
+        function Popup(data) {
+            var mywindow = window.open('', 'Druckansicht', 'min-height=600,min-width=400');
+            mywindow.document.write('<html><head><title>Druckansicht</title>');
+            /*optional stylesheet*/ //mywindow.document.write('<link rel="stylesheet" href="main.css" type="text/css" />');
+            mywindow.document.write('</head><body>');
+            mywindow.document.write(data);
+            mywindow.document.write('</body></html>');
+
+            mywindow.document.close(); // necessary for IE >= 10
+            mywindow.focus(); // necessary for IE >= 10
+
+            mywindow.print();
+            mywindow.close();
+
+            return true;
+        }
+    </script>
+    }
