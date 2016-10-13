@@ -51,3 +51,15 @@ ADD
 CONSTRAINT pk_Configtables
 PRIMARY KEY(id);
 GO
+
+ALTER TABLE CreditCardMaster
+ADD
+CONSTRAINT pk_CreditCardMaster
+PRIMARY KEY(id);
+GO
+
+ALTER TABLE CreditCardVisa
+ADD
+CONSTRAINT pk_CreditCardVisa
+PRIMARY KEY(id);
+GO
