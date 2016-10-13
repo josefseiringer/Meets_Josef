@@ -134,6 +134,7 @@ namespace Meets.Controllers
                     {
                         con.Membervalidations.Add(mfm);
                         con.SaveChanges();
+                        TempData["ConfirmMessage"] = "Sie wurden als Standardkunde validiert";
                         return RedirectToAction("Login","Login");
                     }
                 }
