@@ -20,7 +20,7 @@
                 <table>
                     <tr>
                         <th style="width:150px;padding-left:20px;">@Html.Label("Event Datum:", htmlAttributes: new { @class = "control-label" })</th>
-                        <td>@Html.DisplayFor(modelItem => item.EventDatum)</td>
+                        <td>@item.EventDatum.ToShortDateString()</td>
                     </tr>
                     <tr>
                         <th style="width:150px;padding-left:20px;">@Html.Label("Event Titel:", htmlAttributes: new { @class = "control-label" })</th>

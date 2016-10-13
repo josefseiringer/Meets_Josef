@@ -22,7 +22,7 @@ else
             <table>
                 <tr>
                     <th>Eventdatum:</th>
-                    <td style="padding-left:10px;">@Html.DisplayFor(modelItem => item.Eventdatum)</td>
+                    <td style="padding-left:10px;">@item.Eventdatum.ToShortDateString()</td>
                 </tr>
                 <tr>
                     <th>Titel:</th>
