@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="MeetsModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="MeetsModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Configtables">
           <Key>
             <PropertyRef Name="id" />
@@ -12,6 +12,47 @@
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="description" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="vat" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CreditCardMaster">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="created" Type="datetime" Nullable="false" />
+          <Property Name="memberEmail" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="firstname" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="lastname" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="mastacardnumber" Type="varbinary" MaxLength="8000" Nullable="false" />
+          <Property Name="securecode" Type="varbinary" MaxLength="8000" Nullable="false" />
+          <Property Name="validmonth" Type="int" Nullable="false" />
+          <Property Name="validYear" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CreditCardVisa">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="created" Type="datetime" Nullable="false" />
+          <Property Name="memberEmail" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="firstname" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="lastname" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="visacardnumber" Type="varbinary" MaxLength="8000" Nullable="false" />
+          <Property Name="securecode" Type="varbinary" MaxLength="8000" Nullable="false" />
+          <Property Name="validmonth" Type="int" Nullable="false" />
+          <Property Name="validYear" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="dtproperties">
+          <Key>
+            <PropertyRef Name="id" />
+            <PropertyRef Name="property" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="objectid" Type="int" />
+          <Property Name="property" Type="varchar" MaxLength="64" Nullable="false" />
+          <Property Name="value" Type="varchar" MaxLength="255" />
+          <Property Name="uvalue" Type="nvarchar" MaxLength="255" />
+          <Property Name="lvalue" Type="image" />
+          <Property Name="version" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Eventinvitations">
           <Key>
@@ -88,6 +129,16 @@
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="created" Type="datetime" Nullable="false" />
           <Property Name="description" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
         </EntityType>
         <!--Während der Generierung sind Fehler aufgetreten:
 Warnung 6002: Für Tabelle/Sicht 'Meets.dbo.BesaetigungDetailView' ist kein Primärschlüssel definiert. Der Schlüssel wurde abgeleitet, und die Definition wurde als schreibgeschützte Tabelle/Sicht erstellt.-->
@@ -288,9 +339,6 @@ Warnung 6002: Für Tabelle/Sicht 'Meets.dbo.View_Event_open' ist kein Primärsch
         <Function Name="sp_delete_Member" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="member" Type="int" Mode="In" />
         </Function>
-        <Function Name="sp_GetConfirms" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="eventId" Type="int" Mode="In" />
-        </Function>
         <Function Name="sp_holeUserDaten" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="email" Type="varchar" Mode="In" />
         </Function>
@@ -301,6 +349,9 @@ Warnung 6002: Für Tabelle/Sicht 'Meets.dbo.View_Event_open' ist kein Primärsch
         </Function>
         <EntityContainer Name="MeetsModelStoreContainer">
           <EntitySet Name="Configtables" EntityType="Self.Configtables" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CreditCardMaster" EntityType="Self.CreditCardMaster" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CreditCardVisa" EntityType="Self.CreditCardVisa" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="dtproperties" EntityType="Self.dtproperties" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Eventinvitations" EntityType="Self.Eventinvitations" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Events" EntityType="Self.Events" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Invitationstatus" EntityType="Self.Invitationstatus" Schema="dbo" store:Type="Tables" />
@@ -309,6 +360,7 @@ Warnung 6002: Für Tabelle/Sicht 'Meets.dbo.View_Event_open' ist kein Primärsch
           <EntitySet Name="Membersubscriptions" EntityType="Self.Membersubscriptions" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Membervalidation" EntityType="Self.Membervalidation" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Propertytypes" EntityType="Self.Propertytypes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="BesaetigungDetailView" EntityType="Self.BesaetigungDetailView" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [BesaetigungDetailView].[Eventdatum] AS [Eventdatum], 
@@ -369,8 +421,7 @@ Warnung 6002: Für Tabelle/Sicht 'Meets.dbo.View_Event_open' ist kein Primärsch
             <End Role="Membervalidation" EntitySet="Membervalidation" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="MeetsModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -669,32 +720,36 @@ Warnung 6002: Für Tabelle/Sicht 'Meets.dbo.View_Event_open' ist kein Primärsch
             <Parameter Name="password" Mode="In" Type="Binary" />
           </FunctionImport>
           <FunctionImport Name="fn_detailViewFromUserEmail" IsComposable="true" ReturnType="Collection(MeetsModel.fn_detailViewFromUserEmail_Result)">
-            <Parameter Name="email" Mode="In" Type="String" />
+          <Parameter Name="email" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="fn_Show_Event_Table" IsComposable="true" ReturnType="Collection(MeetsModel.fn_Show_Event_Table_Result)">
-            <Parameter Name="email" Mode="In" Type="String" />
+          <Parameter Name="email" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="sp_AendereUserdaten">
             <Parameter Name="email" Mode="In" Type="String" />
             <Parameter Name="password" Mode="In" Type="Binary" />
           </FunctionImport>
           <FunctionImport Name="sp_delete_Event">
-            <Parameter Name="event" Mode="In" Type="Int32" />
+          <Parameter Name="event" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="sp_delete_Member">
-            <Parameter Name="member" Mode="In" Type="Int32" />
+          <Parameter Name="member" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="sp_GetConfirms" ReturnType="Collection(Int32)">
             <Parameter Name="eventId" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="sp_holeUserDaten" ReturnType="Collection(MeetsModel.sp_holeUserDaten_Result)">
-            <Parameter Name="email" Mode="In" Type="String" />
+          <Parameter Name="email" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="sp_RegisterUser">
             <Parameter Name="email" Mode="In" Type="String" />
             <Parameter Name="password" Mode="In" Type="Binary" />
             <Parameter Name="dateOfBirth" Mode="In" Type="DateTime" />
           </FunctionImport>
+          <EntitySet Name="dtproperties" EntityType="MeetsModel.dtproperty" />
+          <EntitySet Name="sysdiagrams" EntityType="MeetsModel.sysdiagram" />
+          <EntitySet Name="CreditCardMasters" EntityType="MeetsModel.CreditCardMaster" />
+          <EntitySet Name="CreditCardVisas" EntityType="MeetsModel.CreditCardVisa" />
         </EntityContainer>
         <ComplexType Name="sp_holeUserDaten_Result">
           <Property Type="Int32" Name="id" Nullable="false" />
@@ -703,6 +758,57 @@ Warnung 6002: Für Tabelle/Sicht 'Meets.dbo.View_Event_open' ist kein Primärsch
           <Property Type="Binary" Name="password" Nullable="false" />
           <Property Type="DateTime" Name="dateofbirth" Nullable="false" />
         </ComplexType>
+        <EntityType Name="dtproperty">
+          <Key>
+            <PropertyRef Name="id" />
+            <PropertyRef Name="property" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="objectid" Type="Int32" />
+          <Property Name="property" Type="String" Nullable="false" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Name="value" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="uvalue" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="lvalue" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="version" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="sysdiagram">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="CreditCardMaster">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="created" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="memberEmail" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="firstname" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="lastname" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="mastacardnumber" Type="Binary" Nullable="false" MaxLength="8000" FixedLength="false" />
+          <Property Name="securecode" Type="Binary" Nullable="false" MaxLength="8000" FixedLength="false" />
+          <Property Name="validmonth" Type="Int32" Nullable="false" />
+          <Property Name="validYear" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CreditCardVisa">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="created" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="memberEmail" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="firstname" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="lastname" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="visacardnumber" Type="Binary" Nullable="false" MaxLength="8000" FixedLength="false" />
+          <Property Name="securecode" Type="Binary" Nullable="false" MaxLength="8000" FixedLength="false" />
+          <Property Name="validmonth" Type="Int32" Nullable="false" />
+          <Property Name="validYear" Type="Int32" Nullable="false" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -873,7 +979,6 @@ Warnung 6002: Für Tabelle/Sicht 'Meets.dbo.View_Event_open' ist kein Primärsch
           <FunctionImportMapping FunctionImportName="sp_AendereUserdaten" FunctionName="MeetsModel.Store.sp_AendereUserdaten" />
           <FunctionImportMapping FunctionImportName="sp_delete_Event" FunctionName="MeetsModel.Store.sp_delete_Event" />
           <FunctionImportMapping FunctionImportName="sp_delete_Member" FunctionName="MeetsModel.Store.sp_delete_Member" />
-          <FunctionImportMapping FunctionImportName="sp_GetConfirms" FunctionName="MeetsModel.Store.sp_GetConfirms" />
           <FunctionImportMapping FunctionImportName="sp_holeUserDaten" FunctionName="MeetsModel.Store.sp_holeUserDaten">
             <ResultMapping>
               <ComplexTypeMapping TypeName="MeetsModel.sp_holeUserDaten_Result">
@@ -886,6 +991,60 @@ Warnung 6002: Für Tabelle/Sicht 'Meets.dbo.View_Event_open' ist kein Primärsch
             </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="sp_RegisterUser" FunctionName="MeetsModel.Store.sp_RegisterUser" />
+          <EntitySetMapping Name="dtproperties">
+            <EntityTypeMapping TypeName="MeetsModel.dtproperty">
+              <MappingFragment StoreEntitySet="dtproperties">
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="lvalue" ColumnName="lvalue" />
+                <ScalarProperty Name="uvalue" ColumnName="uvalue" />
+                <ScalarProperty Name="value" ColumnName="value" />
+                <ScalarProperty Name="property" ColumnName="property" />
+                <ScalarProperty Name="objectid" ColumnName="objectid" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="MeetsModel.sysdiagram">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="definition" ColumnName="definition" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CreditCardMasters">
+            <EntityTypeMapping TypeName="MeetsModel.CreditCardMaster">
+              <MappingFragment StoreEntitySet="CreditCardMaster">
+                <ScalarProperty Name="validYear" ColumnName="validYear" />
+                <ScalarProperty Name="validmonth" ColumnName="validmonth" />
+                <ScalarProperty Name="securecode" ColumnName="securecode" />
+                <ScalarProperty Name="mastacardnumber" ColumnName="mastacardnumber" />
+                <ScalarProperty Name="lastname" ColumnName="lastname" />
+                <ScalarProperty Name="firstname" ColumnName="firstname" />
+                <ScalarProperty Name="memberEmail" ColumnName="memberEmail" />
+                <ScalarProperty Name="created" ColumnName="created" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CreditCardVisas">
+            <EntityTypeMapping TypeName="MeetsModel.CreditCardVisa">
+              <MappingFragment StoreEntitySet="CreditCardVisa">
+                <ScalarProperty Name="validYear" ColumnName="validYear" />
+                <ScalarProperty Name="validmonth" ColumnName="validmonth" />
+                <ScalarProperty Name="securecode" ColumnName="securecode" />
+                <ScalarProperty Name="visacardnumber" ColumnName="visacardnumber" />
+                <ScalarProperty Name="lastname" ColumnName="lastname" />
+                <ScalarProperty Name="firstname" ColumnName="firstname" />
+                <ScalarProperty Name="memberEmail" ColumnName="memberEmail" />
+                <ScalarProperty Name="created" ColumnName="created" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

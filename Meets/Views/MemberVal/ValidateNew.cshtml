@@ -1,0 +1,27 @@
+﻿@model Meets.Models.RegistrierFormModel
+
+@{
+    ViewBag.Title = "Validate";
+    Layout = "~/Views/Shared/_LayoutValidateNewUser.cshtml";
+}
+
+<div class="val">
+    <h3 style="text-align:center;">Hallo <span style="color:blue;">@Model.Email</span> willst du Premium Mitglied werden?</h3>
+    <h4 style="text-align:center;">Premiummitglieder haben Vorteile.<br />Durch einen kleinen Unkostenbeitrag von 5€<br /> werden deine öffentlichen Events vorgereit und hervorgehoben.</h4>
+    <div style="margin:10px 0 0 60px;">
+        @using (Html.BeginForm("ValidateNew","MemberVal" , new {id = Model.IDMember }))
+        {
+            <input type="submit" name="premium" value="Premiumkunde werden" />
+            <input type="submit" name="nopremium" value="Standardkunde" />
+        }
+    </div>
+    @if (ViewBag.valErr != null)
+    {
+        <h4 class="text-danger" style="text-align:center;">@ViewBag.valErr</h4>
+    }
+</div>
+
+
+
+
+
