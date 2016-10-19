@@ -5,7 +5,7 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="4fae8fe434404fc394df65b0307a4492" Name="Diagram1">
-        <EntityTypeShape EntityType="MeetsModel.Configtable" Width="1.5" PointX="3.75" PointY="0.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="MeetsModel.Configtable" Width="1.5" PointX="4.75" PointY="0.625" IsExpanded="true" />
         <EntityTypeShape EntityType="MeetsModel.Eventinvitation" Width="1.5" PointX="3.75" PointY="3" IsExpanded="true" />
         <EntityTypeShape EntityType="MeetsModel.Event" Width="1.5" PointX="1" PointY="1.375" IsExpanded="true" />
         <EntityTypeShape EntityType="MeetsModel.Invitationstatu" Width="1.5" PointX="6.75" PointY="3.875" IsExpanded="true" />
@@ -26,8 +26,8 @@
         <AssociationConnector Association="MeetsModel.fk_Membervalidation_Member" ManuallyRouted="false" />
         <EntityTypeShape EntityType="MeetsModel.dtproperty" Width="1.5" PointX="5.375" PointY="9.75" />
         <EntityTypeShape EntityType="MeetsModel.sysdiagram" Width="1.5" PointX="9.375" PointY="6.75" />
-        <EntityTypeShape EntityType="MeetsModel.CreditCardMaster" Width="1.5" PointX="7.375" PointY="9.75" />
-        <EntityTypeShape EntityType="MeetsModel.CreditCardVisa" Width="1.5" PointX="9.375" PointY="9.75" />
+        <EntityTypeShape EntityType="MeetsModel.CreditCardMaster" Width="1.5" PointX="8.5" PointY="9.5" />
+        <EntityTypeShape EntityType="MeetsModel.CreditCardVisa" Width="1.5" PointX="10.75" PointY="9.5" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

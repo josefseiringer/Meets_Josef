@@ -200,6 +200,7 @@ namespace Meets.Models
 
                 mail.Subject = "Regiestrierbestätigung von Meets";
                 string link = "http://localhost:52111/MemberVal/Validate/"+id;
+                //string link = "http://localhost:52111/MemberVal/ValidateNew/" + id;
                 //mail.Body = "Bitte auf den Registrierungslink klicken um dich bei Meets zu registrieren.</br></br><a href='http://localhost:52111/MemberVal/Validate/id='"+id+"'>Bestätigen</a>";
                 mail.Body = "Bitte auf den Registrierungslink klicken um dich bei Meets zu registrieren.</br></br><a href="+link+">Bestätigen</a>";
                 mail.IsBodyHtml = true;
