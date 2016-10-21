@@ -72,3 +72,30 @@ CREATE TABLE Configtables (
   vat VARCHAR(50) NOT NULL
 );
 GO
+
+CREATE TABLE CreditCardMaster(
+	id INT IDENTITY(1,1) NOT NULL,
+	created DATETIME DEFAULT GetDate() NOT NULL,
+	memberEmail VARCHAR(50) NOT NULL,
+	firstname VARCHAR(50) NOT NULL,
+	lastname VARCHAR(50) NOT NULL,
+	mastacardnumber VARBINARY(8000) NOT NULL,
+	securecode VARBINARY(8000) NOT NULL,
+	validmonth INT NOT NULL,
+	validYear INT NOT NULL
+);
+GO
+
+CREATE TABLE CreditCardVisa(
+	id INT IDENTITY(1,1) NOT NULL,
+	created DATETIME DEFAULT GetDate() NOT NULL,
+	memberEmail VARCHAR(50) NOT NULL,
+	firstname VARCHAR(50) NOT NULL,
+	lastname VARCHAR(50) NOT NULL,
+	visacardnumber VARBINARY(8000) NOT NULL,
+	securecode VARBINARY(8000) NOT NULL,
+	validmonth INT NOT NULL,
+	validYear INT NOT NULL
+);
+GO
+
