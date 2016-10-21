@@ -89,8 +89,8 @@ namespace Meets.Models
             {
                 try
                 {
-                    string passwd = "irgendwas";
-                    string mailSelf = "bla@qualifizierung.or.at";
+                    string passwd = "nix";
+                    string mailSelf = "Josef.Seiringer@qualifizierung.or.at";
 
                     MailMessage mail = new MailMessage();
                     mail.From = new MailAddress("noreplay@Meets.at"); //Absender
@@ -105,9 +105,9 @@ namespace Meets.Models
                     mail.IsBodyHtml = true;
 
                     //mail.AlternateViews htmlView = AlternateView.CreateAlternateViewFromString()
-                    //SmtpClient client = new SmtpClient("sauron.itcc.local", 25);
+                    SmtpClient client = new SmtpClient("srv08.itccn.loc", 25);
                     //SmtpClient client = new SmtpClient("smtp.live.com", 25);
-                    SmtpClient client = new SmtpClient("localhost", 25);
+                    //SmtpClient client = new SmtpClient("localhost", 25);
 
                     //!!! nicht SSL im BBRZ verwenden !!!           
 
@@ -157,9 +157,9 @@ namespace Meets.Models
                 mail.IsBodyHtml = true;
 
                 //mail.AlternateViews htmlView = AlternateView.CreateAlternateViewFromString()
-                //SmtpClient client = new SmtpClient("sauron.itcc.local", 25);
+                SmtpClient client = new SmtpClient("srv08.itccn.loc", 25);
                 //SmtpClient client = new SmtpClient("smtp.live.com", 25);
-                SmtpClient client = new SmtpClient("localhost", 25);
+                //SmtpClient client = new SmtpClient("localhost", 25);
                 //!!! nicht SSL im BBRZ verwenden !!!           
 
                 client.Credentials = new System.Net.NetworkCredential(mailSelf, passwd);
@@ -206,9 +206,9 @@ namespace Meets.Models
                 mail.IsBodyHtml = true;
 
                 //mail.AlternateViews htmlView = AlternateView.CreateAlternateViewFromString()
-                //SmtpClient client = new SmtpClient("sauron.itcc.local", 25);
+                SmtpClient client = new SmtpClient("srv08.itccn.loc", 25);
                 //SmtpClient client = new SmtpClient("smtp.live.com", 25);
-                SmtpClient client = new SmtpClient("localhost", 25);
+                //SmtpClient client = new SmtpClient("localhost", 25);
                 //!!! nicht SSL im BBRZ verwenden !!!           
 
                 client.Credentials = new System.Net.NetworkCredential(mailSelf, passwd);

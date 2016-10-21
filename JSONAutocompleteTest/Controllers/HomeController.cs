@@ -55,8 +55,5 @@ namespace JSONAutocompleteTest.Controllers
                           select new { e.email }).Distinct();
             return Json(result, JsonRequestBehavior.AllowGet);
         }
-
-
-
     }
 }
