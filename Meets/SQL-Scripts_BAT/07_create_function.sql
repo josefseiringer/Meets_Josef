@@ -224,7 +224,7 @@ RETURN
 );
 GO
 
---Prozedur ruft Funktion auf wieviele Events pro User
+--Prozedur ruft Funktion auf wieviele Events pro User vom meisten zum wenigsten
 CREATE PROCEDURE sp_Call_TopUser
 AS
 BEGIN
