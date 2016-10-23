@@ -15,13 +15,14 @@ namespace JSONAutocompleteTest.Controllers
         [HttpGet]
         public ActionResult CallTopUser()
         {
-            // aus Model
+            // aus Model mit nullabel int count und string email
             CallTopUserViewModel ctvm;
             List<CallTopUserViewModel> listTop = new List<CallTopUserViewModel>();
-            //von Datenbank mit prozedur
-            List<sp_Call_TopUser_Result> tempTop = db.sp_Call_TopUser().ToList();
-            //umspeichern ins model zur weiterverarbeitung
 
+            //von Datenbank mit prozedur über funktionsaufruf in der prozedur liefer email und Menge Events pro email beinnhaltet nullabel int
+            List<sp_Call_TopUser_Result> tempTop = db.sp_Call_TopUser().ToList();
+
+            //umspeichern ins model zur weiterverarbeitung
             foreach (sp_Call_TopUser_Result item in tempTop)
             {
                 ctvm = new CallTopUserViewModel();
