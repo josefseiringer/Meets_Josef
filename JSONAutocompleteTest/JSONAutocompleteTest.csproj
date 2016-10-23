@@ -137,6 +137,7 @@
     <Compile Include="Models\BesaetigungDetailView.cs">
       <DependentUpon>MeetsModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\CallTopUserViewModel.cs" />
     <Compile Include="Models\Configtable.cs">
       <DependentUpon>MeetsModel.tt</DependentUpon>
     </Compile>
@@ -188,6 +189,9 @@
     </Compile>
     <Compile Include="Models\MemberViewModel.cs" />
     <Compile Include="Models\Propertytype.cs">
+      <DependentUpon>MeetsModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\sp_Call_TopUser_Result.cs">
       <DependentUpon>MeetsModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\sp_holeUserDaten_Result.cs">
@@ -313,6 +317,7 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Event\Index.cshtml" />
     <Content Include="Views\Event\PrintViewEvent.cshtml" />
+    <Content Include="Views\Home\CallTopUser.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

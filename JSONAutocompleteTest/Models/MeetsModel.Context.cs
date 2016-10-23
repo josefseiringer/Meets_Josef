@@ -139,5 +139,10 @@ namespace JSONAutocompleteTest.Models
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_RegisterUser", emailParameter, passwordParameter, dateOfBirthParameter);
         }
+    
+        public virtual ObjectResult<sp_Call_TopUser_Result> sp_Call_TopUser()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_Call_TopUser_Result>("sp_Call_TopUser");
+        }
     }
 }

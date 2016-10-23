@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="MeetsModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="MeetsModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Configtables">
           <Key>
             <PropertyRef Name="id" />
@@ -282,14 +282,12 @@ Warnung 6002: Für Tabelle/Sicht 'Meets.dbo.View_Event_open' ist kein Primärsch
           <Parameter Name="email" Type="varchar" Mode="In" />
           <Parameter Name="password" Type="varbinary(max)" Mode="In" />
         </Function>
+        <Function Name="sp_Call_TopUser" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="sp_delete_Event" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="event" Type="int" Mode="In" />
         </Function>
         <Function Name="sp_delete_Member" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="member" Type="int" Mode="In" />
-        </Function>
-        <Function Name="sp_GetConfirms" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="eventId" Type="int" Mode="In" />
         </Function>
         <Function Name="sp_holeUserDaten" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="email" Type="varchar" Mode="In" />
@@ -369,8 +367,7 @@ Warnung 6002: Für Tabelle/Sicht 'Meets.dbo.View_Event_open' ist kein Primärsch
             <End Role="Membervalidation" EntitySet="Membervalidation" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="MeetsModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -669,32 +666,33 @@ Warnung 6002: Für Tabelle/Sicht 'Meets.dbo.View_Event_open' ist kein Primärsch
             <Parameter Name="password" Mode="In" Type="Binary" />
           </FunctionImport>
           <FunctionImport Name="fn_detailViewFromUserEmail" IsComposable="true" ReturnType="Collection(MeetsModel.fn_detailViewFromUserEmail_Result)">
-            <Parameter Name="email" Mode="In" Type="String" />
+          <Parameter Name="email" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="fn_Show_Event_Table" IsComposable="true" ReturnType="Collection(MeetsModel.fn_Show_Event_Table_Result)">
-            <Parameter Name="email" Mode="In" Type="String" />
+          <Parameter Name="email" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="sp_AendereUserdaten">
             <Parameter Name="email" Mode="In" Type="String" />
             <Parameter Name="password" Mode="In" Type="Binary" />
           </FunctionImport>
           <FunctionImport Name="sp_delete_Event">
-            <Parameter Name="event" Mode="In" Type="Int32" />
+          <Parameter Name="event" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="sp_delete_Member">
-            <Parameter Name="member" Mode="In" Type="Int32" />
+          <Parameter Name="member" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="sp_GetConfirms" ReturnType="Collection(Int32)">
             <Parameter Name="eventId" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="sp_holeUserDaten" ReturnType="Collection(MeetsModel.sp_holeUserDaten_Result)">
-            <Parameter Name="email" Mode="In" Type="String" />
+          <Parameter Name="email" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="sp_RegisterUser">
             <Parameter Name="email" Mode="In" Type="String" />
             <Parameter Name="password" Mode="In" Type="Binary" />
             <Parameter Name="dateOfBirth" Mode="In" Type="DateTime" />
           </FunctionImport>
+          <FunctionImport Name="sp_Call_TopUser" ReturnType="Collection(MeetsModel.sp_Call_TopUser_Result)" />
         </EntityContainer>
         <ComplexType Name="sp_holeUserDaten_Result">
           <Property Type="Int32" Name="id" Nullable="false" />
@@ -702,6 +700,10 @@ Warnung 6002: Für Tabelle/Sicht 'Meets.dbo.View_Event_open' ist kein Primärsch
           <Property Type="String" Name="email" Nullable="false" MaxLength="255" />
           <Property Type="Binary" Name="password" Nullable="false" />
           <Property Type="DateTime" Name="dateofbirth" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="sp_Call_TopUser_Result">
+          <Property Type="String" Name="EMail" Nullable="false" MaxLength="255" />
+          <Property Type="Int32" Name="EventCount" Nullable="true" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -873,7 +875,6 @@ Warnung 6002: Für Tabelle/Sicht 'Meets.dbo.View_Event_open' ist kein Primärsch
           <FunctionImportMapping FunctionImportName="sp_AendereUserdaten" FunctionName="MeetsModel.Store.sp_AendereUserdaten" />
           <FunctionImportMapping FunctionImportName="sp_delete_Event" FunctionName="MeetsModel.Store.sp_delete_Event" />
           <FunctionImportMapping FunctionImportName="sp_delete_Member" FunctionName="MeetsModel.Store.sp_delete_Member" />
-          <FunctionImportMapping FunctionImportName="sp_GetConfirms" FunctionName="MeetsModel.Store.sp_GetConfirms" />
           <FunctionImportMapping FunctionImportName="sp_holeUserDaten" FunctionName="MeetsModel.Store.sp_holeUserDaten">
             <ResultMapping>
               <ComplexTypeMapping TypeName="MeetsModel.sp_holeUserDaten_Result">
@@ -886,6 +887,14 @@ Warnung 6002: Für Tabelle/Sicht 'Meets.dbo.View_Event_open' ist kein Primärsch
             </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="sp_RegisterUser" FunctionName="MeetsModel.Store.sp_RegisterUser" />
+          <FunctionImportMapping FunctionImportName="sp_Call_TopUser" FunctionName="MeetsModel.Store.sp_Call_TopUser">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="MeetsModel.sp_Call_TopUser_Result">
+                <ScalarProperty Name="EMail" ColumnName="EMail" />
+                <ScalarProperty Name="EventCount" ColumnName="EventCount" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

@@ -1,0 +1,34 @@
+﻿@model IEnumerable<JSONAutocompleteTest.Models.CallTopUserViewModel>
+
+@{
+    ViewBag.Title = "CallTopUser";
+}
+
+<h2>CallTopUser</h2>
+
+<p>
+    @Html.ActionLink("zurück zur User Übersicht", "Index","Home")
+</p>
+<table class="table table-hover">
+    <tr>
+        <th>
+            Emailadresse der Benutzer
+        </th>
+        <th>
+            Menge der Eintragungen auf Meet's
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.EMail)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.EventCount)
+        </td>
+    </tr>
+}
+
+</table>

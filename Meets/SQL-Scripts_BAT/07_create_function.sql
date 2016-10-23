@@ -207,5 +207,28 @@ FROM   dbo.Eventinvitations INNER JOIN
              dbo.Invitationstatus ON dbo.Eventinvitations.id = dbo.Invitationstatus.eventinvitations_id INNER JOIN
              dbo.Members ON dbo.Events.member_id = dbo.Members.id
 ORDER BY dbo.Events.eventdate DESC;
+GO
 
+-- Funktion zählt wieviele Events ein User schon angelegt hat
+CREATE FUNCTION fn_TopUsers()
+RETURNS TABLE 
+AS
+RETURN 
+(
+	select me.email AS EMail,
+		   Count(ev.member_id) AS EventCount
+	from Events as ev
+	join Members as me
+		on me.id = ev.member_id
+	Group by me.email
+);
+GO
+
+--Prozedur ruft Funktion auf wieviele Events pro User
+CREATE PROCEDURE sp_Call_TopUser
+AS
+BEGIN
+    -- Insert statements for procedure here
+	select * from fn_TopUsers() ORDER BY EventCount DESC
+END
 GO

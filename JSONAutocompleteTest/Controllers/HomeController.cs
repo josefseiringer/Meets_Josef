@@ -13,6 +13,28 @@ namespace JSONAutocompleteTest.Controllers
         MeetsEntities db = new MeetsEntities();
 
         [HttpGet]
+        public ActionResult CallTopUser()
+        {
+            // aus Model
+            CallTopUserViewModel ctvm;
+            List<CallTopUserViewModel> listTop = new List<CallTopUserViewModel>();
+            //von Datenbank mit prozedur
+            List<sp_Call_TopUser_Result> tempTop = db.sp_Call_TopUser().ToList();
+            //umspeichern ins model zur weiterverarbeitung
+
+            foreach (sp_Call_TopUser_Result item in tempTop)
+            {
+                ctvm = new CallTopUserViewModel();
+                ctvm.EMail = item.EMail;
+                ctvm.EventCount = item.EventCount;
+                listTop.Add(ctvm);
+
+            }
+            return View(listTop);
+        }
+
+
+        [HttpGet]
         public ActionResult Index()
         {
             var listMember = (from m in db.Members
