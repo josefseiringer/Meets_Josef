@@ -38,7 +38,7 @@ GO
 
 -- Anzahl der "Erstellten Einladungen", Anzeige ob valid und Anzeige der zugehörigen E-Mail-Adresse
 
-CREATE PROCEDURE sp_UserInvitations	
+ALTER PROCEDURE sp_UserInvitations	
 AS
 BEGIN
 
@@ -52,7 +52,8 @@ BEGIN
 		LEFT JOIN [Events] 
 			ON Members.id = [Events].member_id
 		LEFT JOIN Eventinvitations 
-			ON [Events].id = Eventinvitations.event_id	
+			ON [Events].id = Eventinvitations.event_id
+	WHERE Meets.dbo.Members.deleted IS NULL	
 	GROUP BY Members.id, Members.email
 END
 GO

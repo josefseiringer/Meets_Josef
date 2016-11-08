@@ -18,6 +18,7 @@ namespace Meets.Controllers
         [Authorize]
         public ActionResult Benutzerauswertung()
         {
+
             List<sp_UserInvitations_Result> result;
             using (MeetsEntities con = new MeetsEntities())
             {
@@ -25,6 +26,36 @@ namespace Meets.Controllers
             }
             return View(result);
 
+        }
+
+        [HttpGet]
+        [Authorize]
+        public ActionResult Delete(int? id)
+        {
+            //überprüfung ob eine id vorhanden bei null zurück zu Benutzerverwaltung
+            if (id == null)
+            {
+                TempData["ErrorMessage"] = "Uups es ist ein Fehler aufgetreten";
+                return RedirectToAction("Benutzerauswertung");
+            }
+
+            //ab hier wird gelöscht 
+            using (MeetsEntities con = new MeetsEntities())
+            {
+                //Hole Member anhand der Id
+                var getMember = (from me in con.Members
+                                 where id == me.id
+                                 select me).FirstOrDefault();
+                //Setzt auf gelöscht
+                getMember.deleted = true;
+
+                //Speichern
+                con.SaveChanges();
+
+                TempData["ConfirmMessage"] = "User gelöscht!";
+
+            }
+            return RedirectToAction("Benutzerauswertung");
         }
 
 
@@ -43,7 +74,7 @@ namespace Meets.Controllers
                 List<Member> memVal = (from m in cont.Members
                                  where m.email == defaultUserEmail
                                  select m).ToList();
-                //Überprüfen ob Entitätsmenge Default Member vorhnden
+                //Überprüfen ob Entitätsmenge Default Member vorhanden
                 if (memVal.Count != 0)
                 {
                     //Entitätsmenge aus Memberproperties als Liste für View 
