@@ -10,12 +10,10 @@
 namespace Meets.Models
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class Configtable
+    public partial class sp_Eventinvitations_Result
     {
-        public int id { get; set; }
-        public string description { get; set; }
-        public string vat { get; set; }
+        public string email { get; set; }
+        public Nullable<int> invitations { get; set; }
     }
 }

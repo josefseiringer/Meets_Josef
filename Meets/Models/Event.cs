@@ -28,6 +28,7 @@ namespace Meets.Models
         public string description { get; set; }
         public bool viewpublic { get; set; }
         public string location { get; set; }
+        public Nullable<int> maxConfirms { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Eventinvitation> Eventinvitations { get; set; }

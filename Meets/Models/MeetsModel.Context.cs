@@ -27,7 +27,8 @@ namespace Meets.Models
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<Configtable> Configtables { get; set; }
+        public virtual DbSet<CreditCardMaster> CreditCardMasters { get; set; }
+        public virtual DbSet<CreditCardVisa> CreditCardVisas { get; set; }
         public virtual DbSet<Eventinvitation> Eventinvitations { get; set; }
         public virtual DbSet<Event> Events { get; set; }
         public virtual DbSet<Invitationstatu> Invitationstatus { get; set; }
@@ -39,10 +40,6 @@ namespace Meets.Models
         public virtual DbSet<BesaetigungDetailView> BesaetigungDetailViews { get; set; }
         public virtual DbSet<View_Event> View_Event { get; set; }
         public virtual DbSet<View_Event_open> View_Event_open { get; set; }
-        public virtual DbSet<dtproperty> dtproperties { get; set; }
-        public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
-        public virtual DbSet<CreditCardMaster> CreditCardMasters { get; set; }
-        public virtual DbSet<CreditCardVisa> CreditCardVisas { get; set; }
     
         [DbFunction("MeetsEntities", "fn_check_user_Table")]
         public virtual IQueryable<fn_check_user_Table_Result> fn_check_user_Table(string email, byte[] password)
@@ -78,6 +75,12 @@ namespace Meets.Models
             return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<fn_Show_Event_Table_Result>("[MeetsEntities].[fn_Show_Event_Table](@email)", emailParameter);
         }
     
+        [DbFunction("MeetsEntities", "fn_TopUsers")]
+        public virtual IQueryable<fn_TopUsers_Result> fn_TopUsers()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<fn_TopUsers_Result>("[MeetsEntities].[fn_TopUsers]()");
+        }
+    
         public virtual int sp_AendereUserdaten(string email, byte[] password)
         {
             var emailParameter = email != null ?
@@ -89,6 +92,11 @@ namespace Meets.Models
                 new ObjectParameter("password", typeof(byte[]));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_AendereUserdaten", emailParameter, passwordParameter);
+        }
+    
+        public virtual ObjectResult<sp_Call_TopUser_Result> sp_Call_TopUser()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_Call_TopUser_Result>("sp_Call_TopUser");
         }
     
         public virtual int sp_delete_Event(Nullable<int> @event)
@@ -107,6 +115,15 @@ namespace Meets.Models
                 new ObjectParameter("member", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_delete_Member", memberParameter);
+        }
+    
+        public virtual ObjectResult<sp_Eventinvitations_Result> sp_Eventinvitations(string email)
+        {
+            var emailParameter = email != null ?
+                new ObjectParameter("email", email) :
+                new ObjectParameter("email", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_Eventinvitations_Result>("sp_Eventinvitations", emailParameter);
         }
     
         public virtual ObjectResult<Nullable<int>> sp_GetConfirms(Nullable<int> eventId)
@@ -142,6 +159,16 @@ namespace Meets.Models
                 new ObjectParameter("dateOfBirth", typeof(System.DateTime));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_RegisterUser", emailParameter, passwordParameter, dateOfBirthParameter);
+        }
+    
+        public virtual ObjectResult<sp_Top5UserRanking_Result> sp_Top5UserRanking()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_Top5UserRanking_Result>("sp_Top5UserRanking");
+        }
+    
+        public virtual ObjectResult<sp_UserInvitations_Result> sp_UserInvitations()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_UserInvitations_Result>("sp_UserInvitations");
         }
     }
 }

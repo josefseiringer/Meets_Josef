@@ -17,6 +17,33 @@ namespace Meets.Controllers
         //Datenbankzugriff für alle ActioResult Methoden ohne Using
         private MeetsEntities db = new MeetsEntities();
 
+        [Authorize]
+        [HttpGet]
+        public ActionResult Top5UserRanking()
+        {
+            List<UserRankingViewModel> urvmList = new List<UserRankingViewModel>();
+
+            using (MeetsEntities cont = new MeetsEntities())
+            {
+                List<sp_Top5UserRanking_Result> top5 = cont.sp_Top5UserRanking().ToList();
+
+                UserRankingViewModel urvm;
+                foreach (sp_Top5UserRanking_Result item in top5)
+                {
+                    urvm = new UserRankingViewModel();
+
+                    urvm.Email = item.email;
+                    urvm.Confirms = (int)item.confirms;
+                    urvm.Eventinvitations = (int)cont.sp_Eventinvitations(item.email).FirstOrDefault().invitations;
+
+                    urvmList.Add(urvm);
+                }
+
+            }
+
+            return View(urvmList);
+        }
+
         [HttpGet]
         [Authorize]
         public ActionResult InviteTo()

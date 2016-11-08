@@ -10,16 +10,12 @@
 namespace Meets.Models
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class dtproperty
+    public partial class sp_UserInvitations_Result
     {
         public int id { get; set; }
-        public Nullable<int> objectid { get; set; }
-        public string property { get; set; }
-        public string value { get; set; }
-        public string uvalue { get; set; }
-        public byte[] lvalue { get; set; }
-        public int version { get; set; }
+        public string email { get; set; }
+        public Nullable<int> invitations { get; set; }
+        public Nullable<int> valid { get; set; }
     }
 }

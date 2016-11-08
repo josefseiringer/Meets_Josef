@@ -7,7 +7,20 @@ exec dbo.sp_RegisterUser 'j.seiringer@live.at',@HashThis,'1973-25-07'
 exec dbo.sp_RegisterUser 'digitalman@a1.net',@HashThis,'1973-25-07'
 exec dbo.sp_RegisterUser 'j.seiringer@gmail.com',@HashThis,'1973-25-07'
 exec dbo.sp_RegisterUser 'm.seiringer@gmail.com',@HashThis,'1975-22-12';
+exec dbo.sp_RegisterUser 'admin@meets.at',@HashThis,'1973-25-07';
 GO
+
+INSERT INTO Membervalidation(member_id) VALUES (1);
+GO
+INSERT INTO Membervalidation(member_id) VALUES (2);
+GO
+INSERT INTO Membervalidation(member_id) VALUES (3);
+GO
+INSERT INTO Membervalidation(member_id) VALUES (4);
+GO
+INSERT INTO Membervalidation(member_id) VALUES (5);
+GO
+
 
 insert into [Events] (member_id,eventdate,title,[description],viewpublic,location) values(1,'2016-16-12','Wordpress Einführung','Was ist ein CMS und wie installiere ich Wordpress',1,'U3-Zippererstrasse-->Simmeringer Hauptstrasse 58');
 GO
@@ -33,14 +46,6 @@ GO
 insert into [Events] (member_id,eventdate,title,[description],viewpublic,location) values(1,'2016-31-12','Silvesterparty','Silvester mit Freunden',1,'Zuhause');
 GO
 
-INSERT INTO Membervalidation(member_id) VALUES (2);
-GO
-
-INSERT INTO Membervalidation(member_id) VALUES (1);
-GO
-
-INSERT INTO Membervalidation(member_id) VALUES (3);
-GO
 
 insert into Meets.dbo.Eventinvitations (email,event_id) values ('j.seiringer@gmail.com',1);
 GO

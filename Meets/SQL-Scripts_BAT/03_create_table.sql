@@ -3,7 +3,9 @@ CREATE TABLE Members (
   created DATETIME DEFAULT GetDate() NOT NULL,
   email VARCHAR(255) NOT NULL,
   [password] VARBINARY(MAX) NOT NULL,
-  dateofbirth DATETIME2 NOT NULL
+  dateofbirth DATETIME2 NOT NULL,
+  isAdmin BIT NULL,
+  deleted BIT NULL
 );
 GO
 
@@ -46,7 +48,8 @@ CREATE TABLE [Events] (
   title VARCHAR(50) NOT NULL,
   [description] VARCHAR(255) NOT NULL,
   viewpublic BIT NOT NULL,
-  location VARCHAR(255) NOT NULL
+  location VARCHAR(255) NOT NULL,
+  maxConfirms int NULL
 );
 GO
 

@@ -1,5 +1,62 @@
 USE Meets;
 GO
+
+-- Zeigt die 5 Benutzer an, die am öftesten auf eine Einladung positiv geantwortet haben
+--  (Angenommene Einladungen).
+
+CREATE PROCEDURE sp_Top5UserRanking
+AS
+BEGIN
+
+	SELECT TOP 5 evi.email, 
+		   COUNT(ev.id) AS confirms 
+	FROM [Events] AS ev
+		JOIN Eventinvitations as evi
+			ON ev.id = evi.event_id
+		JOIN Invitationstatus AS ivs
+			ON evi.id = ivs.eventinvitations_id					
+WHERE ivs.confirm = 1
+GROUP BY evi.email
+ORDER BY Confirms DESC
+
+END
+GO
+
+-- Meine Gesamtanzahl an Einladungen die ich bekommen habe (Erhaltene Einladungen).
+
+CREATE PROCEDURE sp_Eventinvitations
+	@email varchar(255)
+
+AS
+BEGIN
+	SELECT evi.email, COUNT(evi.id) AS invitations FROM Eventinvitations AS evi	
+WHERE evi.email = @email
+GROUP BY evi.email
+
+END
+GO
+
+-- Anzahl der "Erstellten Einladungen", Anzeige ob valid und Anzeige der zugehörigen E-Mail-Adresse
+
+CREATE PROCEDURE sp_UserInvitations	
+AS
+BEGIN
+
+	SELECT Members.id, 
+		   Members.email, 
+		   COUNT(Eventinvitations.id) AS invitations,
+		   COUNT(Membervalidation.id) AS valid 
+	FROM Members
+		LEFT JOIN Membervalidation 
+			ON Members.id = Membervalidation.member_id
+		LEFT JOIN [Events] 
+			ON Members.id = [Events].member_id
+		LEFT JOIN Eventinvitations 
+			ON [Events].id = Eventinvitations.event_id	
+	GROUP BY Members.id, Members.email
+END
+GO
+
 -- gibt einen int zurück wieviele haben zugesagt
 CREATE PROCEDURE sp_GetConfirms
 	@eventId int

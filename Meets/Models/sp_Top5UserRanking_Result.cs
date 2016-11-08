@@ -11,14 +11,9 @@ namespace Meets.Models
 {
     using System;
     
-    public partial class sp_holeUserDaten_Result
+    public partial class sp_Top5UserRanking_Result
     {
-        public int id { get; set; }
-        public System.DateTime created { get; set; }
         public string email { get; set; }
-        public byte[] password { get; set; }
-        public System.DateTime dateofbirth { get; set; }
-        public Nullable<bool> isAdmin { get; set; }
-        public Nullable<bool> deleted { get; set; }
+        public Nullable<int> confirms { get; set; }
     }
 }

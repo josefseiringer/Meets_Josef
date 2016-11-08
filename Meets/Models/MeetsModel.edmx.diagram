@@ -4,19 +4,20 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="4fae8fe434404fc394df65b0307a4492" Name="Diagram1">
-        <EntityTypeShape EntityType="MeetsModel.Configtable" Width="1.5" PointX="4.75" PointY="0.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="MeetsModel.Eventinvitation" Width="1.5" PointX="3.75" PointY="3" IsExpanded="true" />
-        <EntityTypeShape EntityType="MeetsModel.Event" Width="1.5" PointX="1" PointY="1.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="MeetsModel.Invitationstatu" Width="1.5" PointX="6.75" PointY="3.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="MeetsModel.Memberproperty" Width="1.5" PointX="3.75" PointY="6.5" IsExpanded="true" />
+      <Diagram DiagramId="9f51b385540a47f19310646bc2d2ae79" Name="Diagram1">
+        <EntityTypeShape EntityType="MeetsModel.CreditCardMaster" Width="1.5" PointX="3" PointY="0.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="MeetsModel.CreditCardVisa" Width="1.5" PointX="5.125" PointY="0.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="MeetsModel.Eventinvitation" Width="1.5" PointX="5.25" PointY="3.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="MeetsModel.Event" Width="1.5" PointX="2.75" PointY="3.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="MeetsModel.Invitationstatu" Width="1.5" PointX="7.5" PointY="3.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="MeetsModel.Memberproperty" Width="1.5" PointX="3.25" PointY="7" IsExpanded="true" />
         <EntityTypeShape EntityType="MeetsModel.Member" Width="1.5" PointX="0.75" PointY="5.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="MeetsModel.Membersubscription" Width="1.5" PointX="0.5" PointY="9.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="MeetsModel.Membervalidation" Width="1.5" PointX="3.25" PointY="9.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="MeetsModel.Propertytype" Width="1.5" PointX="6.75" PointY="6.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="MeetsModel.BesaetigungDetailView" Width="1.5" PointX="11.875" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="MeetsModel.View_Event" Width="1.5" PointX="9.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="MeetsModel.View_Event_open" Width="1.5" PointX="11.25" PointY="3.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="MeetsModel.Membersubscription" Width="1.5" PointX="0.5" PointY="11.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="MeetsModel.Membervalidation" Width="1.5" PointX="3.25" PointY="9.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MeetsModel.Propertytype" Width="1.5" PointX="6.125" PointY="7.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="MeetsModel.BesaetigungDetailView" Width="1.5" PointX="7" PointY="0.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="MeetsModel.View_Event" Width="1.5" PointX="0.75" PointY="0.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="MeetsModel.View_Event_open" Width="1.5" PointX="8.875" PointY="0.5" IsExpanded="true" />
         <AssociationConnector Association="MeetsModel.fk_Eventinvitations_Events" ManuallyRouted="false" />
         <AssociationConnector Association="MeetsModel.fk_Invitationstatus_Eventinvitations" ManuallyRouted="false" />
         <AssociationConnector Association="MeetsModel.fk_Events_Members" ManuallyRouted="false" />
@@ -24,10 +25,6 @@
         <AssociationConnector Association="MeetsModel.fk_Memberproperties_Propertytypes" ManuallyRouted="false" />
         <AssociationConnector Association="MeetsModel.fk_Membersubscriptions_Member" ManuallyRouted="false" />
         <AssociationConnector Association="MeetsModel.fk_Membervalidation_Member" ManuallyRouted="false" />
-        <EntityTypeShape EntityType="MeetsModel.dtproperty" Width="1.5" PointX="5.375" PointY="9.75" />
-        <EntityTypeShape EntityType="MeetsModel.sysdiagram" Width="1.5" PointX="9.375" PointY="6.75" />
-        <EntityTypeShape EntityType="MeetsModel.CreditCardMaster" Width="1.5" PointX="8.5" PointY="9.5" />
-        <EntityTypeShape EntityType="MeetsModel.CreditCardVisa" Width="1.5" PointX="10.75" PointY="9.5" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
