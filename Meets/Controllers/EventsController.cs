@@ -17,42 +17,44 @@ namespace Meets.Controllers
         //Datenbankzugriff für alle ActioResult Methoden ohne Using
         private MeetsEntities db = new MeetsEntities();
 
+        /// <summary>
+        /// Top5 Benutzer Methode mittels procedur
+        /// </summary>
+        /// <returns></returns>
         [Authorize]
         [HttpGet]
         public ActionResult Top5UserRanking()
         {
+            //Liste aus Model erzeugen
             List<UserRankingViewModel> urvmList = new List<UserRankingViewModel>();
 
-            using (MeetsEntities cont = new MeetsEntities())
+            //Liste aus Datenbank model erzeugen und durch prozedur befüllen
+            List<sp_Top5UserRanking_Result> top5 = db.sp_Top5UserRanking().ToList();
+
+            //umkopieren der Daten ins Viewmodel
+            UserRankingViewModel urvm;
+            foreach (sp_Top5UserRanking_Result item in top5)
             {
-                List<sp_Top5UserRanking_Result> top5 = cont.sp_Top5UserRanking().ToList();
-
-                UserRankingViewModel urvm;
-                foreach (sp_Top5UserRanking_Result item in top5)
-                {
-                    urvm = new UserRankingViewModel();
-
-                    urvm.Email = item.email;
-                    urvm.Confirms = (int)item.confirms;
-                    urvm.Eventinvitations = (int)cont.sp_Eventinvitations(item.email).FirstOrDefault().invitations;
-
-                    urvmList.Add(urvm);
-                }
-
-            }
-
+                urvm = new UserRankingViewModel();
+                urvm.Email = item.email;
+                urvm.Confirms = (int)item.confirms;
+                urvm.Eventinvitations = (int)db.sp_Eventinvitations(item.email).FirstOrDefault().invitations;
+                urvmList.Add(urvm);
+            }            
+            //liste dem View übergeben
             return View(urvmList);
         }
-
+        /// <summary>
+        /// Eingeladen zu Event Methode
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         [Authorize]
         public ActionResult InviteTo()
         {
 
             string eingeloggt = User.Identity.Name;
-            //int eventInvId = (from evi in db.Eventinvitations
-            //                    where evi.email == eingeloggt
-            //                    select evi.id).FirstOrDefault();
+            
             List<Event> listInviteTo = (from ev in db.Events
                                         join evi in db.Eventinvitations on ev.id equals evi.event_id
                                         join ivs in db.Invitationstatus on evi.id equals ivs.eventinvitations_id

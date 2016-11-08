@@ -13,6 +13,21 @@ namespace Meets.Controllers
 {
     public class UserController : Controller
     {
+
+        [HttpGet]
+        [Authorize]
+        public ActionResult Benutzerauswertung()
+        {
+            List<sp_UserInvitations_Result> result;
+            using (MeetsEntities con = new MeetsEntities())
+            {
+                result = con.sp_UserInvitations().ToList();                
+            }
+            return View(result);
+
+        }
+
+
         /// <summary>
         /// GET Methode Zusatzinfos für Dynamische Einträge in Datenbank für Tabelle Memberproperties und Propertytype Anzeigen
         /// </summary>

@@ -1,0 +1,57 @@
+﻿@model IEnumerable<Meets.Models.sp_UserInvitations_Result>
+
+@{
+    ViewBag.Title = "Benutzerauswertung";
+    Layout = "~/Views/Shared/_LayoutBenutzerauswertung.cshtml";
+}
+
+<table class="table table-hover">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.email)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.invitations)
+        </th>
+        <th colspan="3">
+            @Html.DisplayNameFor(model => model.valid)
+        </th>
+        
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.email)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.invitations)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.valid)
+        </td>
+        <td>
+            @if (item != null && item.valid > 0)
+            {
+                <text>Yes</text>
+            }
+            else
+            {
+                <text>No</text>
+            }
+        </td> 
+        @if (item.email != "admin@meets.at")
+        {
+            <td>
+                @Html.ActionLink("löschen", "Delete", new { id = item.id })
+            </td>
+        }
+        else
+        {
+            <td><p style="color:red;font-weight:bold;">Nicht löschbar</p></td>
+        }
+
+    </tr>
+}
+
+</table>

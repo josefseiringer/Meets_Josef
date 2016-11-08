@@ -31,26 +31,53 @@ namespace Meets.Controllers
         [HttpPost]
         public ActionResult Login2(LoginFormModel lfm)
         {
-            using(MeetsEntities cont = new MeetsEntities())
+            if (lfm.Email != "admin@meets.at")
             {
-                byte[] pwd = Helper.GetHash(lfm.Password);
-                var loginVal = (from m in cont.Members
-                                where m.email == lfm.Email &&
-                                m.password == pwd
-                                select m).FirstOrDefault();
-
-                if (loginVal != null)
+                using (MeetsEntities cont = new MeetsEntities())
                 {
-                    //Login Authentifizierung
-                    //mittels [Authorize] kann bei Actionmethoden auf dieses Cookie zugreifen
-                    FormsAuthentication.SetAuthCookie(lfm.Email, false);
+                    byte[] pwd = Helper.GetHash(lfm.Password);
+                    var loginVal = (from m in cont.Members
+                                    where m.email == lfm.Email &&
+                                    m.password == pwd && m.deleted != true
+                                    select m).FirstOrDefault();
 
-                    TempData["ConfirmMessage"] = "Login erfolgreich";
-                    return RedirectToAction("EventDefaultUser", "Events");
+                    if (loginVal != null)
+                    {
+                        //Login Authentifizierung
+                        //mittels [Authorize] kann bei Actionmethoden auf dieses Cookie zugreifen
+                        FormsAuthentication.SetAuthCookie(lfm.Email, false);
+
+                        TempData["ConfirmMessage"] = "Login erfolgreich";
+                        return RedirectToAction("EventDefaultUser", "Events");
+                    }
+                    TempData["ErrorMessage"] = "Email/Passwort existiert nicht!";
+                    return RedirectToAction("Login", "Login");
                 }
-                TempData["ErrorMessage"] = "Email/Passwort existiert nicht!";
-                return RedirectToAction("Login", "Login");
             }
+            else
+            {
+                using (MeetsEntities cont = new MeetsEntities())
+                {
+                    byte[] pwd = Helper.GetHash(lfm.Password);
+                    var loginVal = (from m in cont.Members
+                                    where m.email == lfm.Email &&
+                                    m.password == pwd && m.isAdmin == true
+                                    select m).FirstOrDefault();
+
+                    if (loginVal != null)
+                    {
+                        //Login Authentifizierung
+                        //mittels [Authorize] kann bei Actionmethoden auf dieses Cookie zugreifen
+                        FormsAuthentication.SetAuthCookie(lfm.Email, false);
+
+                        TempData["ConfirmMessage"] = "Login erfolgreich";
+                        return RedirectToAction("Benutzerauswertung", "User");
+                    }
+                    TempData["ErrorMessage"] = "Email/Passwort existiert nicht!";
+                    return RedirectToAction("Login", "Login");
+                }
+            }
+            
             
         }
 

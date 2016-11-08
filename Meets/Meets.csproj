@@ -575,6 +575,8 @@
     <Content Include="Views\MemberVal\RegCredit.cshtml" />
     <Content Include="Views\Shared\_LayoutTop5User.cshtml" />
     <Content Include="Views\Events\Top5UserRanking.cshtml" />
+    <Content Include="Views\Shared\_LayoutBenutzerauswertung.cshtml" />
+    <Content Include="Views\User\Benutzerauswertung.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
