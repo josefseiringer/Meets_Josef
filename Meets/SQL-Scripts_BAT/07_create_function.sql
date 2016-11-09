@@ -38,7 +38,7 @@ GO
 
 -- Anzahl der "Erstellten Einladungen", Anzeige ob valid und Anzeige der zugehörigen E-Mail-Adresse
 
-ALTER PROCEDURE sp_UserInvitations	
+CREATE PROCEDURE sp_UserInvitations	
 AS
 BEGIN
 

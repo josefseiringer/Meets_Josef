@@ -200,6 +200,9 @@
     <Compile Include="Models\BesaetigungDetailView.cs">
       <DependentUpon>MeetsModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Configtable.cs">
+      <DependentUpon>MeetsModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\CreditCardMaster.cs">
       <DependentUpon>MeetsModel.tt</DependentUpon>
     </Compile>

@@ -3,7 +3,7 @@ CREATE TABLE Members (
   created DATETIME DEFAULT GetDate() NOT NULL,
   email VARCHAR(255) NOT NULL,
   [password] VARBINARY(MAX) NOT NULL,
-  dateofbirth DATETIME2 NOT NULL,
+  dateofbirth DATETIME NOT NULL,
   isAdmin BIT NULL,
   deleted BIT NULL
 );

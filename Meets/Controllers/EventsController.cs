@@ -472,6 +472,9 @@ namespace Meets.Controllers
         [HttpGet]
         public ActionResult Create()
         {
+            //errormessage übergeben von Post methode
+            ViewBag.errorBez = TempData["error"];
+
             int valid = (from e in db.Membervalidations
                          where e.Member.id == e.member_id &&
                          e.Member.email == User.Identity.Name
@@ -493,8 +496,7 @@ namespace Meets.Controllers
         public ActionResult Create(Event e)
         {
             if (ModelState.IsValid)
-            {
-                
+            {                
                 e.created = DateTime.Now;
                 e.member_id = (from ev in db.Events
                             where ev.Member.email == User.Identity.Name
@@ -502,17 +504,34 @@ namespace Meets.Controllers
                 if (e.member_id != 0 && e.description != null && e.eventdate != null && e.location != null && e.title != null)
                 {
                     db.Events.Add(e);
-                    db.SaveChanges();
-                    return RedirectToAction("EventDefaultUser");
+                    db.Events.Add(e);
+                    if (e.title.Length <= 50 && e.description.Length <= 255 && e.location.Length <= 255)
+                    {                        
+                        db.SaveChanges();
+                        return RedirectToAction("EventDefaultUser");
+                    }
+                    else
+                    {
+                        TempData["error"] = "Titelbezeichnung max 50 Zeichen!";
+                        return RedirectToAction("Create");
+                    }                    
                 }
                 else if (User.Identity.Name != null && e.description != null && e.eventdate != null && e.location != null && e.title != null)
                 {
                     e.member_id = (from m in db.Members
                                    where m.email == User.Identity.Name
                                    select m.id).FirstOrDefault();
-                    db.Events.Add(e);
-                    db.SaveChanges();
-                    return RedirectToAction("EventDefaultUser");
+
+                    if (e.title.Length <= 50 && e.description.Length <= 255 && e.location.Length <= 255)
+                    {
+                        db.SaveChanges();
+                        return RedirectToAction("EventDefaultUser");
+                    }
+                    else
+                    {
+                        TempData["error"] = "Titelbezeichnung max 50 Zeichen!";
+                        return RedirectToAction("Create");
+                    }
                 }
                 else
                 {
@@ -567,9 +586,7 @@ namespace Meets.Controllers
         public ActionResult EditNeu(Event e)
         {
             if (e != null)
-            {
-
-                
+            {                
                 //Suche in der Datenbank die Reihe/Zeile für das Update anhand der E-Mail
                 var query =
                     from mem in db.Events

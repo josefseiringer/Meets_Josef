@@ -4,7 +4,15 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="MeetsModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="MeetsModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Configtables">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="description" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="vat" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
         <EntityType Name="CreditCardMaster">
           <Key>
             <PropertyRef Name="id" />
@@ -339,6 +347,7 @@ Warnung 6002: Für Tabelle/Sicht 'Meets.dbo.View_Event_open' ist kein Primärsch
         <Function Name="sp_Top5UserRanking" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="sp_UserInvitations" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <EntityContainer Name="MeetsModelStoreContainer">
+          <EntitySet Name="Configtables" EntityType="Self.Configtables" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CreditCardMaster" EntityType="Self.CreditCardMaster" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CreditCardVisa" EntityType="Self.CreditCardVisa" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Eventinvitations" EntityType="Self.Eventinvitations" Schema="dbo" store:Type="Tables" />
@@ -409,7 +418,8 @@ Warnung 6002: Für Tabelle/Sicht 'Meets.dbo.View_Event_open' ist kein Primärsch
             <End Role="Membervalidation" EntitySet="Membervalidation" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="MeetsModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -436,6 +446,14 @@ Warnung 6002: Für Tabelle/Sicht 'Meets.dbo.View_Event_open' ist kein Primärsch
           <Property Name="EMail" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="EventCount" Type="Int32" />
         </ComplexType>
+        <EntityType Name="Configtable">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="description" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="vat" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
         <EntityType Name="CreditCardMaster">
           <Key>
             <PropertyRef Name="id" />
@@ -690,6 +708,7 @@ Warnung 6002: Für Tabelle/Sicht 'Meets.dbo.View_Event_open' ist kein Primärsch
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="MeetsEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Configtables" EntityType="Self.Configtable" />
           <EntitySet Name="CreditCardMasters" EntityType="Self.CreditCardMaster" />
           <EntitySet Name="CreditCardVisas" EntityType="Self.CreditCardVisa" />
           <EntitySet Name="Eventinvitations" EntityType="Self.Eventinvitation" />
@@ -736,10 +755,10 @@ Warnung 6002: Für Tabelle/Sicht 'Meets.dbo.View_Event_open' ist kein Primärsch
             <Parameter Name="password" Mode="In" Type="Binary" />
           </FunctionImport>
           <FunctionImport Name="fn_detailViewFromUserEmail" IsComposable="true" ReturnType="Collection(MeetsModel.fn_detailViewFromUserEmail_Result)">
-          <Parameter Name="email" Mode="In" Type="String" />
+            <Parameter Name="email" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="fn_Show_Event_Table" IsComposable="true" ReturnType="Collection(MeetsModel.fn_Show_Event_Table_Result)">
-          <Parameter Name="email" Mode="In" Type="String" />
+            <Parameter Name="email" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="fn_TopUsers" IsComposable="true" ReturnType="Collection(MeetsModel.fn_TopUsers_Result)" />
           <FunctionImport Name="sp_AendereUserdaten">
@@ -748,19 +767,19 @@ Warnung 6002: Für Tabelle/Sicht 'Meets.dbo.View_Event_open' ist kein Primärsch
           </FunctionImport>
           <FunctionImport Name="sp_Call_TopUser" ReturnType="Collection(MeetsModel.sp_Call_TopUser_Result)" />
           <FunctionImport Name="sp_delete_Event">
-          <Parameter Name="event" Mode="In" Type="Int32" />
+            <Parameter Name="event" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="sp_delete_Member">
-          <Parameter Name="member" Mode="In" Type="Int32" />
+            <Parameter Name="member" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="sp_Eventinvitations" ReturnType="Collection(MeetsModel.sp_Eventinvitations_Result)">
-          <Parameter Name="email" Mode="In" Type="String" />
+            <Parameter Name="email" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="sp_GetConfirms" ReturnType="Collection(Int32)">
-          <Parameter Name="eventId" Mode="In" Type="Int32" />
+            <Parameter Name="eventId" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="sp_holeUserDaten" ReturnType="Collection(MeetsModel.sp_holeUserDaten_Result)">
-          <Parameter Name="email" Mode="In" Type="String" />
+            <Parameter Name="email" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="sp_RegisterUser">
             <Parameter Name="email" Mode="In" Type="String" />
@@ -803,6 +822,15 @@ Warnung 6002: Für Tabelle/Sicht 'Meets.dbo.View_Event_open' ist kein Primärsch
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="MeetsModelStoreContainer" CdmEntityContainer="MeetsEntities">
+          <EntitySetMapping Name="Configtables">
+            <EntityTypeMapping TypeName="MeetsModel.Configtable">
+              <MappingFragment StoreEntitySet="Configtables">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="vat" ColumnName="vat" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="CreditCardMasters">
             <EntityTypeMapping TypeName="MeetsModel.CreditCardMaster">
               <MappingFragment StoreEntitySet="CreditCardMaster">

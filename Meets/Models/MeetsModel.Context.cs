@@ -27,6 +27,7 @@ namespace Meets.Models
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<Configtable> Configtables { get; set; }
         public virtual DbSet<CreditCardMaster> CreditCardMasters { get; set; }
         public virtual DbSet<CreditCardVisa> CreditCardVisas { get; set; }
         public virtual DbSet<Eventinvitation> Eventinvitations { get; set; }
