@@ -41,6 +41,7 @@ namespace Meets.Models
         public virtual DbSet<BesaetigungDetailView> BesaetigungDetailViews { get; set; }
         public virtual DbSet<View_Event> View_Event { get; set; }
         public virtual DbSet<View_Event_open> View_Event_open { get; set; }
+        public virtual DbSet<cv_OpenPlaces> cv_OpenPlaces { get; set; }
     
         [DbFunction("MeetsEntities", "fn_check_user_Table")]
         public virtual IQueryable<fn_check_user_Table_Result> fn_check_user_Table(string email, byte[] password)

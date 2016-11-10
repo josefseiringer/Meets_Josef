@@ -1,6 +1,28 @@
 USE Meets;
 GO
 
+CREATE VIEW cv_OpenPlaces
+AS
+SELECT 
+		data.*,
+		data.maxConfirms - data.Confirmed AS openPlaces
+FROM (
+		SELECT
+			e.id,
+			e.maxConfirms,
+			(
+				SELECT COUNT(*) AS anzahl
+				FROM Meets.dbo.Eventinvitations AS ei
+					JOIN Meets.dbo.Invitationstatus AS ivs
+						ON ei.id = ivs.eventinvitations_id
+				WHERE ei.event_id = e.id
+			) as Confirmed
+		FROM Meets.dbo.[Events] AS e
+		WHERE e.viewpublic = 1 
+)as data;
+GO
+
+
 -- Zeigt die 5 Benutzer an, die am öftesten auf eine Einladung positiv geantwortet haben
 --  (Angenommene Einladungen).
 

@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="MeetsModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="MeetsModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Configtables">
           <Key>
             <PropertyRef Name="id" />
@@ -91,7 +91,7 @@
           <Property Name="created" Type="datetime" Nullable="false" />
           <Property Name="email" Type="varchar" MaxLength="255" Nullable="false" />
           <Property Name="password" Type="varbinary(max)" Nullable="false" />
-          <Property Name="dateofbirth" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="dateofbirth" Type="datetime" Nullable="false" />
           <Property Name="isAdmin" Type="bit" />
           <Property Name="deleted" Type="bit" />
         </EntityType>
@@ -133,6 +133,17 @@ Warnung 6002: Für Tabelle/Sicht 'Meets.dbo.BesaetigungDetailView' ist kein Prim
           <Property Name="Bestaetigungszeitpunkt" Type="varchar" MaxLength="10" />
           <Property Name="Eingeladen" Type="varchar" MaxLength="255" Nullable="false" />
           <Property Name="Bestaetigt" Type="bit" Nullable="false" />
+        </EntityType>
+        <!--Während der Generierung sind Fehler aufgetreten:
+Warnung 6002: Für Tabelle/Sicht 'Meets.dbo.cv_OpenPlaces' ist kein Primärschlüssel definiert. Der Schlüssel wurde abgeleitet, und die Definition wurde als schreibgeschützte Tabelle/Sicht erstellt.-->
+        <EntityType Name="cv_OpenPlaces">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="maxConfirms" Type="int" />
+          <Property Name="Confirmed" Type="int" />
+          <Property Name="openPlaces" Type="int" />
         </EntityType>
         <!--Während der Generierung sind Fehler aufgetreten:
 Warnung 6002: Für Tabelle/Sicht 'Meets.dbo.View_Event' ist kein Primärschlüssel definiert. Der Schlüssel wurde abgeleitet, und die Definition wurde als schreibgeschützte Tabelle/Sicht erstellt.-->
@@ -367,6 +378,14 @@ Warnung 6002: Für Tabelle/Sicht 'Meets.dbo.View_Event_open' ist kein Primärsch
     [BesaetigungDetailView].[Bestaetigt] AS [Bestaetigt]
     FROM [dbo].[BesaetigungDetailView] AS [BesaetigungDetailView]</DefiningQuery>
           </EntitySet>
+          <EntitySet Name="cv_OpenPlaces" EntityType="Self.cv_OpenPlaces" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [cv_OpenPlaces].[id] AS [id], 
+    [cv_OpenPlaces].[maxConfirms] AS [maxConfirms], 
+    [cv_OpenPlaces].[Confirmed] AS [Confirmed], 
+    [cv_OpenPlaces].[openPlaces] AS [openPlaces]
+    FROM [dbo].[cv_OpenPlaces] AS [cv_OpenPlaces]</DefiningQuery>
+          </EntitySet>
           <EntitySet Name="View_Event" EntityType="Self.View_Event" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [View_Event].[Erstellt] AS [Erstellt], 
@@ -418,8 +437,7 @@ Warnung 6002: Für Tabelle/Sicht 'Meets.dbo.View_Event_open' ist kein Primärsch
             <End Role="Membervalidation" EntitySet="Membervalidation" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="MeetsModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -539,7 +557,7 @@ Warnung 6002: Für Tabelle/Sicht 'Meets.dbo.View_Event_open' ist kein Primärsch
           <Property Name="created" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="email" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="password" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
-          <Property Name="dateofbirth" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="dateofbirth" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="isAdmin" Type="Boolean" />
           <Property Name="deleted" Type="Boolean" />
           <NavigationProperty Name="Events" Relationship="Self.fk_Events_Members" FromRole="Members" ToRole="Events" />
@@ -755,10 +773,10 @@ Warnung 6002: Für Tabelle/Sicht 'Meets.dbo.View_Event_open' ist kein Primärsch
             <Parameter Name="password" Mode="In" Type="Binary" />
           </FunctionImport>
           <FunctionImport Name="fn_detailViewFromUserEmail" IsComposable="true" ReturnType="Collection(MeetsModel.fn_detailViewFromUserEmail_Result)">
-            <Parameter Name="email" Mode="In" Type="String" />
+          <Parameter Name="email" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="fn_Show_Event_Table" IsComposable="true" ReturnType="Collection(MeetsModel.fn_Show_Event_Table_Result)">
-            <Parameter Name="email" Mode="In" Type="String" />
+          <Parameter Name="email" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="fn_TopUsers" IsComposable="true" ReturnType="Collection(MeetsModel.fn_TopUsers_Result)" />
           <FunctionImport Name="sp_AendereUserdaten">
@@ -767,19 +785,19 @@ Warnung 6002: Für Tabelle/Sicht 'Meets.dbo.View_Event_open' ist kein Primärsch
           </FunctionImport>
           <FunctionImport Name="sp_Call_TopUser" ReturnType="Collection(MeetsModel.sp_Call_TopUser_Result)" />
           <FunctionImport Name="sp_delete_Event">
-            <Parameter Name="event" Mode="In" Type="Int32" />
+          <Parameter Name="event" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="sp_delete_Member">
-            <Parameter Name="member" Mode="In" Type="Int32" />
+          <Parameter Name="member" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="sp_Eventinvitations" ReturnType="Collection(MeetsModel.sp_Eventinvitations_Result)">
-            <Parameter Name="email" Mode="In" Type="String" />
+          <Parameter Name="email" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="sp_GetConfirms" ReturnType="Collection(Int32)">
-            <Parameter Name="eventId" Mode="In" Type="Int32" />
+          <Parameter Name="eventId" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="sp_holeUserDaten" ReturnType="Collection(MeetsModel.sp_holeUserDaten_Result)">
-            <Parameter Name="email" Mode="In" Type="String" />
+          <Parameter Name="email" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="sp_RegisterUser">
             <Parameter Name="email" Mode="In" Type="String" />
@@ -788,6 +806,7 @@ Warnung 6002: Für Tabelle/Sicht 'Meets.dbo.View_Event_open' ist kein Primärsch
           </FunctionImport>
           <FunctionImport Name="sp_Top5UserRanking" ReturnType="Collection(MeetsModel.sp_Top5UserRanking_Result)" />
           <FunctionImport Name="sp_UserInvitations" ReturnType="Collection(MeetsModel.sp_UserInvitations_Result)" />
+          <EntitySet Name="cv_OpenPlaces" EntityType="MeetsModel.cv_OpenPlaces" />
         </EntityContainer>
         <ComplexType Name="sp_Call_TopUser_Result">
           <Property Type="String" Name="EMail" Nullable="false" MaxLength="255" />
@@ -816,6 +835,15 @@ Warnung 6002: Für Tabelle/Sicht 'Meets.dbo.View_Event_open' ist kein Primärsch
           <Property Type="Int32" Name="invitations" Nullable="true" />
           <Property Type="Int32" Name="valid" Nullable="true" />
         </ComplexType>
+        <EntityType Name="cv_OpenPlaces">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="maxConfirms" Type="Int32" />
+          <Property Name="Confirmed" Type="Int32" />
+          <Property Name="openPlaces" Type="Int32" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1076,6 +1104,16 @@ Warnung 6002: Für Tabelle/Sicht 'Meets.dbo.View_Event_open' ist kein Primärsch
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <EntitySetMapping Name="cv_OpenPlaces">
+            <EntityTypeMapping TypeName="MeetsModel.cv_OpenPlaces">
+              <MappingFragment StoreEntitySet="cv_OpenPlaces">
+                <ScalarProperty Name="openPlaces" ColumnName="openPlaces" />
+                <ScalarProperty Name="Confirmed" ColumnName="Confirmed" />
+                <ScalarProperty Name="maxConfirms" ColumnName="maxConfirms" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

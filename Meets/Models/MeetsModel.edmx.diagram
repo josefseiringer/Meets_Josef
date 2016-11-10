@@ -26,6 +26,7 @@
         <AssociationConnector Association="MeetsModel.fk_Memberproperties_Propertytypes" ManuallyRouted="false" />
         <AssociationConnector Association="MeetsModel.fk_Membersubscriptions_Member" ManuallyRouted="false" />
         <AssociationConnector Association="MeetsModel.fk_Membervalidation_Member" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="MeetsModel.cv_OpenPlaces" Width="1.5" PointX="0.875" PointY="0.5" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
