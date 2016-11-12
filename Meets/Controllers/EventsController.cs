@@ -148,6 +148,7 @@ namespace Meets.Controllers
                 //Ermitteln der id in den Eventinvitation über die event_id  aus Event
                 var idEventInvit = (from ei in db.Eventinvitations
                                     where ei.event_id == ev.id
+                                    orderby ei.created descending
                                     select ei.id).FirstOrDefault();
                
                 //instanz erzeugen und variable ivs zeigt darauf
