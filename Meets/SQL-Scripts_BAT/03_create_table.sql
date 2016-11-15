@@ -20,7 +20,9 @@ CREATE TABLE Membersubscriptions (
   id INT IDENTITY(1,1) NOT NULL,
   created DATETIME DEFAULT GetDate() NOT NULL,
   member_id INT NOT NULL,
-  [year] INT NOT NULL
+  [year] INT NULL,
+  advertisingemail nvarchar(50) NULL,
+  bonus DECIMAL(6,2) NULL
 );
 GO
 
