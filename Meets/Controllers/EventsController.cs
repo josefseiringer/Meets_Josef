@@ -9,6 +9,8 @@ using System.Web.Mvc;
 using Meets.Models;
 using System.Web.Security;
 using System.Diagnostics;
+using System.Collections;
+using System.Web.Helpers;
 
 namespace Meets.Controllers
 {
@@ -16,6 +18,44 @@ namespace Meets.Controllers
     {
         //Datenbankzugriff für alle ActioResult Methoden ohne Using
         private MeetsEntities db = new MeetsEntities();
+
+        [HttpGet]
+        [Authorize]
+        public ActionResult Top5Chart()
+        {
+
+            //Liste aus Model erzeugen
+            List<UserRankingViewModel> urvmList = new List<UserRankingViewModel>();
+
+            //Liste aus Datenbank model erzeugen und durch prozedur befüllen
+            List<sp_Top5UserRanking_Result> top5 = db.sp_Top5UserRanking().ToList();
+
+            //umkopieren der Daten ins Viewmodel
+            UserRankingViewModel urvm;
+            foreach (sp_Top5UserRanking_Result item in top5)
+            {
+                urvm = new UserRankingViewModel();
+                urvm.Email = item.email;
+                urvm.Confirms = (int)item.confirms;
+                urvm.Eventinvitations = (int)db.sp_Eventinvitations(item.email).FirstOrDefault().invitations;
+                urvmList.Add(urvm);
+            }
+
+            ArrayList xValue = new ArrayList();
+            ArrayList yValue = new ArrayList();
+
+            urvmList.ToList().ForEach(rs => xValue.Add(rs.Email));
+            urvmList.ToList().ForEach(rs => yValue.Add(rs.Eventinvitations));
+            
+
+            new Chart(width: 800, height: 600, theme: ChartTheme.Green)
+            .AddTitle("Top 5 Benutzer")
+               .AddLegend("Summary")
+               .AddSeries("Default", chartType: "Doughnut", xValue: xValue, yValues: yValue)
+                      .Write("bmp");
+            return null;
+        }
+
 
         /// <summary>
         /// Top5 Benutzer Methode mittels procedur
